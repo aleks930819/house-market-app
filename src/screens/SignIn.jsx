@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Button from '../components/Button';
+import { Link, useNavigate } from 'react-router-dom';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import Container from '../components/Container';
 import Form from '../components/Form';
 import Input from '../components/Input';
 import setChangedValue from '../utils/changeHandler';
 import { FcGoogle } from 'react-icons/fc';
-import { AiFillGithub } from 'react-icons/ai';
+import { AiFillLinkedin } from 'react-icons/ai';
 import { BsTwitter } from 'react-icons/bs';
 
 const SignIn = () => {
@@ -19,9 +19,30 @@ const SignIn = () => {
     setChangedValue(e, setValues);
   };
 
+  const navigate = useNavigate();
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const auth = getAuth();
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+
+      if (userCredential.user) {
+        navigate('/');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Container>
-      <Form heading="Sign In" btnName="Sign In">
+      <Form heading="Sign In" btnName="Sign In" onSubmit={onSubmit}>
         <Input
           element="input"
           type="text"
@@ -31,6 +52,7 @@ const SignIn = () => {
           value={values.name}
           handler={changeHandler}
           email={values.email}
+          icon="email"
         />
         <Input
           element="input"
@@ -41,12 +63,13 @@ const SignIn = () => {
           value={values.name}
           handler={changeHandler}
           password={values.password}
+          icon="password"
         />
         <div className="text-end flex  justify-between">
           <div className="flex gap-1">
             <FcGoogle className=" cursor-pointer text-base" />
-            <AiFillGithub className=" cursor-pointer text-base" />
-            <BsTwitter className=" cursor-pointer text-base text-indigo-500" />
+            <AiFillLinkedin className=" cursor-pointer text-base text-blue-600" />
+            <BsTwitter className=" cursor-pointer text-base text-blue-700" />
           </div>
           <Link
             to="/forgot-password"

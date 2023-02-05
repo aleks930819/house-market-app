@@ -1,3 +1,7 @@
+import { MdEmail } from 'react-icons/md';
+import { RiLockPasswordFill } from 'react-icons/ri';
+import { FaUserAlt } from 'react-icons/fa';
+
 const Input = (props) => {
   const element =
     props.element === 'input' ? (
@@ -10,7 +14,7 @@ const Input = (props) => {
         value={props.values}
         onChange={props.handler}
         onBlur={props.onBlur}
-        className="border-2 border-gray-300 rounded-md p-2 text-sm focus:bg-white focus:border-slate-400 focus:outline-none w-full"
+        className="border-2 border-gray-300 rounded-md p-2 text-sm focus:bg-white focus:border-slate-400 focus:outline-none w-full relative pl-8"
       />
     ) : (
       <textarea
@@ -27,8 +31,20 @@ const Input = (props) => {
 
   return (
     <div>
-      <div className="flex mx-auto mb-5 justify-center items-center">
+      <div className="flex mx-auto mb-5 justify-center items-center relative">
         {element}
+
+        {props.icon && (
+          <div className="pointer-events-none text-sm absolute top-1/2 transform -translate-y-1/2 left-3 text-gray-400">
+            {props.icon === 'email' ? (
+              <MdEmail />
+            ) : props.icon === 'password' ? (
+              <RiLockPasswordFill />
+            ) : props.icon === 'user' ? (
+              <FaUserAlt />
+            ) : null}
+          </div>
+        )}
       </div>
     </div>
   );

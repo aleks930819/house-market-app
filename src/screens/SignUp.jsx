@@ -1,15 +1,24 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Container from '../components/Container';
 import Form from '../components/Form';
 import Input from '../components/Input';
 import setChangedValue from '../utils/changeHandler';
 import { FcGoogle } from 'react-icons/fc';
-import { AiFillGithub } from 'react-icons/ai';
+import { AiFillLinkedin } from 'react-icons/ai';
 import { BsTwitter } from 'react-icons/bs';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from 'firebase/auth';
+import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../../firbase.config';
 
 const SignUp = () => {
   const [values, setValues] = useState({
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
     repassword: '',
@@ -19,9 +28,65 @@ const SignUp = () => {
     setChangedValue(e, setValues);
   };
 
+  const navigate = useNavigate();
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const auth = getAuth();
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+      const user = userCredential.user;
+
+      const fullNameOfTheUser = `${values.firstName} ${values.lastName}`;
+
+      const formDataCopy = { ...values };
+
+      delete formDataCopy.repassword;
+      delete formDataCopy.password;
+
+      formDataCopy.timestamp = serverTimestamp();
+      formDataCopy.fullName = fullNameOfTheUser;
+
+      await setDoc(doc(db, 'users', user.uid), formDataCopy);
+
+      navigate('/');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <Container>
-      <Form heading="Sign Up" btnName="Sign Up">
+      <Form heading="Sign Up" btnName="Sign Up" onSubmit={onSubmit}>
+        <Input
+          element="input"
+          type="text"
+          htmlFor="firstName"
+          placeholder="First Name"
+          name="firstName"
+          value={values.name}
+          handler={changeHandler}
+          firstName={values.firstName}
+          icon="user"
+        />
+
+        <Input
+          element="input"
+          type="text"
+          htmlFor="lastName"
+          placeholder="Last Name"
+          name="lastName"
+          value={values.name}
+          handler={changeHandler}
+          firstName={values.lastName}
+          icon="user"
+        />
+
         <Input
           element="input"
           type="text"
@@ -31,6 +96,7 @@ const SignUp = () => {
           value={values.name}
           handler={changeHandler}
           email={values.email}
+          icon="email"
         />
         <Input
           element="input"
@@ -41,6 +107,7 @@ const SignUp = () => {
           value={values.name}
           handler={changeHandler}
           password={values.password}
+          icon="password"
         />
 
         <Input
@@ -48,16 +115,17 @@ const SignUp = () => {
           type="password"
           htmlFor="password"
           placeholder="Repeat password"
-          name="password"
+          name="repassword"
           value={values.name}
           handler={changeHandler}
           repassword={values.repassword}
+          icon="password"
         />
         <div className="text-end flex  justify-center">
           <div className="flex gap-1">
             <FcGoogle className=" cursor-pointer text-base" />
-            <AiFillGithub className=" cursor-pointer text-base" />
-            <BsTwitter className=" cursor-pointer text-base text-indigo-500" />
+            <AiFillLinkedin className=" cursor-pointer text-base text-blue-600" />
+            <BsTwitter className=" cursor-pointer text-base text-blue-700" />
           </div>
         </div>
         <div className="pt-10">
