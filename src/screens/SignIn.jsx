@@ -1,13 +1,22 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import Container from '../components/Container';
-import Form from '../components/Form';
-import Input from '../components/Input';
-import setChangedValue from '../utils/changeHandler';
 import { FcGoogle } from 'react-icons/fc';
 import { AiFillLinkedin } from 'react-icons/ai';
 import { BsTwitter } from 'react-icons/bs';
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+
+import Container from '../components/Container';
+import Form from '../components/Form';
+import Input from '../components/Input';
+
+import setChangedValue from '../utils/changeHandler';
+
 
 const SignIn = () => {
   const [values, setValues] = useState({
@@ -36,7 +45,7 @@ const SignIn = () => {
         navigate('/');
       }
     } catch (err) {
-      console.log(err);
+      toast.error('Wrong email or password');
     }
   };
 
