@@ -19,13 +19,13 @@ const data = [
     id: 3,
     icon: <RxAvatar className="text-neutral-600" />,
     text: 'Sign In / Sign Up',
-    link: '/profile',
+    link: '/sign-in',
   },
 ];
 
 const Navbar = () => {
   return (
-    <nav className="bg-slate-200 p-8  w-full   drop-shadow-lg">
+    <nav className="bg-slate-200 p-8  w-full   drop-shadow-lg h-1/3">
       <ul className="flex justify-center gap-5 pt-5 sm:justify-end ">
         {data.map((item) => (
           <li key={item.id}>
