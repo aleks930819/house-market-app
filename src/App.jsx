@@ -15,7 +15,7 @@ import Explore from './screens/Explore';
 import Category from './screens/Category';
 import Offers from './screens/Offers';
 import Host from './screens/Host';
-
+import ItemDetails from './components/ItemDetails';
 
 function App() {
   return (
@@ -32,6 +32,7 @@ function App() {
         <Route path="/category/:category" element={<Category />} />
         <Route path="/offers" element={<Offers />} />
         <Route path="/host" element={<Host />} />
+        <Route path="/details/:id" element={<ItemDetails />} />
 
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
