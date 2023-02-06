@@ -11,11 +11,14 @@ import SignUp from './screens/SignUp';
 import StarterScreen from './screens/StarterScreen';
 import ForgotPassword from './screens/ForgotPassword';
 import Explore from './screens/Explore';
+import Category from './screens/Category';
+import ScrollToTop from './utils/scrollToTop';
 
 function App() {
   return (
     <>
       <Navbar />
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<StarterScreen />} />
 
@@ -30,6 +33,7 @@ function App() {
 
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/explore" element={<Explore />} />
+        <Route path="/category/:category" element={<Category />} />
 
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />

@@ -30,7 +30,7 @@ const Features = () => {
         <div className="flex flex-col p-5 gap-5" key={item.id}>
           <div className="text-lg text-cyan-900">{item.icon}</div>
           <div>
-            <h2 className="text pb-2">{item.text}</h2>
+            <h2 className="text pb-2 font-bold">{item.text}</h2>
             <p>{item.desc}</p>
           </div>
         </div>
