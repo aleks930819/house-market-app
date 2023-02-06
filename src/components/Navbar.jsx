@@ -1,16 +1,15 @@
-import { MdOutlineExplore, MdOutlineLocalOffer } from 'react-icons/md';
+import { MdOutlineExplore, MdOutlineLocalOffer,MdOutlinePersonAddAlt} from 'react-icons/md';
 import { RxAvatar } from 'react-icons/rx';
 import { FiLogOut } from 'react-icons/fi';
 
-import { useNavigate,Link } from 'react-router-dom';
+
+
+import { useNavigate, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
-import  useAuthStatus  from '../hooks/useAuthStatus';
-
-
-
+import useAuthStatus from '../hooks/useAuthStatus';
 
 const data = [
   {
@@ -36,19 +35,19 @@ const data = [
 const Navbar = () => {
   const auth = getAuth();
 
-  // const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
 
   const { loggedIn, checkingStatus } = useAuthStatus();
 
-  // useEffect(() => {
-  //   onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       setUser(user);
-  //     } else {
-  //       setUser(null);
-  //     }
-  //   });
-  // }, [auth.currentUser]);
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+  }, [auth.currentUser]);
 
   const navigate = useNavigate();
 
@@ -79,7 +78,7 @@ const Navbar = () => {
           </Link>
         </li>
 
-        {loggedIn ? (
+        {user ? (
           <>
             <li>
               <Link
@@ -88,6 +87,16 @@ const Navbar = () => {
               >
                 <RxAvatar className="text-neutral-600 " />
                 <h3 className="hidden  sm:block  sm:text-sm">Profile</h3>
+              </Link>
+            </li>
+
+            <li onClick={() => logoutHandler()}>
+              <Link
+                to="/host"
+                className="flex justify-center items-center gap-1 text-xl md:cursor-pointe"
+              >
+                <MdOutlinePersonAddAlt className="text-neutral-600 " />
+                <h3 className="hidden  sm:block  sm:text-sm">Become a host</h3>
               </Link>
             </li>
 

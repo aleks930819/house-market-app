@@ -8,8 +8,8 @@ const StarterScreen = () => {
     <div className="">
       <Banner />
       <ExploreSection/>
+      <StarterScreenWidget/>
       <Features/>
-      {/* <StarterScreenWidget/> */}
     </div>
   );
 };

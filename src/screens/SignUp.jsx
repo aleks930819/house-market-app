@@ -1,6 +1,3 @@
-import { FcGoogle } from 'react-icons/fc';
-import { AiFillLinkedin } from 'react-icons/ai';
-import { BsTwitter } from 'react-icons/bs';
 
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,6 +11,7 @@ import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
 import Container from '../components/Container';
 import Form from '../components/Form';
 import Input from '../components/Input';
+import OAuth from '../components/OAuth';
 
 import setChangedValue from '../utils/changeHandler';
 
@@ -126,11 +124,7 @@ const SignUp = () => {
           icon="password"
         />
         <div className="text-end flex  justify-center">
-          <div className="flex gap-1">
-            <FcGoogle className=" cursor-pointer text-base" />
-            <AiFillLinkedin className=" cursor-pointer text-base text-blue-600" />
-            <BsTwitter className=" cursor-pointer text-base text-blue-700" />
-          </div>
+           <OAuth/>
         </div>
         <div className="pt-10">
           <Link to="/sign-in">

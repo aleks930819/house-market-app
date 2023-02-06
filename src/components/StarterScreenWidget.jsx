@@ -1,37 +1,57 @@
+import Laptop from '../assets/images/laptop.jpg';
+import Couple from '../assets/images/couple-rent.jpg';
+import Apartments from '../assets/images/apartments.jpg';
+import OnlineShoping from '../assets/images/online-shoping.jpg';
+
+const data = [
+  {
+    id: 1,
+    image: Laptop,
+    title: 'Renting Made Simple',
+    description:
+      'Browse the highest quality listings, apply online, sign your lease, and even pay your rent from any device.',
+  },
+  {
+    id: 2,
+    image: Couple,
+    title: 'Tips for Renters',
+    description:
+      'Find answers to all of your renting questions with the best renter’s guide in the galaxy.',
+  },
+  {
+    id: 3,
+    image: Apartments,
+    title: 'Advertise Your Rental',
+    description:
+      'Advertise Your Rental Connect with more than 75 million renters looking for new homes using our comprehensive marketing platform.',
+  },
+
+  {
+    id: 4,
+    image: OnlineShoping,
+    title: 'Lease 100% Online',
+    description:
+      'Accept applications, process rent payments online, and sign digital leases all powered on a single platform',
+  },
+];
+
 const StarterScreenWidget = () => {
   return (
-    <>
-      <div className="bg-slate-200 flex flex-col justify-center items-center w-3/4 mx-auto ">
-        <div className="flex justify-center items-center">
-          <div className="h-full w-full">
-            <img src="https://images.unsplash.com/photo-1476703993599-0035a21b17a9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGxvb2tpbmclMjBob3VzZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" />
-          </div>
-          <div className="text-sm text-center p-5 md:text-lg">
-            <h2 className="bold pb-5 ">Renting Made Simple</h2>
-
-            <p>
-              Browse the highest quality listings, apply online, sign your
-              lease, and even pay your rent from any device.
-            </p>
+    <div className="w-full max-w-5xl p-5 pb-10 mx-auto mb-10  grid grid-cols-1 text-xs gap-5 sm:grid-cols-2 sm:gap-0">
+      {data.map((item) => (
+        <div className="relative" key={item.id}>
+          <img
+            src={item.image}
+            alt={item.title}
+            className="w-full h-96 object-cover brightness-50"
+          />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white bg-black bg-opacity-60 p-5">
+            <h2 className="font-bold pb-2">{item.title}</h2>
+            <p>{item.description}</p>
           </div>
         </div>
-      </div>
-      <div className="bg-slate-200 flex flex-col justify-center items-center w-3/4 mx-auto ">
-        <div className="flex justify-center items-center">
-          <div className="h-full w-full">
-            <img src="https://images.unsplash.com/photo-1476703993599-0035a21b17a9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGxvb2tpbmclMjBob3VzZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" />
-          </div>
-          <div className="text-sm text-center p-5 md:text-lg">
-            <h2 className="bold pb-5 ">Renting Made Simple</h2>
-
-            <p>
-              Browse the highest quality listings, apply online, sign your
-              lease, and even pay your rent from any device.
-            </p>
-          </div>
-        </div>
-      </div>
-    </>
+      ))}
+    </div>
   );
 };
 
