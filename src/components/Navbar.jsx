@@ -1,8 +1,10 @@
-import { MdOutlineExplore, MdOutlineLocalOffer,MdOutlinePersonAddAlt} from 'react-icons/md';
+import {
+  MdOutlineExplore,
+  MdOutlineLocalOffer,
+  MdOutlinePersonAddAlt,
+} from 'react-icons/md';
 import { RxAvatar } from 'react-icons/rx';
 import { FiLogOut } from 'react-icons/fi';
-
-
 
 import { useNavigate, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -90,7 +92,7 @@ const Navbar = () => {
               </Link>
             </li>
 
-            <li onClick={() => logoutHandler()}>
+            <li>
               <Link
                 to="/host"
                 className="flex justify-center items-center gap-1 text-xl md:cursor-pointe"

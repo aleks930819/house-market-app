@@ -24,17 +24,28 @@ const Category = () => {
   useEffect(() => {
     const getListings = async () => {
       try {
+        const listingsRef = collection(db, 'listings');
+        // const q = query(
+        //   listingsRef,
+        //   where('type', '==', params.category),
+        //   orderBy('timestamp', 'desc'),
+        //   limit(10)
+        // );
+
+        // const querySnapshot = await getDocs(q);
+
         const q = query(
           collection(db, 'listings'),
           where('type', '==', params.category),
-          orderBy('timestamp', 'desc'),
           limit(10)
         );
         const querySnapshot = await getDocs(q);
+
         const data = querySnapshot.docs.map((doc) => ({
           ...doc.data(),
           id: doc.id,
         }));
+        console.log(data);
         setListings(data);
       } catch (error) {
         console.log(error);
@@ -44,10 +55,9 @@ const Category = () => {
     getListings();
   }, [params.category]);
 
-
   return (
-    <div className='flex flex-col min-h-screen mb-10'>
-      <CategoryListingItem data={listings}/>
+    <div className="flex flex-col min-h-screen mb-10">
+      <CategoryListingItem data={listings} />
     </div>
   );
 };

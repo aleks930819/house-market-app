@@ -1,4 +1,8 @@
 const setChangedValue = (e, setValue) => {
+  if (e.target.files) {
+    setValue((state) => ({ ...state, images: e.target.files }));
+  }
+  
   setValue((state) => ({ ...state, [e.target.name]: e.target.value }));
   return (e.value = e.target.value);
 };

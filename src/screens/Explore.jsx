@@ -6,13 +6,13 @@ import { Link } from 'react-router-dom';
 const data = [
   {
     id: 1,
-    title: 'Sell',
+    title: 'Places for sale',
     image: Sell,
     link: '/category/sale',
   },
   {
     id: 2,
-    title: 'Rent',
+    title: 'Places for rent',
     image: Rent,
     link: '/category/rent',
   },

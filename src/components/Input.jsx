@@ -14,7 +14,11 @@ const Input = (props) => {
         value={props.values}
         onChange={props.handler}
         onBlur={props.onBlur}
-        className="border-2 border-gray-300 rounded-md p-2 text-sm focus:bg-white focus:border-slate-400 focus:outline-none w-full relative pl-8"
+        max={props.max}
+        min={props.min}
+        multiple={props.multiple}
+        accept={props.accept}
+        className="border-2 border-gray-300 rounded-md p-2 text-sm focus:bg-white focus:border-slate-400 focus:outline-none w-full relative pl-8  file:rounded-full file:border-0 file:mr-5 file:py-2 file:px-5 file:bg-cyan-900 file:text-white"
       />
     ) : (
       <textarea

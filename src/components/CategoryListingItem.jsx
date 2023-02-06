@@ -3,118 +3,6 @@ import { FaBath, FaParking } from 'react-icons/fa';
 import { IoIosBed } from 'react-icons/io';
 import Button from './Button';
 
-// const data = [
-//   {
-//     id: 1,
-//     bedrooms: 2,
-//     bathrooms: 2,
-//     discountPrice: 2000,
-//     furnished: false,
-//     geolocation: {
-//       lat: 0,
-//       lng: 0,
-//     },
-//     imageUrls: [
-//       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-//       'https://images.unsplash.com/photo-1575517111478-7f6afd0973db?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-//     ],
-//     location: 'Lagos',
-//     name: 'Condo',
-//     offer: true,
-//     parking: true,
-//     regularPrice: 2500,
-//     type: 'rent',
-//   },
-//   {
-//     id: 2,
-//     bedrooms: 1,
-//     bathrooms: 2,
-
-//     discountPrice: 2000,
-//     furnished: true,
-//     geolocation: {
-//       lat: 0,
-//       lng: 0,
-//     },
-//     imageUrls: [
-//       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-//       'https://images.unsplash.com/photo-1575517111478-7f6afd0973db?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-//     ],
-//     location: '8601 West Peactree Street',
-//     name: 'House',
-//     offer: true,
-//     parking: true,
-//     regularPrice: 2500,
-//     type: 'sale',
-//   },
-//   {
-//     id: 3,
-//     bedrooms: 3,
-//     bathrooms: 2,
-
-//     discountPrice: 2000,
-//     furnished: true,
-//     geolocation: {
-//       lat: 0,
-//       lng: 0,
-//     },
-//     imageUrls: [
-//       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-//       'https://images.unsplash.com/photo-1575517111478-7f6afd0973db?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-//     ],
-//     location: '8601 West Peactree Street',
-//     name: 'Apartment',
-//     offer: true,
-//     parking: true,
-//     regularPrice: 2500,
-//     type: 'rent',
-//   },
-//   {
-//     id: 4,
-//     bedrooms: 3,
-//     bathrooms: 2,
-
-//     discountPrice: 2000,
-//     furnished: true,
-//     geolocation: {
-//       lat: 0,
-//       lng: 0,
-//     },
-//     imageUrls: [
-//       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-//       'https://images.unsplash.com/photo-1575517111478-7f6afd0973db?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-//     ],
-//     location: '8601 West Peactree Street',
-//     name: 'Apartment',
-//     offer: true,
-//     parking: true,
-//     regularPrice: 2500,
-//     type: 'rent',
-//   },
-//   {
-//     id: 5,
-//     bedrooms: 3,
-//     bathrooms: 2,
-
-//     discountPrice: 2000,
-//     furnished: true,
-//     geolocation: {
-//       lat: 0,
-//       lng: 0,
-//     },
-//     imageUrls: [
-//       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-//       'https://images.unsplash.com/photo-1575517111478-7f6afd0973db?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-//     ],
-//     location: '8601 West Peactree Street',
-//     name: 'Apartment',
-//     offer: true,
-//     parking: true,
-//     regularPrice: 2500,
-//     type: 'sale',
-//   },
-// ];
-
 const CategoryListingItem = ({ data }) => {
   return (
     <>
@@ -128,7 +16,7 @@ const CategoryListingItem = ({ data }) => {
               <div className="flex w-full h-48 md:h-64 lg:h-72 relative">
                 <div className="w-8/12 pr-4 relative">
                   <img
-                    src={item?.imageUrls[0]}
+                    src={item?.imgUrls[0]}
                     className="w-full h-full object-cover object-top rounded-lg bg-white"
                   />
                 </div>
@@ -137,7 +25,7 @@ const CategoryListingItem = ({ data }) => {
                     <div className="flex-1 pb-2">
                       <div className="w-full h-full relative">
                         <img
-                          src={item?.imageUrls[0]}
+                          src={item?.imgUrls[1]}
                           className="absolute top-0 w-full h-full object-cover object-center rounded-lg bg-white"
                         />
                       </div>
@@ -145,7 +33,7 @@ const CategoryListingItem = ({ data }) => {
                     <div className="flex-1 pt-2">
                       <div className="w-full h-full relative">
                         <img
-                          src={item?.imageUrls[0]}
+                          src={item?.imgUrls[2]}
                           className="absolute top-0 w-full h-full object-cover object-bottom rounded-lg bg-white"
                         />
                       </div>
