@@ -116,6 +116,7 @@ const Host = () => {
     const formDataCopy = {
       ...values,
       imgUrls,
+      userRef: auth.currentUser.uid,
       timestamp: serverTimestamp(),
     };
     delete formDataCopy.images;

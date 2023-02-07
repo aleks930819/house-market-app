@@ -1,11 +1,14 @@
-
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from 'firebase/auth';
 import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
 
 import Container from '../components/Container';
@@ -45,6 +48,10 @@ const SignUp = () => {
       const user = userCredential.user;
 
       const fullNameOfTheUser = `${values.firstName} ${values.lastName}`;
+
+      updateProfile(auth.currentUser, {
+        displayName: fullNameOfTheUser,
+      });
 
       const formDataCopy = { ...values };
 
@@ -124,7 +131,7 @@ const SignUp = () => {
           icon="password"
         />
         <div className="text-end flex  justify-center">
-           <OAuth/>
+          <OAuth />
         </div>
         <div className="pt-10">
           <Link to="/sign-in">

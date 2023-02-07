@@ -17,6 +17,7 @@ import Offers from './screens/Offers';
 import Host from './screens/Host';
 import ItemDetails from './components/ItemDetails';
 import NotFound from './screens/404';
+import EditProfile from './screens/EditProfile';
 function App() {
   return (
     <>
@@ -36,6 +37,8 @@ function App() {
 
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
+
+        <Route path="/edit/:id" element={<EditProfile />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

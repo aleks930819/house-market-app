@@ -1,7 +1,5 @@
-
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -14,7 +12,6 @@ import Input from '../components/Input';
 
 import setChangedValue from '../utils/changeHandler';
 import OAuth from '../components/OAuth';
-
 
 const SignIn = () => {
   const [values, setValues] = useState({
@@ -73,7 +70,7 @@ const SignIn = () => {
           icon="password"
         />
         <div className="text-end flex  justify-between">
-          <OAuth/>
+          <OAuth />
           <Link
             to="/forgot-password"
             className=" text-gray-500 text-xs underline"

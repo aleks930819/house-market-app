@@ -13,7 +13,9 @@ import { Pagination } from 'swiper';
 
 import 'swiper/css';
 
-const Swipper = ({ data, setShowSwipper }) => {
+const Swipper = ({ data, setShowSwipper,starterIndex }) => {
+    console.log(starterIndex);
+    
   return (
     <div className="fixed w-full h-full  top-0 left-0  right-0 bottom-0 overflow-hidden bg-black bg-opacity-80">
       <AiOutlineClose

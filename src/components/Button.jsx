@@ -25,7 +25,7 @@ const Button = ({
       'border-yellow-400 bg-yellow-400 text-white': warning,
       'border-yellow-400 bg-yellow-400 text-dark': yellow,
 
-      'border-red-500 bg-red-500 text-white': danger,
+      'border-red-500 bg-red-500 text-white hover:bg-red-600': danger,
       'rounded-full': rounded,
       'rounded-sm': roundedSmall,
       'bg-white': outline,

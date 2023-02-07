@@ -1,7 +1,8 @@
-import { MdOutlineAttachMoney,MdChair } from 'react-icons/md';
+import { MdOutlineAttachMoney, MdChair } from 'react-icons/md';
 import { FaBath, FaParking } from 'react-icons/fa';
 import { IoIosBed } from 'react-icons/io';
 import { Link } from 'react-router-dom';
+import { Facilities } from './Facilities';
 
 const Card = ({ item }) => {
   return (
@@ -21,7 +22,8 @@ const Card = ({ item }) => {
               <h2 className="font-bold text-md md:text-lg">{item?.name}</h2>
 
               <p className="text-xs leading-relaxed ">{item?.location}</p>
-              <ul className="text-xs mt-4  list-inside  leading-relaxed flex flex-col gap-5">
+              <Facilities listing={item} />
+              {/* <ul className="text-xs mt-4  list-inside  leading-relaxed flex flex-col gap-5">
                 <li className="flex flex-col sm:flex-row gap-2 items-center">
                   <MdOutlineAttachMoney className="text-lg" />
                   {item?.offer
@@ -54,7 +56,7 @@ const Card = ({ item }) => {
                   <MdChair className="text-lg" />
                   {item?.furnished ? 'Yes' : 'No'}
                 </li>
-              </ul>
+              </ul> */}
             </div>
           </div>
         </div>

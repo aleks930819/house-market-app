@@ -16,11 +16,13 @@ import Button from './Button';
 import Modal from './Modal';
 import Spinner from './Spinner';
 import Swipper from './Swiper';
+import { Facilities } from './Facilities';
 
 const ItemDetails = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showSwipper, setShowSwipper] = useState(false);
+  const [starterIndex, setStartedIndex] = useState(0);
 
   const { id } = useParams();
 
@@ -56,12 +58,19 @@ const ItemDetails = () => {
   const lat = data?.latitude ?? '';
   const lng = data?.longitude ?? '';
 
-  const viewImageHandler = () => {
+  const viewImageHandler = (starterIndex) => {
     setShowSwipper(!showSwipper);
+    setStartedIndex(starterIndex);
   };
 
   if (showSwipper) {
-    return <Swipper data={data} setShowSwipper={setShowSwipper} />;
+    return (
+      <Swipper
+        data={data}
+        setShowSwipper={setShowSwipper}
+        starterIndex={starterIndex}
+      />
+    );
   }
 
   return (
@@ -77,7 +86,7 @@ const ItemDetails = () => {
                 <img
                   src={data?.imgUrls[0]}
                   className="w-full h-full object-cover object-top rounded-lg bg-white cursor-pointer"
-                  onClick={() => viewImageHandler()}
+                  onClick={() => viewImageHandler(0)}
                 />
               </div>
               <div className="w-4/12 h-full">
@@ -87,7 +96,7 @@ const ItemDetails = () => {
                       <img
                         src={data?.imgUrls[1]}
                         className="absolute top-0 w-full h-full object-cover object-center rounded-lg bg-white cursor-pointer"
-                        onClick={() => viewImageHandler()}
+                        onClick={() => viewImageHandler(1)}
                       />
                     </div>
                   </div>
@@ -96,7 +105,7 @@ const ItemDetails = () => {
                       <img
                         src={data?.imgUrls[2]}
                         className="absolute top-0 w-full h-full object-cover object-bottom rounded-lg bg-white cursor-pointer"
-                        onClick={() => viewImageHandler()}
+                        onClick={() => viewImageHandler(2)}
                       />
                     </div>
                   </div>
@@ -108,7 +117,8 @@ const ItemDetails = () => {
                 <h2 className="font-bold text-xs md:text-lg">{data?.name}</h2>
 
                 <p className="text-xs leading-relaxed ">{data?.location}</p>
-                <ul className="text-xs mt-4  list-inside  leading-relaxed flex flex-col gap-5">
+                <Facilities listing={data} />
+                {/* <ul className="text-xs mt-4  list-inside  leading-relaxed flex flex-col gap-5">
                   <li className="flex flex-col sm:flex-row gap-2 items-center">
                     <MdOutlineAttachMoney className="text-lg" />
                     {data?.offer
@@ -147,7 +157,7 @@ const ItemDetails = () => {
                     <MdChair className="text-lg" />
                     {data?.furnished ? 'Yes' : 'No'}
                   </li>
-                </ul>
+                </ul> */}
               </div>
               {data?.latitude && data?.longitude && (
                 <div className="w-full h-[200px] overflow-hidden  mt-10 sm:w-[500px]">

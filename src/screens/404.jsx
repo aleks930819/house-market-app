@@ -1,11 +1,13 @@
 import Container from '../components/Container';
+import Button from '../components/Button';
+import NotFoundImage from '../assets/images/notfound.jpg';
 
 const NotFound = () => {
   return (
     <Container>
-      <h1 className='text-xl'>404</h1>
-      <h2>ERROR</h2>
-      <h2 className='text-black'>Page not found!</h2>
+      <div className="flex flex-col gap-1 justify-center items-center">
+        <img src={NotFoundImage} alt="Not Found" className="w-3/4" />
+      </div>
     </Container>
   );
 };
