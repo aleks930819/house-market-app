@@ -17,9 +17,10 @@ import { db } from '../../firbase.config';
 import CategoryListingItem from '../components/CategoryListingItem';
 import Modal from '../components/Modal';
 import Spinner from '../components/Spinner';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const Category = () => {
-  const [listings, setListings] = useState(null);
+  const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
   const [lastFetchedListing, setLastFetchedListing] = useState(null);
 
@@ -33,7 +34,7 @@ const Category = () => {
         const q = query(
           collection(db, 'listings'),
           where('type', '==', params.category),
-          limit(1)
+          limit(10)
         );
         const querySnapshot = await getDocs(q);
 
@@ -56,14 +57,12 @@ const Category = () => {
   }, [params.category]);
 
   const onFetchMoreListings = async () => {
-
-    setLoading(true);
     try {
       const q = query(
         collection(db, 'listings'),
         where('type', '==', params.category),
         startAfter(lastFetchedListing),
-        limit(1)
+        limit(10)
       );
       const querySnapshot = await getDocs(q);
 
@@ -77,25 +76,32 @@ const Category = () => {
 
       setListings((prevState) => [...prevState, ...data]);
       setLoading(false);
-
     } catch (error) {
       setLoading(false);
-      toast.error('Something went wrong');
     }
-
   };
-
-  console.log(lastFetchedListing);
 
   if (loading) {
     return <Spinner />;
   }
+
   return (
     <>
-      <div className="flex flex-col min-h-screen mb-10">
-        <CategoryListingItem data={listings} />
-      </div>
-      {lastFetchedListing   && <p onClick={onFetchMoreListings}>Load More</p>}
+      <InfiniteScroll
+        dataLength={listings.length}
+        next={onFetchMoreListings}
+        hasMore={true}
+        loader={''}
+        endMessage={
+          <p style={{ textAlign: 'center' }}>
+            <b>Yay! You have seen it all</b>
+          </p>
+        }
+      >
+        <div className="flex flex-col min-h-screen mb-10">
+          <CategoryListingItem data={listings} />
+        </div>
+      </InfiniteScroll>
     </>
   );
 };
