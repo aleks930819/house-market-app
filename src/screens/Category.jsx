@@ -21,6 +21,7 @@ import Spinner from '../components/Spinner';
 const Category = () => {
   const [listings, setListings] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [lastFetchedListing, setLastFetchedListing] = useState(null);
 
   const params = useParams();
 
@@ -51,11 +52,7 @@ const Category = () => {
   }, [params.category]);
 
   if (loading) {
-    return (
-      <Modal>
-        <Spinner />
-      </Modal>
-    );
+    return <Spinner />;
   }
   return (
     <div className="flex flex-col min-h-screen mb-10">

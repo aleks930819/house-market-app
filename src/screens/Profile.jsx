@@ -61,17 +61,25 @@ const Profile = () => {
   }, [auth.currentUser.uid]);
 
   if (loading) {
-    return (
-      <Modal>
-        <Spinner />
-      </Modal>
-    );
+    return <Spinner />;
   }
+
+  const onDeleteHandler = async (id) => {
+    try {
+      await deleteDoc(doc(db, 'listings', id));
+      toast.success('Listing deleted successfully');
+    } catch (error) {
+      toast.error('Something went wrong');
+    }
+
+    const newListings = listings.filter((listing) => listing.id !== id);
+    setListings(newListings);
+  };
 
   return (
     <>
       <Container>
-        <div className="mt-[-120px] text-xs sm:text-md  border shadow-md p-5 flex flex-col gap-2 rounded-md">
+        <div className="mt-[-10px] text-xs sm:text-md  border shadow-md p-5 flex flex-col gap-2 rounded-md ">
           <div className="grid grid-cols-2 place-items-center">
             <div className="w-16 h-16">
               <img
@@ -92,27 +100,35 @@ const Profile = () => {
             <p>{auth.currentUser.email}</p>
           </div>
           <div className="flex  gap-2 mt-5">
-            <Button to={`/edit/${userId}`}  primary>Edit Profile</Button>
+            <Button to={`/edit/${userId}`} primary>
+              Edit Profile
+            </Button>
             <Button danger>Delete Profile</Button>
           </div>
         </div>
         <div>
-          <h1 className="font-bold mt-5 sm:text-lg md:text-2xl">My Listings</h1>
+          <h1 className="font-bold mt-5 sm:text-lg md:text-xl">My Listings</h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-5">
             {listings?.map((listing) => (
               <div
                 className="border shadow-md p-5 flex flex-col gap-2 rounded-md cursor-pointer"
-                key={listings.id}
+                key={listing?.id}
               >
                 <div className="flex items-center gap-2">
                   <img
-                    src={listing.imgUrls[0]}
+                    src={listing?.imgUrls[0]}
                     className="w-16 h-16 object-cover rounded-md"
                   />
-                  <div className="flex flex-col">
-                    <h1 className="font-bold">{listing.name}</h1>
-                    <Facilities listing={listing} key={listings.id} />
+                  <div className="flex flex-col pl-5">
+                    <h1 className="font-bold">{listing?.name}</h1>
+                    <Facilities listing={listing} key={listing?.id} />
                   </div>
+                </div>
+                <div className="flex gap-1 pt-5">
+                  <Button danger onClick={() => onDeleteHandler(listing?.id)}>
+                    Delete
+                  </Button>
+                  <Button success={true}>Edit</Button>
                 </div>
               </div>
             ))}

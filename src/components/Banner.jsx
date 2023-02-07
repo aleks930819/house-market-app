@@ -10,7 +10,7 @@ const Banner = () => {
           className="w-full h-full object-cover md:object-center absolute brightness-50"
         />
         <div className="">
-        <h3 className='text-white absolute  text-sm md:text-3xl  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">'>
+          <h3 className='text-white absolute  text-sm md:text-3xl  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">'>
             Discover Your New Home
           </h3>
         </div>

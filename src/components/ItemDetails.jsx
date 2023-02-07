@@ -13,7 +13,6 @@ import { getDoc, doc } from 'firebase/firestore';
 import { db } from '../../firbase.config';
 
 import Button from './Button';
-import Modal from './Modal';
 import Spinner from './Spinner';
 import Swipper from './Swiper';
 import { Facilities } from './Facilities';
@@ -48,11 +47,7 @@ const ItemDetails = () => {
   }, [id, navigate]);
 
   if (loading) {
-    return (
-      <Modal>
-        <Spinner />
-      </Modal>
-    );
+    return <Spinner />;
   }
 
   const lat = data?.latitude ?? '';

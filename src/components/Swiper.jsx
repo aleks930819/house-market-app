@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -13,13 +13,27 @@ import { Pagination } from 'swiper';
 
 import 'swiper/css';
 
-const Swipper = ({ data, setShowSwipper,starterIndex }) => {
-    console.log(starterIndex);
-    
+const Swipper = ({ data, setShowSwipper, starterIndex }) => {
+  useEffect(() => {
+    const keyDownHandler = (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+
+        setShowSwipper();
+      }
+    };
+
+    document.addEventListener('keydown', keyDownHandler);
+
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler);
+    };
+  }, []);
+
   return (
     <div className="fixed w-full h-full  top-0 left-0  right-0 bottom-0 overflow-hidden bg-black bg-opacity-80">
       <AiOutlineClose
-        className="  absolute top-[160px]  md:top-[60px] left-[15px] text-lg sm:text-2xl z-50 cursor-pointer text-white bg-black bg-opacity-60 rounded-lg"
+        className="  absolute top-[160px]  md:top-[60px] left-[15px] text-lg sm:text-2xl z-50 cursor-pointer text-white bg-black bg-opacity-60 rounded-lg p-[1px]"
         onClick={() => setShowSwipper()}
       />
       <Swiper pagination={true} modules={[Pagination]} className="mySwiper">

@@ -134,11 +134,7 @@ const Host = () => {
   };
 
   if (loading) {
-    return (
-      <Modal>
-        <Spinner />
-      </Modal>
-    );
+    return <Spinner />;
   }
 
   return (

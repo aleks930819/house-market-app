@@ -49,7 +49,6 @@ const EditProfile = () => {
 
       toast.success('Profile updated successfully');
       navigate('/profile');
-      
     } catch (err) {
       setLoading(false);
 
@@ -64,11 +63,7 @@ const EditProfile = () => {
   };
 
   if (loading) {
-    return (
-      <Modal>
-        <Spinner />
-      </Modal>
-    );
+    return <Spinner />;
   }
 
   return (
