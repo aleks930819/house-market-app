@@ -6,6 +6,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { useEffect, useState } from 'react';
 
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+
 import { getDoc, doc } from 'firebase/firestore';
 
 import { db } from '../../firbase.config';
@@ -13,10 +15,12 @@ import { db } from '../../firbase.config';
 import Button from './Button';
 import Modal from './Modal';
 import Spinner from './Spinner';
+import Swipper from './Swiper';
 
 const ItemDetails = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showSwipper, setShowSwipper] = useState(false);
 
   const { id } = useParams();
 
@@ -30,11 +34,11 @@ const ItemDetails = () => {
 
       if (docSnap.exists()) {
         setData(docSnap.data());
+
         setLoading(false);
       } else {
-        setLoading(false);
-
         navigate('/404');
+        setLoading(false);
       }
     };
 
@@ -49,6 +53,17 @@ const ItemDetails = () => {
     );
   }
 
+  const lat = data?.latitude ?? '';
+  const lng = data?.longitude ?? '';
+
+  const viewImageHandler = () => {
+    setShowSwipper(!showSwipper);
+  };
+
+  if (showSwipper) {
+    return <Swipper data={data} setShowSwipper={setShowSwipper} />;
+  }
+
   return (
     <>
       <div className="container mx-auto px-20 mt-10 mb-10 min-h-screen">
@@ -61,7 +76,8 @@ const ItemDetails = () => {
               <div className="w-8/12 pr-4 relative">
                 <img
                   src={data?.imgUrls[0]}
-                  className="w-full h-full object-cover object-top rounded-lg bg-white"
+                  className="w-full h-full object-cover object-top rounded-lg bg-white cursor-pointer"
+                  onClick={() => viewImageHandler()}
                 />
               </div>
               <div className="w-4/12 h-full">
@@ -70,7 +86,8 @@ const ItemDetails = () => {
                     <div className="w-full h-full relative">
                       <img
                         src={data?.imgUrls[1]}
-                        className="absolute top-0 w-full h-full object-cover object-center rounded-lg bg-white"
+                        className="absolute top-0 w-full h-full object-cover object-center rounded-lg bg-white cursor-pointer"
+                        onClick={() => viewImageHandler()}
                       />
                     </div>
                   </div>
@@ -78,14 +95,15 @@ const ItemDetails = () => {
                     <div className="w-full h-full relative">
                       <img
                         src={data?.imgUrls[2]}
-                        className="absolute top-0 w-full h-full object-cover object-bottom rounded-lg bg-white"
+                        className="absolute top-0 w-full h-full object-cover object-bottom rounded-lg bg-white cursor-pointer"
+                        onClick={() => viewImageHandler()}
                       />
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="w-full pt-8 flex flex-col justify-between">
+            <div className="w-full pt-8 flex flex-col justify-between sm:flex-row">
               <div>
                 <h2 className="font-bold text-xs md:text-lg">{data?.name}</h2>
 
@@ -102,7 +120,7 @@ const ItemDetails = () => {
                           .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                     {data?.type === 'rent' ? ' / Month' : ''}
                     {data?.offer ? (
-                      <span className="bg-green-700 text-white roudned-sm">
+                      <span className="bg-green-700 text-white roudned-sm py-[1.2px] px-[4px]">
                         Discount: ${data?.regularPrice - data.discountPrice}
                       </span>
                     ) : (
@@ -131,11 +149,29 @@ const ItemDetails = () => {
                   </li>
                 </ul>
               </div>
-              <div className="w-full sm:flex-1  gap-4 pt-6 text-center">
-                <Button primary>
-                  {data?.type === 'rent' ? 'Reserve' : 'Contact Landlord'}
-                </Button>
-              </div>
+              {data?.latitude && data?.longitude && (
+                <div className="w-full h-[200px] overflow-hidden  mt-10 sm:w-[500px]">
+                  <MapContainer
+                    style={{ height: '100%', width: '100%' }}
+                    center={[lat, lng]}
+                    zoom={13}
+                    scrollWheelZoom={true}
+                  >
+                    <TileLayer
+                      attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                      url="https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png"
+                    />
+                    <Marker position={[lat, lng]}>
+                      <Popup>{data?.location}</Popup>
+                    </Marker>
+                  </MapContainer>
+                </div>
+              )}
+            </div>
+            <div className="w-full sm:flex-1  gap-4 pt-6 text-center">
+              <Button primary>
+                {data?.type === 'rent' ? 'Reserve' : 'Contact'}
+              </Button>
             </div>
           </div>
         </div>

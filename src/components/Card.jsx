@@ -32,7 +32,7 @@ const Card = ({ item }) => {
                         .toString()
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                   {item?.type === 'rent' ? ' / Month' : ''}
-                  {item?.offer ? <span className='bg-green-700 text-white roudned-sm'>Discount: ${item?.regularPrice - item.discountPrice}</span> : ''  }
+                  {item?.offer ? <span className='bg-green-700 text-white roudned-sm py-[1.2px] px-[4px]'>Discount: ${item?.regularPrice - item.discountPrice}</span> : ''  }
                 </li>
                 <li className="flex gap-2 items-center">
                   <IoIosBed className="text-lg" />
