@@ -1,4 +1,4 @@
-import { MdOutlineAttachMoney } from 'react-icons/md';
+import { MdOutlineAttachMoney,MdChair } from 'react-icons/md';
 import { FaBath, FaParking } from 'react-icons/fa';
 import { IoIosBed } from 'react-icons/io';
 import { Link } from 'react-router-dom';
@@ -22,7 +22,7 @@ const Card = ({ item }) => {
 
               <p className="text-xs leading-relaxed ">{item?.location}</p>
               <ul className="text-xs mt-4  list-inside  leading-relaxed flex flex-col gap-5">
-                <li className="flex gap-2 items-center">
+                <li className="flex flex-col sm:flex-row gap-2 items-center">
                   <MdOutlineAttachMoney className="text-lg" />
                   {item?.offer
                     ? item?.discountPrice
@@ -32,6 +32,7 @@ const Card = ({ item }) => {
                         .toString()
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                   {item?.type === 'rent' ? ' / Month' : ''}
+                  {item?.offer ? <span className='bg-green-700 text-white roudned-sm'>Discount: ${item?.regularPrice - item.discountPrice}</span> : ''  }
                 </li>
                 <li className="flex gap-2 items-center">
                   <IoIosBed className="text-lg" />
@@ -48,6 +49,10 @@ const Card = ({ item }) => {
                 <li className="flex gap-2 items-center">
                   <FaParking className="text-lg" />
                   {item?.parking ? 'Yes' : 'No'}
+                </li>
+                <li className="flex gap-2 items-center">
+                  <MdChair className="text-lg" />
+                  {item?.furnished ? 'Yes' : 'No'}
                 </li>
               </ul>
             </div>

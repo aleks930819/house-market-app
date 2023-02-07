@@ -1,4 +1,4 @@
-import { MdOutlineAttachMoney } from 'react-icons/md';
+import { MdOutlineAttachMoney, MdChair } from 'react-icons/md';
 import { FaBath, FaParking } from 'react-icons/fa';
 import { IoIosBed } from 'react-icons/io';
 
@@ -11,23 +11,29 @@ import { getDoc, doc } from 'firebase/firestore';
 import { db } from '../../firbase.config';
 
 import Button from './Button';
+import Modal from './Modal';
+import Spinner from './Spinner';
 
 const ItemDetails = () => {
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const { id } = useParams();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    
     const getData = async () => {
+      setLoading(true);
       const docRef = doc(db, 'listings', id);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
         setData(docSnap.data());
+        setLoading(false);
       } else {
+        setLoading(false);
+
         navigate('/404');
       }
     };
@@ -35,9 +41,17 @@ const ItemDetails = () => {
     getData();
   }, [id, navigate]);
 
+  if (loading) {
+    return (
+      <Modal>
+        <Spinner />
+      </Modal>
+    );
+  }
+
   return (
     <>
-      <div className="container mx-auto px-20 mt-10 mb-10">
+      <div className="container mx-auto px-20 mt-10 mb-10 min-h-screen">
         <div
           className="border bg-slate-200  rounded-lg p-6  relative z-10"
           style={{ cursor: 'auto' }}
@@ -77,7 +91,7 @@ const ItemDetails = () => {
 
                 <p className="text-xs leading-relaxed ">{data?.location}</p>
                 <ul className="text-xs mt-4  list-inside  leading-relaxed flex flex-col gap-5">
-                  <li className="flex gap-2 items-center">
+                  <li className="flex flex-col sm:flex-row gap-2 items-center">
                     <MdOutlineAttachMoney className="text-lg" />
                     {data?.offer
                       ? data?.discountPrice
@@ -87,6 +101,13 @@ const ItemDetails = () => {
                           .toString()
                           .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                     {data?.type === 'rent' ? ' / Month' : ''}
+                    {data?.offer ? (
+                      <span className="bg-green-700 text-white roudned-sm">
+                        Discount: ${data?.regularPrice - data.discountPrice}
+                      </span>
+                    ) : (
+                      ''
+                    )}
                   </li>
                   <li className="flex gap-2 items-center">
                     <IoIosBed className="text-lg" />
@@ -104,10 +125,16 @@ const ItemDetails = () => {
                     <FaParking className="text-lg" />
                     {data?.parking ? 'Yes' : 'No'}
                   </li>
+                  <li className="flex gap-2 items-center">
+                    <MdChair className="text-lg" />
+                    {data?.furnished ? 'Yes' : 'No'}
+                  </li>
                 </ul>
               </div>
               <div className="w-full sm:flex-1  gap-4 pt-6 text-center">
-                <Button primary>Reserve</Button>
+                <Button primary>
+                  {data?.type === 'rent' ? 'Reserve' : 'Contact Landlord'}
+                </Button>
               </div>
             </div>
           </div>

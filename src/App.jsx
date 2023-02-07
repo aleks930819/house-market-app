@@ -16,7 +16,7 @@ import Category from './screens/Category';
 import Offers from './screens/Offers';
 import Host from './screens/Host';
 import ItemDetails from './components/ItemDetails';
-
+import NotFound from './screens/404';
 function App() {
   return (
     <>
@@ -36,6 +36,8 @@ function App() {
 
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
       <ToastContainer />

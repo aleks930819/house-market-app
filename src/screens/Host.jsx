@@ -22,9 +22,12 @@ import setChangedValue from '../utils/changeHandler';
 
 import { db } from '../../firbase.config';
 import { useNavigate } from 'react-router-dom';
+import Modal from '../components/Modal';
+import Spinner from '../components/Spinner';
 
 const Host = () => {
   const [geolocationEnabled, setGeolocationEnabled] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [values, setValues] = useState({
     type: 'rent',
@@ -52,21 +55,27 @@ const Host = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
+    setLoading(true);
+
     if (values.discountPrice >= values.regularPrice) {
+      setLoading(false);
       toast.error('Discount price must be less than regular price');
       return;
     }
 
     if (values.images.length > 6) {
+      setLoading(false);
+
       toast.error('You can only upload a maximum of 6 images');
       return;
     }
 
     if (values.images.length > 3) {
+      setLoading(false);
+
       toast.error('You must  upload a minimum of 3 images');
       return;
     }
-    
 
     const uploadImages = async (image) => {
       return new Promise((resolve, reject) => {
@@ -112,13 +121,24 @@ const Host = () => {
     delete formDataCopy.images;
 
     try {
+      setLoading(true);
       const docRef = await addDoc(collection(db, 'listings'), formDataCopy);
       toast.success('Listing added successfully');
-      navigate(`/category/${formDataCopy.type}/${docRef.id}`);
+      navigate(`/details/${docRef.id}`);
     } catch (err) {
+      setLoading(false);
       toast.error('Something went wrong');
     }
+    setLoading(false);
   };
+
+  if (loading) {
+    return (
+      <Modal>
+        <Spinner />
+      </Modal>
+    );
+  }
 
   return (
     <div className="flex flex-col  justify-center items-center mb-10 mt-16">
