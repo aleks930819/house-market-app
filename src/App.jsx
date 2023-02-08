@@ -19,6 +19,8 @@ import ItemDetails from './components/ItemDetails';
 import NotFound from './screens/404';
 import EditProfile from './screens/EditProfile';
 import EditProperties from './screens/EditProperties';
+import Booking from './screens/Booking';
+import Messages from './screens/Messages';
 function App() {
   return (
     <>
@@ -41,6 +43,9 @@ function App() {
 
         <Route path="/edit/:id" element={<EditProfile />} />
         <Route path="/edit-properties/:id" element={<EditProperties />} />
+
+        <Route path="/booking/:bookingId" element={<Booking />} />
+        <Route path="/messages" element={<Messages />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

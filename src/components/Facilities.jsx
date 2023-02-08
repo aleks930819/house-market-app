@@ -5,7 +5,7 @@ import { IoIosBed } from 'react-icons/io';
 export const Facilities = ({ listing }) => {
   return (
     <ul className="text-xs mt-4  list-inside  leading-relaxed flex flex-col gap-5">
-      <li className="flex flex-col sm:flex-row gap-2 items-center">
+      <li className="flex sm:flex-row gap-2 items-center">
         <MdOutlineAttachMoney className="text-lg" />
         {listing?.offer
           ? listing?.discountPrice

@@ -16,12 +16,15 @@ import Button from './Button';
 import Spinner from './Spinner';
 import Swipper from './Swiper';
 import { Facilities } from './Facilities';
+import Contact from './Contact';
+import Booking from '../screens/Booking';
 
 const ItemDetails = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showSwipper, setShowSwipper] = useState(false);
   const [starterIndex, setStartedIndex] = useState(0);
+  const [showContact, setShowContact] = useState(false);
 
   const { id } = useParams();
 
@@ -45,7 +48,6 @@ const ItemDetails = () => {
 
     getData();
   }, [id, navigate]);
-  
 
   if (loading) {
     return <Spinner />;
@@ -68,6 +70,15 @@ const ItemDetails = () => {
       />
     );
   }
+
+  const clickHandler = (type) => {
+    setShowContact(true);
+
+    if (type === 'rent') {
+      setShowContact(false);
+      navigate(`/booking/${id}`);
+    }
+  };
 
   return (
     <>
@@ -115,8 +126,9 @@ const ItemDetails = () => {
                 <p className="text-xs leading-relaxed ">{data?.location}</p>
                 <Facilities listing={data} />
               </div>
+
               {data?.latitude && data?.longitude && (
-                <div className="w-full h-[200px] overflow-hidden  mt-10 sm:w-[500px]">
+                <div className="w-full h-[200px] overflow-hidden  mt-10 sm:w-[500px] md:w-[800px]">
                   <MapContainer
                     style={{ height: '100%', width: '100%' }}
                     center={[lat, lng]}
@@ -133,15 +145,24 @@ const ItemDetails = () => {
                   </MapContainer>
                 </div>
               )}
+
+              {/* <div className='hidden md:block'>
+                <Booking />
+              </div> */}
             </div>
             <div className="w-full sm:flex-1  gap-4 pt-6 text-center">
-              <Button primary>
-                {data?.type === 'rent' ? 'Reserve' : 'Contact'}
+              <Button primary onClick={() => clickHandler(data?.type)}>
+                Contact
               </Button>
             </div>
           </div>
         </div>
+        {/* <div className="md:hidden mt-10">
+          <Booking />
+        </div> */}
       </div>
+
+      {showContact && <Contact />}
     </>
   );
 };

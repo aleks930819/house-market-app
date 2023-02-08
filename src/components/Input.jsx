@@ -26,6 +26,7 @@ const Input = (props) => {
         htmlFor={props.htmlFor}
         name={props.name}
         rows={props.rows || 4}
+        cols={props.cols || 10}
         onChange={props.handler}
         placeholder={props.placeholder}
         value={props.value}

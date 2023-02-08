@@ -21,11 +21,15 @@ import { db } from '../../firbase.config';
 
 import CategoryListingItem from '../components/CategoryListingItem';
 import Spinner from '../components/Spinner';
+import useScrollToTop from '../hooks/useScrollToTop';
+import ScrollToTopButton from '../components/ScrollToTopButton';
 
 const Category = () => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
   const [lastFetchedListing, setLastFetchedListing] = useState(null);
+
+  const { isVisible } = useScrollToTop();
 
   const params = useParams();
 
@@ -33,7 +37,6 @@ const Category = () => {
     setLoading(true);
 
     const getListings = async () => {
-
       try {
         const q = query(
           collection(db, 'listings'),
@@ -88,6 +91,8 @@ const Category = () => {
   //   }
   // };
 
+  console.log(isVisible);
+
   const q = query(
     collection(db, 'listings'),
     orderBy('timestamp', 'desc'),
@@ -102,7 +107,6 @@ const Category = () => {
     setListings,
     setLoading,
   });
-
 
   if (loading) {
     return <Spinner />;
@@ -123,6 +127,7 @@ const Category = () => {
       >
         <div className="flex flex-col min-h-screen mb-10">
           <CategoryListingItem data={listings} />
+          {isVisible && <ScrollToTopButton />}
         </div>
       </InfiniteScroll>
     </>

@@ -24,17 +24,22 @@ import Container from '../components/Container';
 import Button from '../components/Button';
 
 import DefaultProfilePhoto from '../assets/images/profile.jpg';
+
 import { Facilities } from '../components/Facilities';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const auth = getAuth();
 
   const userId = auth.currentUser.uid;
 
+  console.log(userId);
+
   const [loading, setLoading] = useState(false);
   const [properties, setProperties] = useState(null);
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [activeFilterButton, setActiveFilterButton] = useState('all');
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -73,7 +78,11 @@ const Profile = () => {
     }
 
     const newListings = properties.filter((listing) => listing.id !== id);
+    const newFielteredProperties = filteredProperties.filter(
+      (listing) => listing.id !== id
+    );
     setProperties(newListings);
+    setFilteredProperties(newFielteredProperties);
   };
 
   const filterProperties = (type) => {
@@ -89,6 +98,8 @@ const Profile = () => {
 
   const buttonsType = ['sale', 'rent', 'all'];
 
+  console.log(messages);
+
   return (
     <>
       <Container>
@@ -100,10 +111,12 @@ const Profile = () => {
                 className="w-full h-full object-cover rounded-full"
               />
             </div>
-            <div className="flex items-center gap-2 cursor-pointer">
-              <AiFillMessage className="text-2xl place-items-center text-cyan-900" />
-              <h2>My Messages</h2>
-            </div>
+            <Link to="/messages">
+              <div className="flex items-center gap-2 cursor-pointer">
+                <AiFillMessage className="text-2xl place-items-center text-cyan-900" />
+                <h2>My Messages</h2>
+              </div>
+            </Link>
           </div>
 
           <div className="flex flex-col items-center mt-5">
@@ -131,7 +144,7 @@ const Profile = () => {
                   onClick={() => filterProperties(type)}
                   success={activeFilterButton === type}
                 >
-                  {type[0].toUpperCase() + type.slice(1) + 's' || 'All'}
+                  {type[0].toUpperCase() + type.slice(1) || 'All'}
                 </Button>
               ))}
             </div>
