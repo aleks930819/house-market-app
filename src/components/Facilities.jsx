@@ -3,7 +3,6 @@ import { FaBath, FaParking } from 'react-icons/fa';
 import { IoIosBed } from 'react-icons/io';
 
 export const Facilities = ({ listing }) => {
-    
   return (
     <ul className="text-xs mt-4  list-inside  leading-relaxed flex flex-col gap-5">
       <li className="flex flex-col sm:flex-row gap-2 items-center">
@@ -18,7 +17,10 @@ export const Facilities = ({ listing }) => {
         {listing?.type === 'rent' ? ' / Month' : ''}
         {listing?.offer ? (
           <span className="bg-green-700 text-white roudned-sm py-[1.2px] px-[4px]">
-            Discount: ${listing?.regularPrice - listing.discountPrice}
+            Discount: $
+            {(listing?.regularPrice - listing.discountPrice)
+              ?.toString()
+              ?.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
           </span>
         ) : (
           ''

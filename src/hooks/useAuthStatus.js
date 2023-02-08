@@ -21,7 +21,6 @@ const useAuthStatus = () => {
     }
   }, [isMounted]);
 
-  console.log(loggedIn);
   return { loggedIn, checkingStatus };
 };
 

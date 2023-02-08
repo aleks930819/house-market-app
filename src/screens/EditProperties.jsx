@@ -1,5 +1,6 @@
 import { toast } from 'react-toastify';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -10,7 +11,14 @@ import {
   getDownloadURL,
 } from 'firebase/storage';
 
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import {
+  addDoc,
+  collection,
+  serverTimestamp,
+  doc,
+  updateDoc,
+  getDoc,
+} from 'firebase/firestore';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
@@ -21,13 +29,12 @@ import Button from '../components/Button';
 import setChangedValue from '../utils/changeHandler';
 
 import { db } from '../../firbase.config';
-import { useNavigate } from 'react-router-dom';
-import Modal from '../components/Modal';
 import Spinner from '../components/Spinner';
 
-const Host = () => {
+const EditProperties = () => {
   const [geolocationEnabled, setGeolocationEnabled] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [listing, setListing] = useState(null);
 
   const [values, setValues] = useState({
     type: 'rent',
@@ -52,30 +59,38 @@ const Host = () => {
     setChangedValue(e, setValues);
   };
 
+  const { id } = useParams();
+
+  useEffect(() => {
+    setLoading(true);
+
+    const fetchListing = async () => {
+      const docRef = doc(db, 'listings', id);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        setListing(docSnap.data());
+        setValues((prev) => ({
+          ...prev,
+          ...docSnap.data(),
+          images: {},
+        }));
+
+        setLoading(false);
+      } else {
+        toast.error('Listing does not exist');
+        navigate('/');
+      }
+      setLoading(false);
+    };
+
+    fetchListing();
+  }, []);
+
   const onSubmit = async (e) => {
     e.preventDefault();
 
     setLoading(true);
-
-    if (values.discountPrice >= values.regularPrice) {
-      setLoading(false);
-      toast.error('Discount price must be less than regular price');
-      return;
-    }
-
-    if (values.images.length > 6) {
-      setLoading(false);
-
-      toast.error('You can only upload a maximum of 6 images');
-      return;
-    }
-
-    if (values.images.length < 3) {
-      setLoading(false);
-
-      toast.error('You must  upload a minimum of 3 images');
-      return;
-    }
 
     const uploadImages = async (image) => {
       return new Promise((resolve, reject) => {
@@ -106,16 +121,15 @@ const Host = () => {
       });
     };
 
-    const imgUrls = await Promise.all(
-      [...values.images].map((image) => uploadImages(image))
-    ).catch(() => {
-      toast.error('Images not uploaded');
-      return;
-    });
+    // const imgUrls = await Promise.all(
+    //   [...values.images].map((image) => uploadImages(image))
+    // ).catch(() => {
+    //   toast.error('Images not uploaded');
+    //   return;
+    // });
 
     const formDataCopy = {
       ...values,
-      imgUrls,
       userRef: auth.currentUser.uid,
       timestamp: serverTimestamp(),
     };
@@ -123,10 +137,11 @@ const Host = () => {
 
     try {
       setLoading(true);
-      const docRef = await addDoc(collection(db, 'listings'), formDataCopy);
-      toast.success('Listing added successfully');
-      navigate(`/details/${docRef.id}`);
+      await updateDoc(doc(db, 'listings', id), formDataCopy);
+      toast.success('Listing updated successfully');
+      navigate('/profile');
     } catch (err) {
+      console.log(err);
       setLoading(false);
       toast.error('Something went wrong');
     }
@@ -139,7 +154,7 @@ const Host = () => {
 
   return (
     <div className="flex flex-col  justify-center items-center mb-10 mt-16">
-      <Form heading="Become a host" btnName="Send" onSubmit={onSubmit}>
+      <Form heading="Edit" btnName="Edit" onSubmit={onSubmit}>
         <div className="flex flex-col gap-2 pb-5">
           <label>Sell / Rent</label>
           <div className="flex gap-2">
@@ -334,4 +349,4 @@ const Host = () => {
   );
 };
 
-export default Host;
+export default EditProperties;

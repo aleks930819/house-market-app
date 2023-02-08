@@ -21,7 +21,7 @@ const Button = ({
     {
       'border-blue-500 bg-cyan-900 p-5 text-white hover:bg-cyan-700 transition':
         primary,
-      'border-green-500 bg-green-500 text-white': success,
+      'border-green-500 bg-green-500 text-white hover:bg-green-600': success,
       'border-yellow-400 bg-yellow-400 text-white': warning,
       'border-yellow-400 bg-yellow-400 text-dark': yellow,
 

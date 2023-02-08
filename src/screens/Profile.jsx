@@ -20,7 +20,6 @@ import {
 import { db } from '../../firbase.config';
 
 import Spinner from '../components/Spinner';
-import Modal from '../components/Modal';
 import Container from '../components/Container';
 import Button from '../components/Button';
 
@@ -32,28 +31,29 @@ const Profile = () => {
 
   const userId = auth.currentUser.uid;
 
-  console.log(userId);
-
   const [loading, setLoading] = useState(false);
-  const [listings, setListings] = useState(null);
+  const [properties, setProperties] = useState(null);
+  const [filteredProperties, setFilteredProperties] = useState([]);
+  const [activeFilterButton, setActiveFilterButton] = useState('all');
 
   useEffect(() => {
     setLoading(true);
 
     const fetchUserListings = async () => {
-      const listingsRef = collection(db, 'listings');
+      const propertiesRef = collection(db, 'listings');
 
-      const q = query(listingsRef, where('userRef', '==', userId));
+      const q = query(propertiesRef, where('userRef', '==', userId));
 
       const querySnapshot = await getDocs(q);
 
-      const listings = [];
+      const properties = [];
 
       querySnapshot.forEach((doc) => {
-        listings.push({ id: doc.id, ...doc.data() });
+        properties.push({ id: doc.id, ...doc.data() });
       });
 
-      setListings(listings);
+      setProperties(properties);
+      setFilteredProperties(properties);
       setLoading(false);
     };
 
@@ -72,14 +72,27 @@ const Profile = () => {
       toast.error('Something went wrong');
     }
 
-    const newListings = listings.filter((listing) => listing.id !== id);
-    setListings(newListings);
+    const newListings = properties.filter((listing) => listing.id !== id);
+    setProperties(newListings);
   };
+
+  const filterProperties = (type) => {
+    setActiveFilterButton(type);
+    if (type === 'all') {
+      setFilteredProperties(properties);
+      return;
+    }
+
+    const filtered = properties.filter((property) => property.type === type);
+    setFilteredProperties(filtered);
+  };
+
+  const buttonsType = ['sale', 'rent', 'all'];
 
   return (
     <>
       <Container>
-        <div className="mt-[-10px] text-xs sm:text-md  border shadow-md p-5 flex flex-col gap-2 rounded-md ">
+        <div className="mt-10 text-xs sm:text-md  border shadow-md p-5 flex flex-col gap-2 rounded-md ">
           <div className="grid grid-cols-2 place-items-center">
             <div className="w-16 h-16">
               <img
@@ -106,10 +119,26 @@ const Profile = () => {
             <Button danger>Delete Profile</Button>
           </div>
         </div>
-        <div>
-          <h1 className="font-bold mt-5 sm:text-lg md:text-xl">My Listings</h1>
+
+        <div className="mb-10">
+          <div className="">
+            <h1 className="font-bold mt-5 sm:text-lg md:text-xl pb-5">
+              My Properties
+            </h1>
+            <div className="flex gap-1">
+              {buttonsType.map((type) => (
+                <Button
+                  onClick={() => filterProperties(type)}
+                  success={activeFilterButton === type}
+                >
+                  {type[0].toUpperCase() + type.slice(1) + 's' || 'All'}
+                </Button>
+              ))}
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-5">
-            {listings?.map((listing) => (
+            {filteredProperties?.map((listing) => (
               <div
                 className="border shadow-md p-5 flex flex-col gap-2 rounded-md cursor-pointer"
                 key={listing?.id}
@@ -128,7 +157,9 @@ const Profile = () => {
                   <Button danger onClick={() => onDeleteHandler(listing?.id)}>
                     Delete
                   </Button>
-                  <Button success={true}>Edit</Button>
+                  <Button success={true} to={`/edit-properties/${listing?.id}`}>
+                    Edit
+                  </Button>
                 </div>
               </div>
             ))}

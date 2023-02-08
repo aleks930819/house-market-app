@@ -18,12 +18,12 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { db } from '../../firbase.config';
 import CategoryListingItem from '../components/CategoryListingItem';
 
+import useFetchMore from '../hooks/useFetchMoreListings';
+
 const Offers = () => {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(false);
   const [lastFetchedListing, setLastFetchedListing] = useState(null);
-
-  const params = useParams();
 
   useEffect(() => {
     const getListings = async () => {
@@ -46,31 +46,50 @@ const Offers = () => {
     getListings();
   }, []);
 
+  // const onFetchMoreListings = async () => {
+  //   try {
+  //     const q = query(
+  //       collection(db, 'listings'),
+  //       where('offer', '==', true),
+  //       orderBy('timestamp', 'desc'),
+  //       startAfter(lastFetchedListing),
+  //       limit(10)
+  //     );
+  //     const querySnapshot = await getDocs(q);
 
-  const onFetchMoreListings = async () => {
-    try {
-      const q = query(
-        collection(db, 'listings'),
-        where('offer', '==', true),
-        startAfter(lastFetchedListing),
-        limit(10)
-      );
-      const querySnapshot = await getDocs(q);
+  //     const data = querySnapshot.docs.map((doc) => ({
+  //       ...doc.data(),
+  //       id: doc.id,
+  //     }));
 
-      const data = querySnapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
+  //     const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+  //     setLastFetchedListing(lastVisible);
 
-      const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-      setLastFetchedListing(lastVisible);
+  //     setListings((prevState) => [...prevState, ...data]);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     setLoading(false);
+  //   }
+  // };
 
-      setListings((prevState) => [...prevState, ...data]);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-    }
-  };
+  const q = query(
+    collection(db, 'listings'),
+    where('offer', '==', true),
+    orderBy('timestamp', 'desc'),
+    startAfter(lastFetchedListing),
+    limit(10)
+  );
+
+  const [onFetchMoreListings] = useFetchMore({
+    query: q,
+    setLastFetchedListing,
+    setListings,
+    setLoading,
+  });
+
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <>

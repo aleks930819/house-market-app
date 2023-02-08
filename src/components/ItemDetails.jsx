@@ -45,6 +45,7 @@ const ItemDetails = () => {
 
     getData();
   }, [id, navigate]);
+  
 
   if (loading) {
     return <Spinner />;
@@ -113,46 +114,6 @@ const ItemDetails = () => {
 
                 <p className="text-xs leading-relaxed ">{data?.location}</p>
                 <Facilities listing={data} />
-                {/* <ul className="text-xs mt-4  list-inside  leading-relaxed flex flex-col gap-5">
-                  <li className="flex flex-col sm:flex-row gap-2 items-center">
-                    <MdOutlineAttachMoney className="text-lg" />
-                    {data?.offer
-                      ? data?.discountPrice
-                          .toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                      : data?.regularPrice
-                          .toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                    {data?.type === 'rent' ? ' / Month' : ''}
-                    {data?.offer ? (
-                      <span className="bg-green-700 text-white roudned-sm py-[1.2px] px-[4px]">
-                        Discount: ${data?.regularPrice - data.discountPrice}
-                      </span>
-                    ) : (
-                      ''
-                    )}
-                  </li>
-                  <li className="flex gap-2 items-center">
-                    <IoIosBed className="text-lg" />
-                    {data?.bedrooms > 1
-                      ? `${data?.bedrooms} Bedrooms`
-                      : `${data?.bedrooms} Bedroom`}
-                  </li>
-                  <li className="flex gap-2 items-center">
-                    <FaBath className="text-lg" />
-                    {data?.bathrooms > 1
-                      ? `${data?.bathrooms} Bathrooms`
-                      : `${data?.bathrooms} Bathroom`}
-                  </li>
-                  <li className="flex gap-2 items-center">
-                    <FaParking className="text-lg" />
-                    {data?.parking ? 'Yes' : 'No'}
-                  </li>
-                  <li className="flex gap-2 items-center">
-                    <MdChair className="text-lg" />
-                    {data?.furnished ? 'Yes' : 'No'}
-                  </li>
-                </ul> */}
               </div>
               {data?.latitude && data?.longitude && (
                 <div className="w-full h-[200px] overflow-hidden  mt-10 sm:w-[500px]">

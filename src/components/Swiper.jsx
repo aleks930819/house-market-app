@@ -14,6 +14,7 @@ import { Pagination } from 'swiper';
 import 'swiper/css';
 
 const Swipper = ({ data, setShowSwipper, starterIndex }) => {
+  
   useEffect(() => {
     const keyDownHandler = (event) => {
       if (event.key === 'Escape') {
