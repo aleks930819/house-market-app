@@ -4,9 +4,8 @@ import useScrollToTop from '../hooks/useScrollToTop';
 import { BiArrowFromBottom } from 'react-icons/bi';
 
 const ScrollToTopButton = () => {
-
-    const { scrollToTop } = useScrollToTop();
-
+    
+  const { scrollToTop } = useScrollToTop();
 
   return (
     <div className="fixed bottom-2 right-2">

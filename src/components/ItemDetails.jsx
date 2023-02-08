@@ -73,11 +73,6 @@ const ItemDetails = () => {
 
   const clickHandler = (type) => {
     setShowContact(true);
-
-    if (type === 'rent') {
-      setShowContact(false);
-      navigate(`/booking/${id}`);
-    }
   };
 
   return (

@@ -1,12 +1,4 @@
-import {
-  getDocs,
-  collection,
-  query,
-  where,
-  orderBy,
-  limit,
-  startAfter,
-} from 'firebase/firestore';
+import { getDocs } from 'firebase/firestore';
 import { useCallback } from 'react';
 
 const useFetchMore = ({

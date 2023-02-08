@@ -9,7 +9,6 @@ import {
   orderBy,
   limit,
   startAfter,
-  startAt,
 } from 'firebase/firestore';
 
 import { toast } from 'react-toastify';

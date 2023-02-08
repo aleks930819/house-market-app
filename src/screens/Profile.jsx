@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { AiFillMessage } from 'react-icons/ai';
@@ -22,11 +22,10 @@ import { db } from '../../firbase.config';
 import Spinner from '../components/Spinner';
 import Container from '../components/Container';
 import Button from '../components/Button';
+import Modal from '../components/Modal';
+import MyProperties from '../components/MyProperties';
 
 import DefaultProfilePhoto from '../assets/images/profile.jpg';
-
-import { Facilities } from '../components/Facilities';
-import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const auth = getAuth();
@@ -38,8 +37,9 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [properties, setProperties] = useState(null);
   const [filteredProperties, setFilteredProperties] = useState([]);
-  const [activeFilterButton, setActiveFilterButton] = useState('all');
   const [messages, setMessages] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [itemToDeleteId, setItemToDeleteId] = useState(null);
 
   useEffect(() => {
     setLoading(true);
@@ -69,36 +69,47 @@ const Profile = () => {
     return <Spinner />;
   }
 
-  const onDeleteHandler = async (id) => {
+  const onDeleteHandler = async () => {
     try {
-      await deleteDoc(doc(db, 'listings', id));
+      await deleteDoc(doc(db, 'listings', itemToDeleteId));
       toast.success('Listing deleted successfully');
     } catch (error) {
       toast.error('Something went wrong');
     }
 
-    const newListings = properties.filter((listing) => listing.id !== id);
+    const newListings = properties.filter(
+      (listing) => listing.id !== itemToDeleteId
+    );
     const newFielteredProperties = filteredProperties.filter(
-      (listing) => listing.id !== id
+      (listing) => listing.id !== itemToDeleteId
     );
     setProperties(newListings);
     setFilteredProperties(newFielteredProperties);
+    setShowModal(false);
   };
 
-  const filterProperties = (type) => {
-    setActiveFilterButton(type);
-    if (type === 'all') {
-      setFilteredProperties(properties);
-      return;
-    }
-
-    const filtered = properties.filter((property) => property.type === type);
-    setFilteredProperties(filtered);
+  const handleModalView = () => {
+    setShowModal(!showModal);
   };
 
-  const buttonsType = ['sale', 'rent', 'all'];
+  const action = (
+    <div className="flex gap-2">
+      <Button rounded success onClick={onDeleteHandler}>
+        YES
+      </Button>
+      <Button rounded danger onClick={handleModalView}>
+        NO
+      </Button>
+    </div>
+  );
 
-  console.log(messages);
+  const modal = (
+    <Modal action={action}>
+      <h2 className="text-white text-xs pb-5 sm:text-lg">
+        Are you sure you want to delete?
+      </h2>
+    </Modal>
+  );
 
   return (
     <>
@@ -133,52 +144,15 @@ const Profile = () => {
           </div>
         </div>
 
-        <div className="mb-10">
-          <div className="">
-            <h1 className="font-bold mt-5 sm:text-lg md:text-xl pb-5">
-              My Properties
-            </h1>
-            <div className="flex gap-1">
-              {buttonsType.map((type) => (
-                <Button
-                  onClick={() => filterProperties(type)}
-                  success={activeFilterButton === type}
-                >
-                  {type[0].toUpperCase() + type.slice(1) || 'All'}
-                </Button>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-5">
-            {filteredProperties?.map((listing) => (
-              <div
-                className="border shadow-md p-5 flex flex-col gap-2 rounded-md cursor-pointer"
-                key={listing?.id}
-              >
-                <div className="flex items-center gap-2">
-                  <img
-                    src={listing?.imgUrls[0]}
-                    className="w-16 h-16 object-cover rounded-md"
-                  />
-                  <div className="flex flex-col pl-5">
-                    <h1 className="font-bold">{listing?.name}</h1>
-                    <Facilities listing={listing} key={listing?.id} />
-                  </div>
-                </div>
-                <div className="flex gap-1 pt-5">
-                  <Button danger onClick={() => onDeleteHandler(listing?.id)}>
-                    Delete
-                  </Button>
-                  <Button success={true} to={`/edit-properties/${listing?.id}`}>
-                    Edit
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <MyProperties
+          filteredProperties={filteredProperties}
+          handleModalView={handleModalView}
+          setItemToDeleteId={setItemToDeleteId}
+          properties={properties}
+          setFilteredProperties={setFilteredProperties}
+        />
       </Container>
+      {showModal && modal}
     </>
   );
 };
