@@ -2,25 +2,26 @@ import { MdOutlineAttachMoney, MdChair } from 'react-icons/md';
 import { FaBath, FaParking } from 'react-icons/fa';
 import { IoIosBed } from 'react-icons/io';
 
+
+import ConvertPrice from '../utils/ConvertPrice';
+
+
+
 export const Facilities = ({ listing }) => {
+  
   return (
+
     <ul className="text-xs mt-4  list-inside  leading-relaxed flex flex-col gap-5">
       <li className="flex sm:flex-row gap-2 items-center">
         <MdOutlineAttachMoney className="text-lg" />
         {listing?.offer
-          ? listing?.discountPrice
-              ?.toString()
-              ?.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-          : listing?.regularPrice
-              ?.toString()
-              ?.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          ? ConvertPrice(listing?.discountPrice)
+          : ConvertPrice(listing?.regularPrice)}
         {listing?.type === 'rent' ? ' / Month' : ''}
         {listing?.offer ? (
           <span className="bg-green-700 text-white roudned-sm py-[1.2px] px-[4px]">
             Discount: $
-            {(listing?.regularPrice - listing.discountPrice)
-              ?.toString()
-              ?.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            {ConvertPrice(listing?.regularPrice - listing?.discountPrice)}
           </span>
         ) : (
           ''

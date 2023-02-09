@@ -1,7 +1,3 @@
-import { MdOutlineAttachMoney } from 'react-icons/md';
-import { FaBath, FaParking } from 'react-icons/fa';
-import { IoIosBed } from 'react-icons/io';
-import Button from './Button';
 import Card from './Card';
 
 const CategoryListingItem = ({ data }) => {

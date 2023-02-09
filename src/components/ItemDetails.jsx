@@ -157,7 +157,7 @@ const ItemDetails = () => {
         </div> */}
       </div>
 
-      {showContact && <Contact />}
+      {showContact && <Contact subject={data?.name} userRef={data?.userRef}/>}
     </>
   );
 };

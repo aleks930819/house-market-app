@@ -78,6 +78,7 @@ const Host = () => {
     }
 
     const uploadImages = async (image) => {
+      
       return new Promise((resolve, reject) => {
         const storage = getStorage();
         const fileName = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;

@@ -1,6 +1,3 @@
-import { MdOutlineAttachMoney, MdChair } from 'react-icons/md';
-import { FaBath, FaParking } from 'react-icons/fa';
-import { IoIosBed } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import { Facilities } from './Facilities';
 

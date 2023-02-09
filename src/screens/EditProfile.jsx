@@ -7,7 +7,6 @@ import { updateDoc, doc } from 'firebase/firestore';
 import Form from '../components/Form';
 import Input from '../components/Input';
 import Container from '../components/Container';
-import Modal from '../components/Modal';
 import Spinner from '../components/Spinner';
 
 import { getAuth, updateProfile } from 'firebase/auth';

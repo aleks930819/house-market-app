@@ -35,6 +35,7 @@ const MyProperties = ({
             <Button
               onClick={() => filterProperties(type)}
               success={activeFilterButton === type}
+              key={type}
             >
               {type[0].toUpperCase() + type.slice(1) || 'All'}
             </Button>

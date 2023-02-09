@@ -17,6 +17,7 @@ import { db } from '../../firbase.config';
 
 import Spinner from '../components/Spinner';
 import Container from '../components/Container';
+import { Link } from 'react-router-dom';
 
 const Messages = () => {
   const [messages, setMessages] = useState([]);
@@ -32,7 +33,9 @@ const Messages = () => {
 
       const q = query(
         propertiesRef,
-        where('userRef', '==', auth.currentUser.uid)
+        orderBy('createdAt', 'desc'),
+        where('userRef', '==', auth.currentUser.uid),
+        limit(10)
       );
 
       const querySnapshot = await getDocs(q);
@@ -50,11 +53,10 @@ const Messages = () => {
     fetchUserListings();
   }, [auth.currentUser.uid]);
 
-  console.log(messages);
-
   if (loading) {
     return <Spinner />;
   }
+
 
   return (
     <>
@@ -65,15 +67,18 @@ const Messages = () => {
           </h1>
           <div className="flex flex-col items-center overflow-auto max-h-[600px]">
             {messages.map((message) => (
-              <div
-                div
-                className="flex flex-col items-center border p-5 w-[350px] sm:w-[500px] cursor-pointer"
-              >
-                <div className="flex  justify-between  w-full">
-                  <h1 className="font-bold">{message.name}</h1>
-                  <p>{message.subject}</p>
+              <Link to={`/messages/${message?.id}`} key={message?.id}>
+                <div
+                  div
+                  className="flex flex-col items-center border p-5 w-[350px] sm:w-[500px] cursor-pointer"
+                  key={message?.id}
+                >
+                  <div className="flex  justify-between  w-full">
+                    <h1 className="font-bold">{message?.name}</h1>
+                    <p>{message?.subject}</p>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
