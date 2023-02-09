@@ -22,6 +22,7 @@ import EditProperties from './screens/EditProperties';
 import Booking from './screens/Booking';
 import Messages from './screens/Messages';
 import MessagesDetails from './screens/MessagesDetails';
+
 function App() {
   return (
     <>
@@ -36,17 +37,22 @@ function App() {
         <Route path="/explore" element={<Explore />} />
         <Route path="/category/:category" element={<Category />} />
         <Route path="/offers" element={<Offers />} />
+
         <Route path="/host" element={<Host />} />
+
         <Route path="/details/:id" element={<ItemDetails />} />
 
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
 
+        <Route path="/edit-profile/:id" element={<EditProfile />} />
+
         <Route path="/edit/:id" element={<EditProfile />} />
+
         <Route path="/edit-properties/:id" element={<EditProperties />} />
 
-        <Route path="/booking/:bookingId" element={<Booking />} />
         <Route path="/messages" element={<Messages />} />
+
         <Route path="/messages/:id" element={<MessagesDetails />} />
 
         <Route path="*" element={<NotFound />} />

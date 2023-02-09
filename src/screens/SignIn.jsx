@@ -6,18 +6,26 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
+
+
+
+
+import setChangedValue from '../utils/changeHandler';
+
 import Container from '../components/Container';
 import Form from '../components/Form';
 import Input from '../components/Input';
-
-import setChangedValue from '../utils/changeHandler';
 import OAuth from '../components/OAuth';
+
+
 
 const SignIn = () => {
   const [values, setValues] = useState({
     email: '',
     password: '',
   });
+
+
 
   const changeHandler = (e) => {
     setChangedValue(e, setValues);
@@ -36,6 +44,8 @@ const SignIn = () => {
         values.password
       );
 
+      
+
       if (userCredential.user) {
         navigate('/');
       }
@@ -43,6 +53,8 @@ const SignIn = () => {
       toast.error('Wrong email or password');
     }
   };
+
+ 
 
   return (
     <Container>

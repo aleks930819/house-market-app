@@ -8,16 +8,26 @@ import { getAuth } from 'firebase/auth';
 import Button from '../components/Button';
 
 import DefaultProfilePhoto from '../assets/images/profile.jpg';
+import { useSelector } from 'react-redux';
+import { selectPhotoURL,selectDisplayName,selectEmail,selectUserID } from '../slices/authSlice';
 
 const ProfileCard = () => {
+  
   const auth = getAuth();
+
+
+  const photo = useSelector(selectPhotoURL);
+  const email  = useSelector(selectEmail);
+  const displayName = useSelector(selectDisplayName);
+  const uid = useSelector(selectUserID);
+
 
   return (
     <div className="mt-10 text-xs sm:text-md  border shadow-md p-5 flex flex-col gap-2 rounded-md ">
       <div className="grid grid-cols-2 place-items-center">
         <div className="w-16 h-16">
           <img
-            src={auth.currentUser.photoURL || DefaultProfilePhoto}
+            src={photo || DefaultProfilePhoto}
             className="w-full h-full object-cover rounded-full"
           />
         </div>
@@ -30,11 +40,11 @@ const ProfileCard = () => {
       </div>
 
       <div className="flex flex-col items-center mt-5">
-        <h1 className="text-sm font-bold">{auth.currentUser.displayName}</h1>
-        <p>{auth.currentUser.email}</p>
+        <h1 className="text-sm font-bold">{displayName}</h1>
+        <p>{email}</p>
       </div>
       <div className="flex  gap-2 mt-5">
-        <Button to={`/edit/${auth.currentUser.uid}`} primary>
+        <Button to={`/edit/${uid}`} primary>
           Edit Profile
         </Button>
         <Button danger>Delete Profile</Button>

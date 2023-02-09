@@ -24,12 +24,18 @@ import Modal from '../components/Modal';
 import MyProperties from '../components/MyProperties';
 
 import ProfileCard from '../components/ProfileCard';
+import AddPropertySuggestion from '../components/AddPropertySuggestion';
+import { useSelector } from 'react-redux';
+import { selectUserID } from '../slices/authSlice';
 
 const Profile = () => {
   const auth = getAuth();
 
-  const userId = auth.currentUser.uid;
+  const userId = useSelector(selectUserID);
 
+  console.log(userId);
+
+  // const userId = auth.currentUser.uid;
 
   const [loading, setLoading] = useState(false);
   const [properties, setProperties] = useState(null);
@@ -59,7 +65,7 @@ const Profile = () => {
     };
 
     fetchUserListings();
-  }, [auth.currentUser.uid]);
+  }, [userId]);
 
   const onDeleteHandler = async () => {
     try {
@@ -97,8 +103,8 @@ const Profile = () => {
 
   const modal = (
     <Modal action={action}>
-      <h2 className="text-white text-xs pb-5 sm:text-lg">
-        Are you sure you want to delete?
+      <h2 className="text-white text-sm pb-5 sm:text-lg w-[400px] text-center md:w-[500px]">
+        Are you sure you want to delete it?
       </h2>
     </Modal>
   );
@@ -111,13 +117,17 @@ const Profile = () => {
     <>
       <Container>
         <ProfileCard />
-        <MyProperties
-          filteredProperties={filteredProperties}
-          handleModalView={handleModalView}
-          setItemToDeleteId={setItemToDeleteId}
-          properties={properties}
-          setFilteredProperties={setFilteredProperties}
-        />
+        {!properties ? (
+          <AddPropertySuggestion />
+        ) : (
+          <MyProperties
+            filteredProperties={filteredProperties}
+            handleModalView={handleModalView}
+            setItemToDeleteId={setItemToDeleteId}
+            properties={properties}
+            setFilteredProperties={setFilteredProperties}
+          />
+        )}
       </Container>
       {showModal && modal}
     </>

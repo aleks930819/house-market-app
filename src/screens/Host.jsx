@@ -120,6 +120,7 @@ const Host = () => {
       userRef: auth.currentUser.uid,
       timestamp: serverTimestamp(),
     };
+    
     delete formDataCopy.images;
 
     try {

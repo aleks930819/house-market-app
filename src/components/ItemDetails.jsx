@@ -72,7 +72,7 @@ const ItemDetails = () => {
   }
 
   const clickHandler = (type) => {
-    setShowContact(true);
+    setShowContact(!showContact);
   };
 
   return (

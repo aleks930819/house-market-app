@@ -14,6 +14,7 @@ import Button from '../components/Button';
 import Container from '../components/Container';
 import { Facilities } from '../components/Facilities';
 import Input from '../components/Input';
+import Modal from '../components/Modal';
 
 const MessagesDetails = () => {
   const { id } = useParams();
@@ -31,6 +32,8 @@ const MessagesDetails = () => {
 
   const [subject, setSubject] = useState('');
   const [senderId, setSenderId] = useState('');
+
+  const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -135,13 +138,36 @@ const MessagesDetails = () => {
     }
   };
 
+  const handleModalView = () => {
+    setShowModal(!showModal);
+  };
+
+  const action = (
+    <div className="flex gap-2">
+      <Button rounded success onClick={deleteHandler}>
+        YES
+      </Button>
+      <Button rounded danger onClick={handleModalView}>
+        NO
+      </Button>
+    </div>
+  );
+
+  const modal = (
+    <Modal action={action}>
+      <h2 className="text-white text-sm pb-5 sm:text-lg w-[400px] text-center md:w-[500px]">
+        Are you sure you'd like to erase that message?
+      </h2>
+    </Modal>
+  );
+
   return (
     <Container>
       {message?.map((message) => {
         return (
           <div
             key={message.id}
-            className="text-base border shadow-lg p-5 flex flex-col gap-5 w-[300px] sm:w-[550px] md:w-[650px]"
+            className="text-base border shadow-lg p-5 flex flex-col gap-5 w-[300px] sm:w-[550px] md:w-[650px] mt-10"
           >
             <h1 className="font-bold">Subject: {message?.subject}</h1>
             <h2>From: {message?.name}</h2>
@@ -167,7 +193,7 @@ const MessagesDetails = () => {
                 <Button primary onClick={replyHandler}>
                   REPLY
                 </Button>
-                <Button danger onClick={deleteHandler}>
+                <Button danger onClick={handleModalView}>
                   DELETE
                 </Button>
               </div>
@@ -176,7 +202,13 @@ const MessagesDetails = () => {
         );
       })}
 
-      <div className="border shadow-md p-5 flex flex-col gap-2 rounded-md cursor-pointer mt-10">
+      <div>
+        <h1 className="font-bold text-base sm:text-lg mt-10">
+          Property Details
+        </h1>
+      </div>
+
+      <div className="border shadow-md p-5 flex flex-col gap-2 rounded-md cursor-pointer mb-10 mt-5">
         {listingDetails?.map((listing) => {
           return (
             <div key={listing.id}>
@@ -194,6 +226,7 @@ const MessagesDetails = () => {
           );
         })}
       </div>
+      {showModal && modal}
     </Container>
   );
 };
