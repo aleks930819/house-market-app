@@ -112,12 +112,12 @@ const Profile = () => {
   if (loading) {
     return <Spinner />;
   }
-
+  
   return (
     <>
       <Container>
         <ProfileCard />
-        {!properties ? (
+        {properties?.length === 0 ? (
           <AddPropertySuggestion />
         ) : (
           <MyProperties

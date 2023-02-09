@@ -31,29 +31,29 @@ function App() {
       <Routes>
         <Route path="/" element={<StarterScreen />} />
 
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
 
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/category/:category" element={<Category />} />
         <Route path="/offers" element={<Offers />} />
 
-        <Route path="/host" element={<Host />} />
+        <Route path="/host" element={<PrivateRoute><Host /></PrivateRoute>} />
 
         <Route path="/details/:id" element={<ItemDetails />} />
 
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
 
-        <Route path="/edit-profile/:id" element={<EditProfile />} />
+        <Route path="/edit-profile/:id" element={<PrivateRoute><EditProfile /></PrivateRoute>} />
 
-        <Route path="/edit/:id" element={<EditProfile />} />
+        <Route path="/edit/:id" element={<PrivateRoute><EditProfile /></PrivateRoute>} />
 
-        <Route path="/edit-properties/:id" element={<EditProperties />} />
+        <Route path="/edit-properties/:id" element={<PrivateRoute><EditProperties /></PrivateRoute>} />
 
-        <Route path="/messages" element={<Messages />} />
+        <Route path="/messages" element={<PrivateRoute><Messages /></PrivateRoute>} />
 
-        <Route path="/messages/:id" element={<MessagesDetails />} />
+        <Route path="/messages/:id" element={<PrivateRoute><MessagesDetails /></PrivateRoute>} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>
