@@ -3,11 +3,13 @@ import {
   MdOutlineLocalOffer,
   MdOutlinePersonAddAlt,
 } from 'react-icons/md';
+
+
 import { RxAvatar } from 'react-icons/rx';
 import { FiLogOut } from 'react-icons/fi';
 
 import { useNavigate, Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { toast } from 'react-toastify';
 
@@ -15,39 +17,15 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
-import useAuthStatus from '../hooks/useAuthStatus';
 import {
   SET_ACTIVE_USER,
   SET_LOGOUT,
   selectIsLoggedIn,
 } from '../slices/authSlice';
 
-const data = [
-  {
-    id: 1,
-    icon: <MdOutlineExplore className="text-neutral-600 " />,
-    text: 'Explore',
-    link: '/explore',
-  },
-  {
-    id: 2,
-    icon: <MdOutlineLocalOffer className="text-neutral-600" />,
-    text: 'Offers',
-    link: '/offers',
-  },
-  {
-    id: 3,
-    icon: <RxAvatar className="text-neutral-600" />,
-    text: 'Sign In / Sign Up',
-    link: '/sign-in',
-  },
-];
-
 const Navbar = () => {
   const auth = getAuth();
   const dispatch = useDispatch();
-
-  const [user, setUser] = useState(null);
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
@@ -62,10 +40,6 @@ const Navbar = () => {
             photo: user.photoURL,
           })
         );
-
-        setUser(user);
-      } else {
-        setUser(null);
       }
     });
   }, [auth.currentUser]);

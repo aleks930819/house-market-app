@@ -29,13 +29,7 @@ import { useSelector } from 'react-redux';
 import { selectUserID } from '../slices/authSlice';
 
 const Profile = () => {
-  const auth = getAuth();
-
   const userId = useSelector(selectUserID);
-
-  console.log(userId);
-
-  // const userId = auth.currentUser.uid;
 
   const [loading, setLoading] = useState(false);
   const [properties, setProperties] = useState(null);
@@ -112,7 +106,7 @@ const Profile = () => {
   if (loading) {
     return <Spinner />;
   }
-  
+
   return (
     <>
       <Container>

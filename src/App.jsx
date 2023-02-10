@@ -19,7 +19,6 @@ import ItemDetails from './components/ItemDetails';
 import NotFound from './screens/404';
 import EditProfile from './screens/EditProfile';
 import EditProperties from './screens/EditProperties';
-import Booking from './screens/Booking';
 import Messages from './screens/Messages';
 import MessagesDetails from './screens/MessagesDetails';
 

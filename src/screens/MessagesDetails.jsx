@@ -12,9 +12,11 @@ import { db } from '../../firbase.config';
 import Spinner from '../components/Spinner';
 import Button from '../components/Button';
 import Container from '../components/Container';
-import { Facilities } from '../components/Facilities';
 import Input from '../components/Input';
 import Modal from '../components/Modal';
+
+import useGetDataById from '../hooks/useGetDataById';
+import PropertyDetails from '../components/PropertyDetails';
 
 const MessagesDetails = () => {
   const { id } = useParams();
@@ -22,14 +24,10 @@ const MessagesDetails = () => {
   const auth = getAuth();
 
   const [loading, setLoading] = useState(false);
-
   const [message, setMessage] = useState(null);
-
   const [reply, setReply] = useState('');
   const [listingId, setListingId] = useState(null);
-  const [listingDetails, setListingDetails] = useState(null);
   const [lastMessage, setLastMessage] = useState('');
-
   const [subject, setSubject] = useState('');
   const [senderId, setSenderId] = useState('');
 
@@ -64,34 +62,6 @@ const MessagesDetails = () => {
 
     fetchMessageInfo();
   }, [id]);
-
-  useEffect(() => {
-    setLoading(true);
-
-    const fetchListing = async () => {
-      const docRf = doc(db, 'listings', listingId);
-
-      try {
-        const docSnap = await getDoc(docRf);
-
-        if (docSnap.exists()) {
-          const listing = [];
-          listing.push({ id: docSnap.id, ...docSnap.data() });
-          setListingDetails(listing);
-          setLoading(false);
-        } else {
-          setListingDetails(null);
-          setLoading(false);
-          toast.error('Listing not found');
-        }
-      } catch (err) {
-        console.log(err);
-        setLoading(false);
-      }
-    };
-
-    fetchListing();
-  }, [listingId]);
 
   if (loading) {
     return <Spinner />;
@@ -201,31 +171,7 @@ const MessagesDetails = () => {
           </div>
         );
       })}
-
-      <div>
-        <h1 className="font-bold text-base sm:text-lg mt-10">
-          Property Details
-        </h1>
-      </div>
-
-      <div className="border shadow-md p-5 flex flex-col gap-2 rounded-md cursor-pointer mb-10 mt-5">
-        {listingDetails?.map((listing) => {
-          return (
-            <div key={listing.id}>
-              <div className="flex items-center gap-2">
-                <img
-                  src={listing?.imgUrls[0]}
-                  className="w-16 h-16 object-cover rounded-md"
-                />
-                <div className="flex flex-col pl-5">
-                  <h1 className="font-bold">{listing?.name}</h1>
-                  <Facilities listing={listing} key={listing?.id} />
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <PropertyDetails listingId={listingId} />
       {showModal && modal}
     </Container>
   );

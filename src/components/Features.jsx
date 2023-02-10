@@ -23,6 +23,7 @@ const data = [
   },
 ];
 
+
 const Features = () => {
   return (
     <div className="flex flex-col md:flex-row justify-center items-center pt-10 pb-10 border-t-2 w-4/5 mx-auto text-sm">

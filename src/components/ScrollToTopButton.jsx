@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 
 import useScrollToTop from '../hooks/useScrollToTop';
 import { BiArrowFromBottom } from 'react-icons/bi';

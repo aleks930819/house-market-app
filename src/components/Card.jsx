@@ -8,7 +8,7 @@ const Card = ({ item }) => {
         <div className="w-full h-96">
           <Link to={`/details/${item.id}`}>
             <img
-              src={item?.imgUrls[1]}
+              src={item?.imgUrls[0]}
               className="w-full h-full object-cover md:hover:scale-110 transition duration-500 ease-in-out"
             />
           </Link>

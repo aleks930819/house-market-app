@@ -1,4 +1,5 @@
 import Container from './Container';
+
 const Spinner = () => {
   return (
     <Container>
@@ -19,7 +20,6 @@ const Spinner = () => {
             fill="currentFill"
           />
         </svg>
-        <span className="sr-only">Loading...</span>
       </div>
     </Container>
   );

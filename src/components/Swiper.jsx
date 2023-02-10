@@ -4,17 +4,13 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { AiOutlineClose } from 'react-icons/ai';
 
+import { Pagination } from 'swiper';
+
+import '../index.css';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-import '../index.css';
-
-import { Pagination } from 'swiper';
-
-import 'swiper/css';
-
 const Swipper = ({ data, setShowSwipper, starterIndex }) => {
-  
   useEffect(() => {
     const keyDownHandler = (event) => {
       if (event.key === 'Escape') {
@@ -37,12 +33,17 @@ const Swipper = ({ data, setShowSwipper, starterIndex }) => {
         className="  absolute top-[160px]  md:top-[60px] left-[15px] text-lg sm:text-2xl z-50 cursor-pointer text-white bg-black bg-opacity-60 rounded-lg p-[1px]"
         onClick={() => setShowSwipper()}
       />
-      <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
-        {data.imgUrls.map((imgUrl, index) => (
+      <Swiper
+        pagination={true}
+        modules={[Pagination]}
+        className="mySwiper"
+        initialSlide={starterIndex}
+      >
+        {data[0]?.imgUrls?.map((imgUrl, index) => (
           <SwiperSlide key={index}>
             <div
               style={{
-                backgroundImage: `url(${data.imgUrls[index]})`,
+                backgroundImage: `url(${data[0]?.imgUrls[index]})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
               }}

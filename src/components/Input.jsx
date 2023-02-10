@@ -3,6 +3,7 @@ import { RiLockPasswordFill } from 'react-icons/ri';
 import { FaUserAlt } from 'react-icons/fa';
 
 const Input = (props) => {
+  
   const element =
     props.element === 'input' ? (
       <input

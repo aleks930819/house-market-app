@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { AiFillMessage } from 'react-icons/ai';
 
 
-import { getAuth } from 'firebase/auth';
 
 import Button from '../components/Button';
 

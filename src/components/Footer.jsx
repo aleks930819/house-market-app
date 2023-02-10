@@ -1,21 +1,4 @@
-const data = [
-  {
-    id: 1,
-    text: '&#169; 2023 All rights reserved',
-  },
-  {
-    id: 2,
-    text: 'Privacy Policy',
-  },
-  {
-    id: 3,
-    text: 'Terms of Service',
-  },
-  {
-    id: 4,
-    text: 'Contact Us',
-  },
-];
+import { FooterData as data } from '../data/data';
 
 const Footer = () => {
   return (
