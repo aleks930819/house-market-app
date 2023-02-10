@@ -24,6 +24,7 @@ import { db } from '../../firbase.config';
 import { useNavigate } from 'react-router-dom';
 import Modal from '../components/Modal';
 import Spinner from '../components/Spinner';
+import uploadImages from '../utils/uploadImages';
 
 const Host = () => {
   const [geolocationEnabled, setGeolocationEnabled] = useState(false);
@@ -77,36 +78,6 @@ const Host = () => {
       return;
     }
 
-    const uploadImages = async (image) => {
-      
-      return new Promise((resolve, reject) => {
-        const storage = getStorage();
-        const fileName = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
-        const storageRef = ref(storage, `images/${fileName}`);
-        const uploadTask = uploadBytesResumable(storageRef, image);
-
-        uploadTask.on(
-          'state_changed',
-          (snapshot) => {
-            const progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            switch (snapshot.state) {
-              case 'paused':
-                break;
-              case 'running':
-                break;
-            }
-          },
-          (error) => {},
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              resolve(downloadURL);
-            });
-          }
-        );
-      });
-    };
-
     const imgUrls = await Promise.all(
       [...values.images].map((image) => uploadImages(image))
     ).catch(() => {
@@ -120,7 +91,7 @@ const Host = () => {
       userRef: auth.currentUser.uid,
       timestamp: serverTimestamp(),
     };
-    
+
     delete formDataCopy.images;
 
     try {

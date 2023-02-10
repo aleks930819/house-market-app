@@ -13,12 +13,7 @@ import {
 } from 'firebase/auth';
 import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
 
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from 'firebase/storage';
+
 
 import Container from '../components/Container';
 import Form from '../components/Form';
@@ -28,6 +23,7 @@ import OAuth from '../components/OAuth';
 import setChangedValue from '../utils/changeHandler';
 
 import { db } from '../../firbase.config';
+import uploadImages from '../utils/uploadImages';
 
 const SignUp = () => {
   const [values, setValues] = useState({
@@ -45,39 +41,8 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
-  console.log(values);
-
   const onSubmit = async (e) => {
     e.preventDefault();
-
-    const uploadImages = async (image) => {
-      return new Promise((resolve, reject) => {
-        const storage = getStorage();
-        const fileName = `${image.name}-${uuidv4()}`;
-        const storageRef = ref(storage, `images/${fileName}`);
-        const uploadTask = uploadBytesResumable(storageRef, image);
-
-        uploadTask.on(
-          'state_changed',
-          (snapshot) => {
-            const progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            switch (snapshot.state) {
-              case 'paused':
-                break;
-              case 'running':
-                break;
-            }
-          },
-          (error) => {},
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              resolve(downloadURL);
-            });
-          }
-        );
-      });
-    };
 
     const imgUrl = await Promise.all(
       [...values.images].map((image) => uploadImages(image))
@@ -102,10 +67,11 @@ const SignUp = () => {
         photoURL: imgUrl[0],
       });
 
-      const formDataCopy = { ...values, images: imgUrl };
+      const formDataCopy = { ...values, imgUrl };
 
       delete formDataCopy.repassword;
       delete formDataCopy.password;
+      delete formDataCopy.images;
 
       formDataCopy.timestamp = serverTimestamp();
       formDataCopy.fullName = fullNameOfTheUser;
@@ -114,7 +80,6 @@ const SignUp = () => {
 
       navigate('/');
     } catch (err) {
-      console.log(err);
       toast.error('User already exists!');
     }
   };
@@ -191,14 +156,13 @@ const SignUp = () => {
             name="imageUrls"
             value={values.imageUrls}
             handler={changeHandler}
-            max="6"
+            max="1"
             accept=".jpg, .jpeg, .png"
-            multiple
           />
         </div>
 
         <div className="text-end flex  justify-center">
-          <OAuth />
+          <OAuth btnName={'Sign Up With Google'} />
         </div>
         <div className="pt-10">
           <Link to="/sign-in">

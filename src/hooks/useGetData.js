@@ -7,7 +7,6 @@ const useGetData = (collectionName, orderBy, where, limit) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [lastFetchedListing, setLastFetchedListing] = useState(null);
-  const collectionRef = collection(db, collectionName);
 
   useEffect(() => {
     const getData = async () => {
@@ -29,14 +28,6 @@ const useGetData = (collectionName, orderBy, where, limit) => {
 
         const lastVisible = snapShot.docs[snapShot.docs.length - 1];
         setLastFetchedListing(lastVisible);
-
-        // const data = [];
-        // querySnapshot.forEach((doc) => {
-        //   data.push({ id: doc.id, ...doc.data() });
-        // });
-
-        // setData(data);
-        // setLoading(false);
       } catch (error) {
         setError(error);
         setLoading(false);

@@ -1,28 +1,18 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 
-import {
-  getDocs,
-  collection,
-  query,
-  where,
-  orderBy,
-  limit,
-  startAfter,
-} from 'firebase/firestore';
+import { where, orderBy, limit, startAfter } from 'firebase/firestore';
 
-import { toast } from 'react-toastify';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import useFetchMore from '../hooks/useFetchMoreListings';
 
-import { db } from '../../firbase.config';
-
 import CategoryListingItem from '../components/CategoryListingItem';
 import Spinner from '../components/Spinner';
-import useScrollToTop from '../hooks/useScrollToTop';
 import ScrollToTopButton from '../components/ScrollToTopButton';
+
+import useScrollToTop from '../hooks/useScrollToTop';
 import useGetData from '../hooks/useGetData';
+
 
 const Category = () => {
   const { isVisible } = useScrollToTop();

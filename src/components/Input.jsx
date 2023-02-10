@@ -18,6 +18,7 @@ const Input = (props) => {
         min={props.min}
         multiple={props.multiple}
         accept={props.accept}
+        defaultValue={props.defaultValue}
         className="border-2 border-gray-300 rounded-md p-2 text-sm focus:bg-white focus:border-slate-400 focus:outline-none w-full relative pl-8  file:rounded-full file:border-0 file:mr-5 file:py-2 file:px-5 file:bg-cyan-900 file:text-white file:text-xs"
       />
     ) : (
@@ -30,24 +31,30 @@ const Input = (props) => {
         onChange={props.handler}
         placeholder={props.placeholder}
         value={props.value}
+        defaultValue={props.defaultValue}
         className="border-2 border-gray-300 rounded-md p-2 text-sm focus:bg-white focus:border-slate-400 focus:outline-none w-full"
       />
     );
+
+  const icon = () => {
+    if (props.icon === 'email') {
+      return <MdEmail />;
+    } else if (props.icon === 'password') {
+      return <RiLockPasswordFill />;
+    } else if (props.icon === 'user') {
+      return <FaUserAlt />;
+    } else {
+      return null;
+    }
+  };
 
   return (
     <div>
       <div className="flex mx-auto mb-5 justify-center items-center relative">
         {element}
-
         {props.icon && (
           <div className="pointer-events-none text-sm absolute top-1/2 transform -translate-y-1/2 left-3 text-gray-400">
-            {props.icon === 'email' ? (
-              <MdEmail />
-            ) : props.icon === 'password' ? (
-              <RiLockPasswordFill />
-            ) : props.icon === 'user' ? (
-              <FaUserAlt />
-            ) : null}
+            {icon()}
           </div>
         )}
       </div>

@@ -1,8 +1,6 @@
 import { FcGoogle } from 'react-icons/fc';
-import { AiFillLinkedin } from 'react-icons/ai';
-import { BsTwitter } from 'react-icons/bs';
 
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
@@ -10,9 +8,11 @@ import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 
 import { db } from '../../firbase.config';
 
-const OAuth = () => {
+import Button from '../components/Button';
+
+const OAuth = ({ btnName }) => {
   const navigate = useNavigate();
-  const onGoogleSignIn = async () => { 
+  const onGoogleSignIn = async () => {
     try {
       const auth = getAuth();
       const provider = new GoogleAuthProvider();
@@ -39,13 +39,10 @@ const OAuth = () => {
   };
 
   return (
-    <div className="flex gap-1">
-      <FcGoogle
-        className=" cursor-pointer text-base"
-        onClick={() => onGoogleSignIn()}
-      />
-      <AiFillLinkedin className=" cursor-pointer text-base text-blue-600" />
-      <BsTwitter className=" cursor-pointer text-base text-blue-700" />
+    <div className="flex gap-1 mr-2">
+      <Button onClick={() => onGoogleSignIn()} primary type="button">
+        <FcGoogle className="bg-white text-base mr-2" /> {btnName}
+      </Button>
     </div>
   );
 };

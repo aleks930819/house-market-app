@@ -13,7 +13,6 @@ import { selectPhotoURL,selectDisplayName,selectEmail,selectUserID } from '../sl
 
 const ProfileCard = () => {
   
-  const auth = getAuth();
 
 
   const photo = useSelector(selectPhotoURL);

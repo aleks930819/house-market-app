@@ -18,6 +18,7 @@ import Swipper from './Swiper';
 import { Facilities } from './Facilities';
 import Contact from './Contact';
 import Booking from '../screens/Booking';
+import Map from './Map';
 
 const ItemDetails = () => {
   const [data, setData] = useState(null);
@@ -123,41 +124,23 @@ const ItemDetails = () => {
               </div>
 
               {data?.latitude && data?.longitude && (
-                <div className="w-full h-[200px] overflow-hidden  mt-10 sm:w-[500px] md:w-[800px]">
-                  <MapContainer
-                    style={{ height: '100%', width: '100%' }}
-                    center={[lat, lng]}
-                    zoom={13}
-                    scrollWheelZoom={true}
-                  >
-                    <TileLayer
-                      attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                      url="https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png"
-                    />
-                    <Marker position={[lat, lng]}>
-                      <Popup>{data?.location}</Popup>
-                    </Marker>
-                  </MapContainer>
-                </div>
+                <Map lat={lat} lng={lng} location={data?.location} />
               )}
-
-              {/* <div className='hidden md:block'>
-                <Booking />
-              </div> */}
+              
             </div>
             <div className="w-full sm:flex-1  gap-4 pt-6 text-center">
-              <Button primary onClick={() => clickHandler(data?.type)}>
+              <Button primary onClick={() => clickHandler()}>
                 Contact
               </Button>
             </div>
           </div>
         </div>
-        {/* <div className="md:hidden mt-10">
-          <Booking />
-        </div> */}
       </div>
-
-      {showContact && <Contact subject={data?.name} userRef={data?.userRef}/>}
+      <div>
+        {showContact && (
+          <Contact subject={data?.name} userRef={data?.userRef} />
+        )}
+      </div>
     </>
   );
 };

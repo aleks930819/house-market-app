@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getAuth } from 'firebase/auth';
 
 import { db } from '../../firbase.config';
@@ -28,6 +28,14 @@ const Contact = ({ subject, userRef }) => {
   const auth = getAuth();
 
   const { id } = useParams();
+  const ref = useRef();
+
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+  }, []);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -50,12 +58,13 @@ const Contact = ({ subject, userRef }) => {
     setMessage('');
   };
 
+
   const changeHandler = (e) => {
     setMessage(e.target.value);
   };
 
   return (
-    <div className="mt-[80px] md:mt-0">
+    <div className="mt-[80px] md:mt-0" ref={ref}>
       <Form onSubmit={onSubmit} heading="Contact Owner" btnName="Send">
         <Input
           element="textarea"

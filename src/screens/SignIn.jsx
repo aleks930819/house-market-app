@@ -6,10 +6,6 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
-
-
-
-
 import setChangedValue from '../utils/changeHandler';
 
 import Container from '../components/Container';
@@ -17,15 +13,12 @@ import Form from '../components/Form';
 import Input from '../components/Input';
 import OAuth from '../components/OAuth';
 
-
-
 const SignIn = () => {
+  
   const [values, setValues] = useState({
     email: '',
     password: '',
   });
-
-
 
   const changeHandler = (e) => {
     setChangedValue(e, setValues);
@@ -44,8 +37,6 @@ const SignIn = () => {
         values.password
       );
 
-      
-
       if (userCredential.user) {
         navigate('/');
       }
@@ -53,8 +44,6 @@ const SignIn = () => {
       toast.error('Wrong email or password');
     }
   };
-
- 
 
   return (
     <Container>
@@ -81,8 +70,10 @@ const SignIn = () => {
           password={values.password}
           icon="password"
         />
-        <div className="text-end flex  justify-between">
-          <OAuth />
+        <div className="text-end flex  justify-between items-center">
+          <OAuth btnName={'Sign In With Google'}/>
+        </div>
+        <div className='mt-2 text-end'>
           <Link
             to="/forgot-password"
             className=" text-gray-500 text-xs underline"
@@ -90,6 +81,7 @@ const SignIn = () => {
             Forgot Password?
           </Link>
         </div>
+
         <div className="pt-10">
           <Link to="/sign-up">
             <h5>Don't have an account? Sign Up</h5>

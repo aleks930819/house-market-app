@@ -141,7 +141,6 @@ const EditProperties = () => {
       toast.success('Listing updated successfully');
       navigate('/profile');
     } catch (err) {
-      console.log(err);
       setLoading(false);
       toast.error('Something went wrong');
     }
@@ -183,6 +182,7 @@ const EditProperties = () => {
           placeholder="Name"
           name="name"
           value={values.name}
+          defaultValue={listing?.name}
           handler={changeHandler}
         />
         <div className="flex gap-1 ">
@@ -193,6 +193,7 @@ const EditProperties = () => {
             placeholder="Bedrooms"
             name="bedrooms"
             value={values.bedrooms}
+            defaultValue={listing?.bedrooms}
             handler={changeHandler}
           />
 
@@ -203,6 +204,7 @@ const EditProperties = () => {
             placeholder="Bathrooms"
             name="bathrooms"
             value={values.bathrooms}
+            defaultValue={listing?.bathrooms}
             handler={changeHandler}
           />
         </div>
@@ -255,6 +257,7 @@ const EditProperties = () => {
           placeholder="Location"
           name="location"
           value={values.location}
+          defaultValue={listing?.location}
           handler={changeHandler}
         />
         <div className="flex gap-1 ">
@@ -265,6 +268,7 @@ const EditProperties = () => {
             placeholder="Latitude"
             name="latitude"
             value={values.latitude}
+            defaultValue={listing?.latitude}
             handler={changeHandler}
           />
 
@@ -275,6 +279,7 @@ const EditProperties = () => {
             placeholder="longitude"
             name="longitude"
             value={values.longitude}
+            defaultValue={listing?.longitude}
             handler={changeHandler}
           />
         </div>
@@ -310,6 +315,7 @@ const EditProperties = () => {
             placeholder="Regular Price"
             name="regularPrice"
             value={values.regularPrice}
+            defaultValue={listing?.regularPrice}
             handler={changeHandler}
           />
         </div>
@@ -324,6 +330,7 @@ const EditProperties = () => {
               placeholder="Discount Price"
               name="discountPrice"
               value={values.discountPrice}
+              defaultValue={listing?.discountPrice}
               handler={changeHandler}
             />
           </div>
