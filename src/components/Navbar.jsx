@@ -9,12 +9,18 @@ import { FiLogOut } from 'react-icons/fi';
 import { useNavigate, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
+import { toast } from 'react-toastify';
+
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 import useAuthStatus from '../hooks/useAuthStatus';
-import { SET_ACTIVE_USER, SET_LOGOUT, selectIsLoggedIn } from '../slices/authSlice';
+import {
+  SET_ACTIVE_USER,
+  SET_LOGOUT,
+  selectIsLoggedIn,
+} from '../slices/authSlice';
 
 const data = [
   {
@@ -38,7 +44,6 @@ const data = [
 ];
 
 const Navbar = () => {
-
   const auth = getAuth();
   const dispatch = useDispatch();
 
@@ -46,14 +51,9 @@ const Navbar = () => {
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
-
-
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-
       if (user) {
-
-
         dispatch(
           SET_ACTIVE_USER({
             email: user.email,
@@ -76,6 +76,7 @@ const Navbar = () => {
     auth.signOut();
     dispatch(SET_LOGOUT());
     navigate('/');
+    toast.success('Logged out successfully');
   };
 
   return (

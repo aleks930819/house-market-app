@@ -20,72 +20,35 @@ import CategoryListingItem from '../components/CategoryListingItem';
 
 import useFetchMore from '../hooks/useFetchMoreListings';
 
+import useGetData from '../hooks/useGetData';
+
+import Spinner from '../components/Spinner';
+
 const Offers = () => {
-  const [listings, setListings] = useState([]);
-  const [loading, setLoading] = useState(false);
+  
   const [lastFetchedListing, setLastFetchedListing] = useState(null);
-
-  useEffect(() => {
-    const getListings = async () => {
-      try {
-        const q = query(
-          collection(db, 'listings'),
-          where('offer', '==', true),
-          limit(10)
-        );
-        const querySnapshot = await getDocs(q);
-        const data = querySnapshot.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
-        setListings(data);
-      } catch (error) {
-        toast.error('Something went wrong');
-      }
-    };
-    getListings();
-  }, []);
-
-  // const onFetchMoreListings = async () => {
-  //   try {
-  //     const q = query(
-  //       collection(db, 'listings'),
-  //       where('offer', '==', true),
-  //       orderBy('timestamp', 'desc'),
-  //       startAfter(lastFetchedListing),
-  //       limit(10)
-  //     );
-  //     const querySnapshot = await getDocs(q);
-
-  //     const data = querySnapshot.docs.map((doc) => ({
-  //       ...doc.data(),
-  //       id: doc.id,
-  //     }));
-
-  //     const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-  //     setLastFetchedListing(lastVisible);
-
-  //     setListings((prevState) => [...prevState, ...data]);
-  //     setLoading(false);
-  //   } catch (error) {
-  //     setLoading(false);
-  //   }
-  // };
-
-  const q = query(
-    collection(db, 'listings'),
-    where('offer', '==', true),
+  
+  
+  const {
+    data: listings,
+    loading,
+    setData: setListings,
+  } = useGetData(
+    'listings',
     orderBy('timestamp', 'desc'),
-    startAfter(lastFetchedListing),
+    where('offer', '==', true),
     limit(10)
   );
 
-  const [onFetchMoreListings] = useFetchMore({
-    query: q,
+  const [onFetchMoreListings] = useFetchMore(
+    'listings',
+    orderBy('timestamp', 'desc'),
+    where('offer', '==', true),
+    startAfter(lastFetchedListing),
+    limit(10),
     setLastFetchedListing,
-    setListings,
-    setLoading,
-  });
+    setListings
+  );
 
   if (loading) {
     return <Spinner />;
@@ -94,9 +57,9 @@ const Offers = () => {
   return (
     <>
       <InfiniteScroll
-        dataLength={listings.length}
-        next={onFetchMoreListings}
+        dataLength={listings?.length || 0}
         hasMore={true}
+        next={onFetchMoreListings}
         loader={''}
         endMessage={
           <p style={{ textAlign: 'center' }}>

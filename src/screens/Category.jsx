@@ -22,90 +22,35 @@ import CategoryListingItem from '../components/CategoryListingItem';
 import Spinner from '../components/Spinner';
 import useScrollToTop from '../hooks/useScrollToTop';
 import ScrollToTopButton from '../components/ScrollToTopButton';
+import useGetData from '../hooks/useGetData';
 
 const Category = () => {
-  const [listings, setListings] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [lastFetchedListing, setLastFetchedListing] = useState(null);
-
   const { isVisible } = useScrollToTop();
 
   const params = useParams();
 
-  useEffect(() => {
-    setLoading(true);
-
-    const getListings = async () => {
-      try {
-        const q = query(
-          collection(db, 'listings'),
-          orderBy('timestamp', 'desc'),
-          where('type', '==', params.category),
-          limit(10)
-        );
-        const querySnapshot = await getDocs(q);
-
-        const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-        setLastFetchedListing(lastVisible);
-
-        const data = querySnapshot.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
-        setListings(data);
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-
-        toast.error('Something went wrong');
-      }
-    };
-    getListings();
-  }, [params.category]);
-
-  // const onFetchMoreListings = async () => {
-  //   try {
-  //     setLoading(true);
-  //     const q = query(
-  //       collection(db, 'listings'),
-  //       where('type', '==', params.category),
-  //       orderBy('timestamp', 'desc'),
-  //       startAfter(lastFetchedListing),
-  //       limit(1)
-  //     );
-  //     const querySnapshot = await getDocs(q);
-
-  //     const data = querySnapshot.docs.map((doc) => ({
-  //       ...doc.data(),
-  //       id: doc.id,
-  //     }));
-
-  //     const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-  //     setLastFetchedListing(lastVisible);
-
-  //     setListings((prevState) => [...prevState, ...data]);
-  //     setLoading(false);
-  //   } catch (error) {
-  //     setLoading(false);
-  //   }
-  // };
-
-  console.log(isVisible);
-
-  const q = query(
-    collection(db, 'listings'),
+  const {
+    data: listings,
+    loading,
+    setData: setListings,
+    lastFetchedListing,
+    setLastFetchedListing,
+  } = useGetData(
+    'listings',
     orderBy('timestamp', 'desc'),
     where('type', '==', params.category),
-    startAfter(lastFetchedListing),
     limit(10)
   );
 
-  const [onFetchMoreListings] = useFetchMore({
-    query: q,
+  const [onFetchMoreListings] = useFetchMore(
+    'listings',
+    orderBy('timestamp', 'desc'),
+    where('type', '==', params.category),
+    startAfter(lastFetchedListing),
+    limit(10),
     setLastFetchedListing,
-    setListings,
-    setLoading,
-  });
+    setListings
+  );
 
   if (loading) {
     return <Spinner />;
@@ -114,7 +59,7 @@ const Category = () => {
   return (
     <>
       <InfiniteScroll
-        dataLength={listings.length}
+        dataLength={listings?.length || 0}
         next={onFetchMoreListings}
         hasMore={true}
         loader={''}

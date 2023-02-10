@@ -1,15 +1,27 @@
 import { getDocs } from 'firebase/firestore';
 import { useCallback } from 'react';
 
+import { db } from '../../firbase.config';
+
+import { collection, query } from 'firebase/firestore';
+
 const useFetchMore = ({
-  query,
+  collectionName,
+  orderBy,
+  where,
+  startAfter,
+  limit,
   setLastFetchedListing,
   setListings,
-  setLoading,
 }) => {
+  
   const onFetchMoreListing = useCallback(async () => {
     try {
-      const querySnapshot = await getDocs(query);
+      const collectionRef = collection(db, collectionName);
+
+      const q = query(collectionRef, orderBy, where, startAfter, limit);
+
+      const querySnapshot = await getDocs(q);
       const data = querySnapshot.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
@@ -24,11 +36,8 @@ const useFetchMore = ({
       setLastFetchedListing(lastVisible);
 
       setListings((prevState) => [...prevState, ...data]);
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-    }
-  }, [query, setLastFetchedListing, setListings, setLoading]);
+    } catch (err) {}
+  }, [query, setLastFetchedListing, setListings]);
 
   return [onFetchMoreListing];
 };
