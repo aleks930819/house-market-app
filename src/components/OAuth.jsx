@@ -11,6 +11,7 @@ import { db } from '../../firbase.config';
 import Button from '../components/Button';
 
 const OAuth = ({ btnName }) => {
+  
   const navigate = useNavigate();
   const onGoogleSignIn = async () => {
     try {

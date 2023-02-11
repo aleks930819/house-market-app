@@ -1,21 +1,9 @@
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import {
-  getDocs,
-  collection,
-  query,
-  where,
-  orderBy,
-  limit,
-  startAfter,
-} from 'firebase/firestore';
-
-import { toast } from 'react-toastify';
+import { where, orderBy, limit, startAfter } from 'firebase/firestore';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import { db } from '../../firbase.config';
 import CategoryListingItem from '../components/CategoryListingItem';
 
 import useFetchMore from '../hooks/useFetchMoreListings';
@@ -25,10 +13,8 @@ import useGetData from '../hooks/useGetData';
 import Spinner from '../components/Spinner';
 
 const Offers = () => {
-  
   const [lastFetchedListing, setLastFetchedListing] = useState(null);
-  
-  
+
   const {
     data: listings,
     loading,

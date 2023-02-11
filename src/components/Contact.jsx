@@ -9,18 +9,7 @@ import { db } from '../../firbase.config';
 import Form from './Form';
 import Input from './Input';
 
-import {
-  updateDoc,
-  doc,
-  getDocs,
-  collection,
-  query,
-  where,
-  orderBy,
-  limit,
-  deleteDoc,
-  addDoc,
-} from 'firebase/firestore';
+import { collection, addDoc } from 'firebase/firestore';
 
 const Contact = ({ subject, userRef }) => {
   const [message, setMessage] = useState('');
@@ -29,7 +18,6 @@ const Contact = ({ subject, userRef }) => {
 
   const { id } = useParams();
   const ref = useRef();
-
 
   useEffect(() => {
     if (ref.current) {
@@ -57,7 +45,6 @@ const Contact = ({ subject, userRef }) => {
 
     setMessage('');
   };
-
 
   const changeHandler = (e) => {
     setMessage(e.target.value);

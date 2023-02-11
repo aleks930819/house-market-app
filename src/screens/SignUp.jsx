@@ -78,6 +78,7 @@ const SignUp = () => {
 
       await setDoc(doc(db, 'users', user.uid), formDataCopy);
 
+
       navigate('/');
     } catch (err) {
       toast.error('User already exists!');

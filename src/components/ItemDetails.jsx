@@ -49,7 +49,7 @@ const ItemDetails = () => {
           <>
             <div
               className="container mx-auto px-20 mt-10 mb-10 min-h-screen z-0"
-              key={item.id}
+              key={item?.id}
             >
               <div
                 className="border bg-slate-200  rounded-lg p-6  relative z-0"
@@ -117,7 +117,7 @@ const ItemDetails = () => {
             </div>
             <div>
               {showContact && (
-                <Contact subject={item?.name} userRef={item?.userRef} />
+                <Contact subject={item?.name} userRef={item?.userRef}  key={item?.id}/>
               )}
             </div>
           </>

@@ -8,7 +8,7 @@ const AsideButton = ({ setIsOpen }) => {
       onClick={() => {
         setIsOpen(true);
       }}
-      className="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg  hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+      className="inline-flex items-center p-2 mt-2 ml-3 text-sm text-black rounded-lg  hover:bg-gray-500 focus:outline-none  dark:text-slate-800 dark:hover:bg-slate-200 dark:focus:ring-gray-400"
     >
       <span className="sr-only">Open sidebar</span>
 

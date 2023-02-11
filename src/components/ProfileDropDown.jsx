@@ -4,8 +4,6 @@ import { MdOutlinePersonAddAlt } from 'react-icons/md';
 import { FiLogOut } from 'react-icons/fi';
 import { RxAvatar } from 'react-icons/rx';
 
-import { useSelector } from 'react-redux';
-
 const ProfileDropDown = ({
   isMenuDropDownOpen,
   setMenuDropDownOpen,

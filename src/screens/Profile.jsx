@@ -27,39 +27,27 @@ import ProfileCard from '../components/ProfileCard';
 import AddPropertySuggestion from '../components/AddPropertySuggestion';
 import { useSelector } from 'react-redux';
 import { selectUserID } from '../slices/authSlice';
+import useGetData from '../hooks/useGetData';
 
 const Profile = () => {
   const userId = useSelector(selectUserID);
 
-  const [loading, setLoading] = useState(false);
-  const [properties, setProperties] = useState(null);
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [itemToDeleteId, setItemToDeleteId] = useState(null);
 
+  const { data: properties, loading } = useGetData(
+    'listings',
+    orderBy('timestamp', 'desc'),
+    where('userRef', '==', userId),
+    limit(10)
+  );
+
+  console.log(properties);
+
   useEffect(() => {
-    setLoading(true);
-
-    const fetchUserListings = async () => {
-      const propertiesRef = collection(db, 'listings');
-
-      const q = query(propertiesRef, where('userRef', '==', userId));
-
-      const querySnapshot = await getDocs(q);
-
-      const properties = [];
-
-      querySnapshot.forEach((doc) => {
-        properties.push({ id: doc.id, ...doc.data() });
-      });
-
-      setProperties(properties);
-      setFilteredProperties(properties);
-      setLoading(false);
-    };
-
-    fetchUserListings();
-  }, [userId]);
+    setFilteredProperties(properties);
+  }, [properties]);
 
   const onDeleteHandler = async () => {
     try {
@@ -69,13 +57,10 @@ const Profile = () => {
       toast.error('Something went wrong');
     }
 
-    const newListings = properties.filter(
-      (listing) => listing.id !== itemToDeleteId
-    );
     const newFielteredProperties = filteredProperties.filter(
       (listing) => listing.id !== itemToDeleteId
     );
-    setProperties(newListings);
+
     setFilteredProperties(newFielteredProperties);
     setShowModal(false);
   };
@@ -83,6 +68,8 @@ const Profile = () => {
   const handleModalView = () => {
     setShowModal(!showModal);
   };
+
+  
 
   const action = (
     <div className="flex gap-2">

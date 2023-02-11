@@ -3,10 +3,6 @@ import Couple from '../assets/images/couple-rent.jpg';
 import Apartments from '../assets/images/apartments.jpg';
 import OnlineShoping from '../assets/images/online-shoping.jpg';
 
-import { BsFillShieldFill } from 'react-icons/bs';
-import { BiSupport } from 'react-icons/bi';
-import { MdFreeCancellation } from 'react-icons/md';
-
 // Path: src\components\StarterScreenWidget.jsx
 
 export const StarterScreenWidgetData = [

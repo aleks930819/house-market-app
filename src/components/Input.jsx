@@ -3,7 +3,6 @@ import { RiLockPasswordFill } from 'react-icons/ri';
 import { FaUserAlt } from 'react-icons/fa';
 
 const Input = (props) => {
-  
   const element =
     props.element === 'input' ? (
       <input
@@ -50,16 +49,18 @@ const Input = (props) => {
   };
 
   return (
-    <div>
-      <div className="flex mx-auto mb-5 justify-center items-center relative">
-        {element}
-        {props.icon && (
-          <div className="pointer-events-none text-sm absolute top-1/2 transform -translate-y-1/2 left-3 text-gray-400">
-            {icon()}
-          </div>
-        )}
+    <>
+      <div>
+        <div className="flex mx-auto mb-5 justify-center items-center relative">
+          {element}
+          {props.icon && (
+            <div className="pointer-events-none text-sm absolute top-1/2 transform -translate-y-1/2 left-3 text-gray-400">
+              {icon()}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

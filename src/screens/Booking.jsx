@@ -19,7 +19,6 @@ const Booking = () => {
   ]);
 
 
-  console.log(state);
   return (
     // <Container>
       <div className=" flex flex-col justify-center items-center">

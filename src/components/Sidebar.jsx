@@ -32,19 +32,16 @@ import AsideButton from './AsideButton';
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
   const menuRef = useRef(null);
-
   const isLoggedIn = useSelector(selectIsLoggedIn);
-
   const userPhoto = useSelector(selectPhotoURL);
+  const auth = getAuth();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const closeClickMenu = () => {
     setIsOpen(false);
   };
-
-  const auth = getAuth();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -60,8 +57,6 @@ const Sidebar = () => {
       }
     });
   }, [auth.currentUser]);
-
-  const navigate = useNavigate();
 
   const logoutHandler = () => {
     auth.signOut();
@@ -135,19 +130,16 @@ const Sidebar = () => {
     },
   ];
 
-
   return (
     <div ref={menuRef}>
       <AsideButton setIsOpen={setIsOpen} />
 
       {isOpen && (
-        <>
-          <AsideItem
-            loggedOutLinks={loggedOutLinks}
-            loggedInLinks={loggedInLinks}
-            isLoggedIn={isLoggedIn}
-          />
-        </>
+        <AsideItem
+          loggedOutLinks={loggedOutLinks}
+          loggedInLinks={loggedInLinks}
+          isLoggedIn={isLoggedIn}
+        />
       )}
     </div>
   );
