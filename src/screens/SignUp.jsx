@@ -13,8 +13,6 @@ import {
 } from 'firebase/auth';
 import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
 
-
-
 import Container from '../components/Container';
 import Form from '../components/Form';
 import Input from '../components/Input';
@@ -24,6 +22,8 @@ import setChangedValue from '../utils/changeHandler';
 
 import { db } from '../../firbase.config';
 import uploadImages from '../utils/uploadImages';
+import useValidators from '../hooks/useValidators';
+import ValidationMessage from '../components/ValidationMessage';
 
 const SignUp = () => {
   const [values, setValues] = useState({
@@ -78,12 +78,27 @@ const SignUp = () => {
 
       await setDoc(doc(db, 'users', user.uid), formDataCopy);
 
-
       navigate('/');
     } catch (err) {
       toast.error('User already exists!');
     }
   };
+
+  const {
+    message,
+    setMessage,
+    checkEmail,
+    checkPassword,
+    checkRepassword,
+    checkFirstName,
+    checkLastName,
+  } = useValidators({
+    firstName: values.firstName,
+    lastName: values.lastName,
+    email: values.email,
+    password: values.password,
+    repassword: values.repassword,
+  });
 
   return (
     <Container>
@@ -97,6 +112,7 @@ const SignUp = () => {
           value={values.name}
           handler={changeHandler}
           firstName={values.firstName}
+          onBlur={checkFirstName}
           icon="user"
         />
 
@@ -109,6 +125,7 @@ const SignUp = () => {
           value={values.name}
           handler={changeHandler}
           firstName={values.lastName}
+          onBlur={checkLastName}
           icon="user"
         />
 
@@ -121,6 +138,7 @@ const SignUp = () => {
           value={values.name}
           handler={changeHandler}
           email={values.email}
+          onBlur={checkEmail}
           icon="email"
         />
         <Input
@@ -132,6 +150,7 @@ const SignUp = () => {
           value={values.name}
           handler={changeHandler}
           password={values.password}
+          onBlur={checkPassword}
           icon="password"
         />
 
@@ -144,8 +163,11 @@ const SignUp = () => {
           value={values.name}
           handler={changeHandler}
           repassword={values.repassword}
+          onBlur={checkRepassword}
           icon="password"
         />
+
+        {message && <ValidationMessage message={message} />}
 
         <div>
           <h2 className="text-xs sm:text-base pl-2 pb-1">Profile Photo</h2>

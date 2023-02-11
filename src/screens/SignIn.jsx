@@ -12,9 +12,9 @@ import Container from '../components/Container';
 import Form from '../components/Form';
 import Input from '../components/Input';
 import OAuth from '../components/OAuth';
+import useValidators from '../hooks/useValidators';
 
 const SignIn = () => {
-  
   const [values, setValues] = useState({
     email: '',
     password: '',
@@ -25,6 +25,8 @@ const SignIn = () => {
   };
 
   const navigate = useNavigate();
+
+
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -71,9 +73,9 @@ const SignIn = () => {
           icon="password"
         />
         <div className="text-end flex  justify-between items-center">
-          <OAuth btnName={'Sign In With Google'}/>
+          <OAuth btnName={'Sign In With Google'} />
         </div>
-        <div className='mt-2 text-end'>
+        <div className="mt-2 text-end">
           <Link
             to="/forgot-password"
             className=" text-gray-500 text-xs underline"

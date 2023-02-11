@@ -53,6 +53,7 @@ const Input = (props) => {
       <div>
         <div className="flex mx-auto mb-5 justify-center items-center relative">
           {element}
+
           {props.icon && (
             <div className="pointer-events-none text-sm absolute top-1/2 transform -translate-y-1/2 left-3 text-gray-400">
               {icon()}
