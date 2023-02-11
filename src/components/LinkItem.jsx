@@ -5,11 +5,11 @@ const LinkItem = ({ link }) => {
     <li>
       <Link
         to={link.link}
-        className="flex items-center p-2 text-base font-normal rounded-lg dark:text-white hover:bg-slate-600 dark:hover:bg-slate-500 "
+        className="flex items-center p-2 text-base font-normal rounded-lg dark:text-white  sm:text-neutral-600 "
         onClick={link.onClickHandler}
       >
         <div
-          className="w-6 h-6 text-white transition duration-75 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white flex items-center"
+          className="w-6 h-6 text-white transition duration-75 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white flex items-center  sm:text-neutral-600"
           fill="currentColor"
         >
           {link.icon}
@@ -23,7 +23,7 @@ const LinkItem = ({ link }) => {
           />
         )}
 
-        <span className="ml-3">{link.name}</span>
+        <span className="ml-3 sm:ml-0">{link.name}</span>
       </Link>
     </li>
   );

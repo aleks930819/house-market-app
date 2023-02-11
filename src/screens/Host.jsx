@@ -25,6 +25,7 @@ import { useNavigate } from 'react-router-dom';
 import Modal from '../components/Modal';
 import Spinner from '../components/Spinner';
 import uploadImages from '../utils/uploadImages';
+import useValidators from '../hooks/useValidators';
 
 const Host = () => {
   const [loading, setLoading] = useState(false);
@@ -32,8 +33,8 @@ const Host = () => {
   const [values, setValues] = useState({
     type: 'rent',
     name: '',
-    bedrooms: 1,
-    bathrooms: 1,
+    bedrooms: 0,
+    bathrooms: 0,
     parking: false,
     furnished: false,
     location: '',
@@ -57,20 +58,36 @@ const Host = () => {
 
     setLoading(true);
 
-    if (values.discountPrice >= values.regularPrice) {
+    if (
+      values.bathrooms === 0 ||
+      values.bedrooms === 0 ||
+      values.name === '' ||
+      values.location === '' ||
+      values.regularPrice < 1 ||
+      values.discountPrice < 1 ||
+      values.longitude === 0 ||
+      values.latitude === 0
+    ) {
       setLoading(false);
-      toast.error('Discount price must be less than regular price');
+      toast.error('All fields are required');
       return;
     }
 
-    if (values.images.length > 6) {
+    if (values?.images?.length > 6) {
       setLoading(false);
 
       toast.error('You can only upload a maximum of 6 images');
       return;
     }
 
-    if (values.images.length < 3) {
+    if (values?.images?.length === 0) {
+      setLoading(false);
+
+      toast.error('Images are required');
+      return;
+    }
+
+    if (values?.images?.length < 3) {
       setLoading(false);
 
       toast.error('You must  upload a minimum of 3 images');
@@ -111,7 +128,11 @@ const Host = () => {
 
   return (
     <div className="flex flex-col  justify-center items-center mb-10 mt-16">
-      <Form heading="Sell / Rent Your Property" btnName="Send" onSubmit={onSubmit}>
+      <Form
+        heading="Sell / Rent Your Property"
+        btnName="Send"
+        onSubmit={onSubmit}
+      >
         <div className="flex flex-col gap-2 pb-5">
           <label>Sell / Rent</label>
           <div className="flex gap-2">
@@ -137,7 +158,7 @@ const Host = () => {
           element="input"
           type="text"
           htmlFor="name"
-          placeholder="Name"
+          placeholder="*Name"
           name="name"
           value={values.name}
           handler={changeHandler}
@@ -147,7 +168,7 @@ const Host = () => {
             element="input"
             type="number"
             htmlFor="bedrooms"
-            placeholder="Bedrooms"
+            placeholder="*Bedrooms"
             name="bedrooms"
             value={values.bedrooms}
             handler={changeHandler}
@@ -157,7 +178,7 @@ const Host = () => {
             element="input"
             type="number"
             htmlFor="bathrooms"
-            placeholder="Bathrooms"
+            placeholder="*Bathrooms"
             name="bathrooms"
             value={values.bathrooms}
             handler={changeHandler}
@@ -209,7 +230,7 @@ const Host = () => {
           element="textarea"
           type="text"
           htmlFor="location"
-          placeholder="Location"
+          placeholder="*Location"
           name="location"
           value={values.location}
           handler={changeHandler}
@@ -219,7 +240,7 @@ const Host = () => {
             element="input"
             type="text"
             htmlFor="latitude"
-            placeholder="Latitude"
+            placeholder="*Latitude"
             name="latitude"
             value={values.latitude}
             handler={changeHandler}
@@ -229,7 +250,7 @@ const Host = () => {
             element="input"
             type="text"
             htmlFor="longitude"
-            placeholder="longitude"
+            placeholder="*Longitude"
             name="longitude"
             value={values.longitude}
             handler={changeHandler}
@@ -264,7 +285,7 @@ const Host = () => {
             element="input"
             type="number"
             htmlFor="regularPrice"
-            placeholder="Regular Price"
+            placeholder="*Regular Price"
             name="regularPrice"
             value={values.regularPrice}
             handler={changeHandler}

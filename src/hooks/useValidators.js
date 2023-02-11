@@ -7,6 +7,15 @@ const useValidators = ({
   text,
   firstName,
   lastName,
+  bathrooms,
+  bedrooms,
+  regularPrice,
+  discountPrice,
+  location,
+  name,
+  latitude,
+  longitude,
+  images,
 }) => {
   const [message, setMessage] = useState('');
 
@@ -27,7 +36,7 @@ const useValidators = ({
   const checkLastName = () => {
     let pattern = /^[A-Z][a-z]{2,}$/;
 
-    if (!pattern.test(firstName.trim())) {
+    if (!pattern.test(lastName.trim())) {
       setMessage('Invalid last name!');
     }
 

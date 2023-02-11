@@ -131,7 +131,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div ref={menuRef}>
+    <div ref={menuRef} className='sm:hidden'>
       <AsideButton setIsOpen={setIsOpen} />
 
       {isOpen && (

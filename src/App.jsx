@@ -26,7 +26,7 @@ import Sidebar from './components/Sidebar';
 function App() {
   return (
     <>
-      {/* <Navbar /> */}
+      <Navbar />
       <Sidebar/>
       <ScrollToTop />
       <Routes>
