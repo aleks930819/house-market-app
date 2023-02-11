@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import Button from './Button';
 import { Facilities } from './Facilities';
 
@@ -9,9 +10,9 @@ const MyProperties = ({
   properties,
   setFilteredProperties,
 }) => {
-    
-  const buttonsType = ['sale', 'rent', 'all'];
   const [activeFilterButton, setActiveFilterButton] = useState('all');
+
+  const buttonsType = ['sale', 'rent', 'all'];
 
   const filterProperties = (type) => {
     setActiveFilterButton(type);
@@ -59,6 +60,9 @@ const MyProperties = ({
               </div>
             </div>
             <div className="flex gap-1 pt-5">
+              <Button success={true} to={`/edit-properties/${listing?.id}`}>
+                Edit
+              </Button>
               <Button
                 danger
                 onClick={() => {
@@ -67,9 +71,6 @@ const MyProperties = ({
                 }}
               >
                 Delete
-              </Button>
-              <Button success={true} to={`/edit-properties/${listing?.id}`}>
-                Edit
               </Button>
             </div>
           </div>

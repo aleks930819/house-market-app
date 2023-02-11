@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -11,6 +11,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 const Swipper = ({ data, setShowSwipper, starterIndex }) => {
+
   useEffect(() => {
     const keyDownHandler = (event) => {
       if (event.key === 'Escape') {
@@ -27,6 +28,7 @@ const Swipper = ({ data, setShowSwipper, starterIndex }) => {
     };
   }, []);
 
+  
   return (
     <div className="fixed w-full h-full  top-0 left-0  right-0 bottom-0 overflow-hidden bg-black bg-opacity-80">
       <AiOutlineClose

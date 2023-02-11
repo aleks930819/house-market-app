@@ -48,11 +48,11 @@ const ItemDetails = () => {
         data?.map((item) => (
           <>
             <div
-              className="container mx-auto px-20 mt-10 mb-10 min-h-screen"
+              className="container mx-auto px-20 mt-10 mb-10 min-h-screen z-0"
               key={item.id}
             >
               <div
-                className="border bg-slate-200  rounded-lg p-6  relative z-10"
+                className="border bg-slate-200  rounded-lg p-6  relative z-0"
                 style={{ cursor: 'auto' }}
               >
                 <div className="flex flex-wrap items-center">

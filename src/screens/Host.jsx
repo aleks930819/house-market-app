@@ -27,7 +27,6 @@ import Spinner from '../components/Spinner';
 import uploadImages from '../utils/uploadImages';
 
 const Host = () => {
-  const [geolocationEnabled, setGeolocationEnabled] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [values, setValues] = useState({
@@ -112,7 +111,7 @@ const Host = () => {
 
   return (
     <div className="flex flex-col  justify-center items-center mb-10 mt-16">
-      <Form heading="Become a host" btnName="Send" onSubmit={onSubmit}>
+      <Form heading="Sell / Rent Your Property" btnName="Send" onSubmit={onSubmit}>
         <div className="flex flex-col gap-2 pb-5">
           <label>Sell / Rent</label>
           <div className="flex gap-2">

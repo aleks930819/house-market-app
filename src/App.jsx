@@ -21,11 +21,13 @@ import EditProfile from './screens/EditProfile';
 import EditProperties from './screens/EditProperties';
 import Messages from './screens/Messages';
 import MessagesDetails from './screens/MessagesDetails';
+import Sidebar from './components/Sidebar';
 
 function App() {
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
+      <Sidebar/>
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<StarterScreen />} />

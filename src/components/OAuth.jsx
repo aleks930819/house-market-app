@@ -41,7 +41,7 @@ const OAuth = ({ btnName }) => {
   return (
     <div className="flex gap-1 mr-2">
       <Button onClick={() => onGoogleSignIn()} primary type="button">
-        <FcGoogle className="bg-white text-base mr-2" /> {btnName}
+        <FcGoogle className="text-base mr-2" /> {btnName}
       </Button>
     </div>
   );
