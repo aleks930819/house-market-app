@@ -9,6 +9,7 @@ import { Facilities } from './Facilities';
 import Contact from './Contact';
 import Map from './Map';
 import useGetDataById from '../hooks/useGetDataById';
+import { useKeyDown } from '../hooks/useKeyDown';
 
 const ItemDetails = () => {
   const [showSwipper, setShowSwipper] = useState(false);
@@ -117,7 +118,11 @@ const ItemDetails = () => {
             </div>
             <div>
               {showContact && (
-                <Contact subject={item?.name} userRef={item?.userRef}  key={item?.id}/>
+                <Contact
+                  subject={item?.name}
+                  userRef={item?.userRef}
+                  key={item?.id}
+                />
               )}
             </div>
           </>

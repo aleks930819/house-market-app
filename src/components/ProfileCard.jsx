@@ -2,11 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { AiFillMessage } from 'react-icons/ai';
 
-import {
-  getAuth,
-  deleteUser,
-  reauthenticateWithCredential,
-} from 'firebase/auth';
+import { getAuth, deleteUser } from 'firebase/auth';
 
 import Button from '../components/Button';
 
