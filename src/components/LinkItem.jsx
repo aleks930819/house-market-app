@@ -1,0 +1,32 @@
+import { Link } from 'react-router-dom';
+
+const LinkItem = ({ link }) => {
+  return (
+    <li>
+      <Link
+        to={link.link}
+        className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+        onClick={link.onClickHandler}
+      >
+        <div
+          className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+          fill="currentColor"
+        >
+          {link.icon}
+        </div>
+
+        {link.img && (
+          <img
+            src={link.img}
+            alt="user"
+            className="w-10 h-10 object-cover rounded-full"
+          />
+        )}
+
+        <span className="ml-3">{link.name}</span>
+      </Link>
+    </li>
+  );
+};
+
+export default LinkItem;
