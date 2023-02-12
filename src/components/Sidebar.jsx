@@ -44,6 +44,7 @@ const Sidebar = () => {
   };
 
   useEffect(() => {
+    
     onAuthStateChanged(auth, (user) => {
       if (user) {
         dispatch(
@@ -131,7 +132,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div ref={menuRef} className='sm:hidden'>
+    <div ref={menuRef} className="sm:hidden">
       <AsideButton setIsOpen={setIsOpen} />
 
       {isOpen && (

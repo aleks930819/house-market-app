@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import LinkItem from './LinkItem';
+import Search from './Search';
 
 const AsideItem = ({ loggedOutLinks, loggedInLinks, isLoggedIn }) => {
   return (
@@ -8,7 +10,7 @@ const AsideItem = ({ loggedOutLinks, loggedInLinks, isLoggedIn }) => {
       aria-label="Sidebar"
     >
       <div className="h-full px-3 py-4 overflow-y-auto bg-slate-400 ">
-        <ul className="space-y-2">
+        <ul className="space-y-2 pb-3">
           {!isLoggedIn &&
             loggedOutLinks.map((link) => (
               <LinkItem link={link} key={link.name} />
@@ -19,6 +21,7 @@ const AsideItem = ({ loggedOutLinks, loggedInLinks, isLoggedIn }) => {
               <LinkItem link={link} key={link.name} />
             ))}
         </ul>
+        <Search />
       </div>
     </aside>
   );

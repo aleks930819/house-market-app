@@ -22,41 +22,91 @@ import EditProperties from './screens/EditProperties';
 import Messages from './screens/Messages';
 import MessagesDetails from './screens/MessagesDetails';
 import Sidebar from './components/Sidebar';
+import SearchResult from './screens/SearchResult';
 
 function App() {
   return (
     <>
       <Navbar />
-      <Sidebar/>
+      <Sidebar />
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<StarterScreen />} />
 
-        <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
 
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/category/:category" element={<Category />} />
         <Route path="/offers" element={<Offers />} />
 
-        <Route path="/host" element={<PrivateRoute><Host /></PrivateRoute>} />
+        <Route
+          path="/host"
+          element={
+            <PrivateRoute>
+              <Host />
+            </PrivateRoute>
+          }
+        />
 
         <Route path="/details/:id" element={<ItemDetails />} />
 
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
 
-        
+        <Route
+          path="/edit-profile/:id"
+          element={
+            <PrivateRoute>
+              <EditProfile />
+            </PrivateRoute>
+          }
+        />
 
-        <Route path="/edit-profile/:id" element={<PrivateRoute><EditProfile /></PrivateRoute>} />
+        <Route
+          path="/edit/:id"
+          element={
+            <PrivateRoute>
+              <EditProfile />
+            </PrivateRoute>
+          }
+        />
 
-        <Route path="/edit/:id" element={<PrivateRoute><EditProfile /></PrivateRoute>} />
+        <Route
+          path="/edit-properties/:id"
+          element={
+            <PrivateRoute>
+              <EditProperties />
+            </PrivateRoute>
+          }
+        />
 
-        <Route path="/edit-properties/:id" element={<PrivateRoute><EditProperties /></PrivateRoute>} />
+        <Route
+          path="/messages"
+          element={
+            <PrivateRoute>
+              <Messages />
+            </PrivateRoute>
+          }
+        />
 
-        <Route path="/messages" element={<PrivateRoute><Messages /></PrivateRoute>} />
+        <Route
+          path="/messages/:id"
+          element={
+            <PrivateRoute>
+              <MessagesDetails />
+            </PrivateRoute>
+          }
+        />
 
-        <Route path="/messages/:id" element={<PrivateRoute><MessagesDetails /></PrivateRoute>} />
+        <Route path="/search" element={<SearchResult />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

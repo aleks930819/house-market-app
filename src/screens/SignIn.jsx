@@ -12,7 +12,6 @@ import Container from '../components/Container';
 import Form from '../components/Form';
 import Input from '../components/Input';
 import OAuth from '../components/OAuth';
-import useValidators from '../hooks/useValidators';
 
 const SignIn = () => {
   const [values, setValues] = useState({
@@ -20,13 +19,13 @@ const SignIn = () => {
     password: '',
   });
 
+  const auth = getAuth();
+
   const changeHandler = (e) => {
     setChangedValue(e, setValues);
   };
 
   const navigate = useNavigate();
-
-
 
   const onSubmit = async (e) => {
     e.preventDefault();

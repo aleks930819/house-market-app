@@ -2,6 +2,7 @@ import { BsFillShieldFill } from 'react-icons/bs';
 import { BiSupport } from 'react-icons/bi';
 import { MdFreeCancellation } from 'react-icons/md';
 
+
 const data = [
   {
     id: 1,

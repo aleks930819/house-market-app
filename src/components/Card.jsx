@@ -6,7 +6,7 @@ const Card = ({ item }) => {
     <>
       <div className="flex flex-col justify-center items-center w-2/3 overflow-hidden rounded-md shadow-xl text-xs  mb-5 cursor-pointer">
         <div className="w-full h-96">
-          <Link to={`/details/${item.id}`}>
+          <Link to={`/details/${item.id === undefined ? item.objectID : item.id }`}>
             <img
               src={item?.imgUrls[0]}
               className="w-full h-full object-cover md:hover:scale-110 transition duration-500 ease-in-out"

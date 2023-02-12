@@ -17,11 +17,7 @@ import { db } from '../../firbase.config';
 import { useNavigate } from 'react-router-dom';
 import uploadImages from '../utils/uploadImages';
 import { useSelector } from 'react-redux';
-import {
-  selectDisplayName,
-  selectEmail,
-  selectUserID,
-} from '../slices/authSlice';
+import { selectDisplayName, selectEmail } from '../slices/authSlice';
 
 const EditProfile = () => {
   const auth = getAuth();
@@ -39,8 +35,6 @@ const EditProfile = () => {
     email,
     images: {},
   });
-
-  console.log(values);
 
   const changeHandler = (e) => {
     setChangedValue(e, setValues);
@@ -75,7 +69,6 @@ const EditProfile = () => {
       toast.success('Profile updated successfully');
       navigate('/profile');
     } catch (err) {
-      console.log(err);
       setLoading(false);
 
       toast.error('Could not update profile');

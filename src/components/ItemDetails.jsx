@@ -2,14 +2,14 @@ import { useParams } from 'react-router-dom';
 
 import { useState } from 'react';
 
+import useGetDataById from '../hooks/useGetDataById';
+
 import Button from './Button';
 import Spinner from './Spinner';
 import Swipper from './Swiper';
 import { Facilities } from './Facilities';
 import Contact from './Contact';
 import Map from './Map';
-import useGetDataById from '../hooks/useGetDataById';
-import { useKeyDown } from '../hooks/useKeyDown';
 
 const ItemDetails = () => {
   const [showSwipper, setShowSwipper] = useState(false);
