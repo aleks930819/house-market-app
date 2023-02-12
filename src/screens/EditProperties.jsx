@@ -9,6 +9,7 @@ import {
   ref,
   uploadBytesResumable,
   getDownloadURL,
+  deleteObject,
 } from 'firebase/storage';
 
 import {
@@ -20,7 +21,7 @@ import {
   getDoc,
 } from 'firebase/firestore';
 
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, updateCurrentUser } from 'firebase/auth';
 
 import Form from '../components/Form';
 import Input from '../components/Input';
@@ -30,11 +31,12 @@ import setChangedValue from '../utils/changeHandler';
 
 import { db } from '../../firbase.config';
 import Spinner from '../components/Spinner';
+import uploadImages from '../utils/uploadImages';
 
 const EditProperties = () => {
-  const [geolocationEnabled, setGeolocationEnabled] = useState(false);
   const [loading, setLoading] = useState(false);
   const [listing, setListing] = useState(null);
+  const [images, setImages] = useState([]);
 
   const [values, setValues] = useState({
     type: 'rent',
@@ -76,6 +78,8 @@ const EditProperties = () => {
           images: {},
         }));
 
+        setImages(docSnap.data().imgUrls);
+
         setLoading(false);
       } else {
         toast.error('Listing does not exist');
@@ -87,49 +91,23 @@ const EditProperties = () => {
     fetchListing();
   }, []);
 
+  const storage = getStorage();
+
   const onSubmit = async (e) => {
     e.preventDefault();
 
     setLoading(true);
 
-    const uploadImages = async (image) => {
-      return new Promise((resolve, reject) => {
-        const storage = getStorage();
-        const fileName = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
-        const storageRef = ref(storage, `images/${fileName}`);
-        const uploadTask = uploadBytesResumable(storageRef, image);
-
-        uploadTask.on(
-          'state_changed',
-          (snapshot) => {
-            const progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            switch (snapshot.state) {
-              case 'paused':
-                break;
-              case 'running':
-                break;
-            }
-          },
-          (error) => {},
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              resolve(downloadURL);
-            });
-          }
-        );
-      });
-    };
-
-    // const imgUrls = await Promise.all(
-    //   [...values.images].map((image) => uploadImages(image))
-    // ).catch(() => {
-    //   toast.error('Images not uploaded');
-    //   return;
-    // });
+    const imgUrls = await Promise.all(
+      [...values.images].map((image) => uploadImages(image))
+    ).catch(() => {
+      toast.error('Images not uploaded');
+      return;
+    });
 
     const formDataCopy = {
       ...values,
+      imgUrls: [...images, ...imgUrls],
       userRef: auth.currentUser.uid,
       timestamp: serverTimestamp(),
     };
@@ -150,6 +128,31 @@ const EditProperties = () => {
   if (loading) {
     return <Spinner />;
   }
+
+  const deleteImageHandler = async (url) => {
+    setImages((prev) => prev.filter((img) => img !== url));
+
+    setValues((prev) => ({
+      ...prev,
+      images: prev.imgUrls.filter((img) => img !== url),
+    }));
+
+    const imgUrls = values.imgUrls.filter((img) => img !== url);
+
+    await updateDoc(doc(db, 'listings', id), {
+      imgUrls,
+    });
+
+    const desertRef = ref(storage, url);
+
+    deleteObject(desertRef)
+      .then(() => {
+        toast.success('Image deleted successfully');
+      })
+      .catch((error) => {
+        toast.error('Something went wrong');
+      });
+  };
 
   return (
     <div className="flex flex-col  justify-center items-center mb-10 mt-16">
@@ -350,6 +353,28 @@ const EditProperties = () => {
             accept=".jpg, .jpeg, .png"
             multiple
           />
+        </div>
+        <div>
+          <label>Images:</label>
+          <div className="flex flex-wrap gap-2 pt-5">
+            {images?.map((image, index) => (
+              <div key={index} className="flex flex-wrap flex-col items-center">
+                <img
+                  src={index === 0 ? images[0] : image}
+                  alt="image"
+                  className="w-20 h-20 object-cover pb-5"
+                />
+                <Button
+                  danger
+                  rounded
+                  type="button"
+                  onClick={() => deleteImageHandler(images[index])}
+                >
+                  Delete
+                </Button>
+              </div>
+            ))}
+          </div>
         </div>
       </Form>
     </div>

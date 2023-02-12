@@ -64,7 +64,6 @@ const Host = () => {
       values.name === '' ||
       values.location === '' ||
       values.regularPrice < 1 ||
-      values.discountPrice < 1 ||
       values.longitude === 0 ||
       values.latitude === 0
     ) {
