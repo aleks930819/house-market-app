@@ -1,39 +1,23 @@
-import { useState } from 'react';
-
-import { where, orderBy, limit, startAfter } from 'firebase/firestore';
+import { where, orderBy, limit } from 'firebase/firestore';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import CategoryListingItem from '../components/CategoryListingItem';
-
-import useFetchMore from '../hooks/useFetchMoreListings';
 
 import useGetData from '../hooks/useGetData';
 
 import Spinner from '../components/Spinner';
 
 const Offers = () => {
-  const [lastFetchedListing, setLastFetchedListing] = useState(null);
-
   const {
     data: listings,
     loading,
-    setData: setListings,
+    fetchMoreData,
   } = useGetData(
     'listings',
     orderBy('timestamp', 'desc'),
     where('offer', '==', true),
     limit(10)
-  );
-
-  const [onFetchMoreListings] = useFetchMore(
-    'listings',
-    orderBy('timestamp', 'desc'),
-    where('offer', '==', true),
-    startAfter(lastFetchedListing),
-    limit(10),
-    setLastFetchedListing,
-    setListings
   );
 
   if (loading) {
@@ -45,7 +29,7 @@ const Offers = () => {
       <InfiniteScroll
         dataLength={listings?.length || 0}
         hasMore={true}
-        next={onFetchMoreListings}
+        next={fetchMoreData}
         loader={''}
         endMessage={
           <p style={{ textAlign: 'center' }}>

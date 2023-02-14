@@ -1,18 +1,10 @@
 import { toast } from 'react-toastify';
 import { useState } from 'react';
-
-import { v4 as uuidv4 } from 'uuid';
-
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from 'firebase/storage';
+import { useNavigate } from 'react-router-dom';
 
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 
 import Form from '../components/Form';
 import Input from '../components/Input';
@@ -21,11 +13,8 @@ import Button from '../components/Button';
 import setChangedValue from '../utils/changeHandler';
 
 import { db } from '../../firbase.config';
-import { useNavigate } from 'react-router-dom';
-import Modal from '../components/Modal';
 import Spinner from '../components/Spinner';
 import uploadImages from '../utils/uploadImages';
-import useValidators from '../hooks/useValidators';
 
 const Host = () => {
   const [loading, setLoading] = useState(false);
@@ -99,6 +88,7 @@ const Host = () => {
       toast.error('Images not uploaded');
       return;
     });
+    
 
     const formDataCopy = {
       ...values,

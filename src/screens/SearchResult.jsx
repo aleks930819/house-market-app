@@ -1,14 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import {
-  SET_SEARCH_RESULT,
   selectSearchResult,
   SET_SEARCH_RESULT_TO_EMPTY,
 } from '../slices/searchQuerySlice';
 
 import Card from '../components/Card';
-import { Link } from 'react-router-dom';
 import Container from '../components/Container';
 
 const SearchResult = () => {

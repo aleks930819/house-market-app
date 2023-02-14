@@ -10,9 +10,10 @@ import Form from './Form';
 import Input from './Input';
 
 import { collection, addDoc } from 'firebase/firestore';
+import useValidators from '../hooks/useValidators';
 
 const Contact = ({ subject, userRef }) => {
-  const [message, setMessage] = useState('');
+  const [contactMessage, setContactMessage] = useState('');
 
   const auth = getAuth();
 
@@ -28,9 +29,17 @@ const Contact = ({ subject, userRef }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
+    if (contactMessage.length < 10) {
+      toast.error('Message must be at least 10 characters long');
+      return;
+    } else if (contactMessage.length > 500) {
+      toast.error('Message must be less than 500 characters long');
+      return;
+    }
+
     try {
       await addDoc(collection(db, 'messages'), {
-        text: message,
+        text: contactMessage,
         createdAt: new Date(),
         senderId: auth.currentUser.uid,
         subject: subject,
@@ -43,11 +52,11 @@ const Contact = ({ subject, userRef }) => {
       toast.error('Could not send message');
     }
 
-    setMessage('');
+    setContactMessage('');
   };
 
   const changeHandler = (e) => {
-    setMessage(e.target.value);
+    setContactMessage(e.target.value);
   };
 
   return (
@@ -59,11 +68,11 @@ const Contact = ({ subject, userRef }) => {
           htmlFor="message"
           placeholder="Your Message Here..."
           name="message"
-          value={message}
+          value={contactMessage}
           handler={changeHandler}
           rows={10}
           cols={150}
-          message={message}
+          message={contactMessage}
         />
       </Form>
     </div>

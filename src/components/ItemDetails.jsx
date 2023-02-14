@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useState } from 'react';
 
@@ -10,11 +10,18 @@ import Swipper from './Swiper';
 import { Facilities } from './Facilities';
 import Contact from './Contact';
 import Map from './Map';
+import { useSelector } from 'react-redux';
+
+import { selectIsLoggedIn } from '../slices/authSlice';
 
 const ItemDetails = () => {
   const [showSwipper, setShowSwipper] = useState(false);
   const [starterIndex, setStartedIndex] = useState(0);
   const [showContact, setShowContact] = useState(false);
+
+  const user = useSelector(selectIsLoggedIn);
+
+  const navigate = useNavigate();
 
   const { id } = useParams();
 
@@ -39,7 +46,10 @@ const ItemDetails = () => {
     );
   }
 
-  const clickHandler = (type) => {
+  const clickHandler = () => {
+    if (!user) {
+      navigate('/sign-in');
+    }
     setShowContact(!showContact);
   };
 
@@ -109,7 +119,7 @@ const ItemDetails = () => {
                     )}
                   </div>
                   <div className="w-full sm:flex-1  gap-4 pt-6 text-center">
-                    <Button primary onClick={() => clickHandler()}>
+                    <Button primary onClick={clickHandler}>
                       Contact
                     </Button>
                   </div>

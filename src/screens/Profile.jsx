@@ -36,14 +36,16 @@ const Profile = () => {
   const [showModal, setShowModal] = useState(false);
   const [itemToDeleteId, setItemToDeleteId] = useState(null);
 
-  const { data: properties, loading } = useGetData(
+  const {
+    data: properties,
+    loading,
+    fetchMoreData,
+  } = useGetData(
     'listings',
     orderBy('timestamp', 'desc'),
     where('userRef', '==', userId),
     limit(10)
   );
-
-  console.log(properties);
 
   useEffect(() => {
     setFilteredProperties(properties);
@@ -68,8 +70,6 @@ const Profile = () => {
   const handleModalView = () => {
     setShowModal(!showModal);
   };
-
-  
 
   const action = (
     <div className="flex gap-2">
@@ -101,13 +101,29 @@ const Profile = () => {
         {properties?.length === 0 ? (
           <AddPropertySuggestion />
         ) : (
-          <MyProperties
-            filteredProperties={filteredProperties}
-            handleModalView={handleModalView}
-            setItemToDeleteId={setItemToDeleteId}
-            properties={properties}
-            setFilteredProperties={setFilteredProperties}
-          />
+          <>
+            {' '}
+            <MyProperties
+              filteredProperties={filteredProperties}
+              handleModalView={handleModalView}
+              setItemToDeleteId={setItemToDeleteId}
+              properties={properties}
+              setFilteredProperties={setFilteredProperties}
+            />
+            {properties?.length >= 10 && (
+              <div className="flex justify-center">
+                <Button
+                  rounded
+                  success
+                  onClick={fetchMoreData}
+                  className="mt-5"
+                  disabled={properties.length < 1}
+                >
+                  Load More
+                </Button>
+              </div>
+            )}
+          </>
         )}
       </Container>
       {showModal && modal}

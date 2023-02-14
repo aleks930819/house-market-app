@@ -1,10 +1,8 @@
 import { useParams } from 'react-router-dom';
 
-import { where, orderBy, limit, startAfter } from 'firebase/firestore';
+import { where, orderBy, limit } from 'firebase/firestore';
 
 import InfiniteScroll from 'react-infinite-scroll-component';
-
-import useFetchMore from '../hooks/useFetchMoreListings';
 
 import CategoryListingItem from '../components/CategoryListingItem';
 import Spinner from '../components/Spinner';
@@ -12,7 +10,6 @@ import ScrollToTopButton from '../components/ScrollToTopButton';
 
 import useScrollToTop from '../hooks/useScrollToTop';
 import useGetData from '../hooks/useGetData';
-
 
 const Category = () => {
   const { isVisible } = useScrollToTop();
@@ -22,24 +19,12 @@ const Category = () => {
   const {
     data: listings,
     loading,
-    setData: setListings,
-    lastFetchedListing,
-    setLastFetchedListing,
+    fetchMoreData,
   } = useGetData(
     'listings',
     orderBy('timestamp', 'desc'),
     where('type', '==', params.category),
     limit(10)
-  );
-
-  const [onFetchMoreListings] = useFetchMore(
-    'listings',
-    orderBy('timestamp', 'desc'),
-    where('type', '==', params.category),
-    startAfter(lastFetchedListing),
-    limit(10),
-    setLastFetchedListing,
-    setListings
   );
 
   if (loading) {
@@ -50,7 +35,7 @@ const Category = () => {
     <>
       <InfiniteScroll
         dataLength={listings?.length || 0}
-        next={onFetchMoreListings}
+        next={fetchMoreData}
         hasMore={true}
         loader={''}
         endMessage={

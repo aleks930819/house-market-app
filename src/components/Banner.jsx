@@ -2,7 +2,7 @@ import HouseImage from '../assets/images/house.jpg';
 
 const Banner = () => {
   return (
-    <div className=" z-0">
+    <div className="hidden sm:block">
       <div className="w-ful h-96 md:h-60 relative z-0">
         <img
           src={HouseImage}

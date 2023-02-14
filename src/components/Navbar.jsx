@@ -4,7 +4,10 @@ import {
   MdOutlinePersonAddAlt,
   MdOutlineOtherHouses,
   MdOutlineForwardToInbox,
+  MdOutlineAdminPanelSettings,
 } from 'react-icons/md';
+
+import { GrUserAdmin } from 'react-icons/gr';
 
 import { FiLogOut } from 'react-icons/fi';
 import { RxAvatar } from 'react-icons/rx';
@@ -16,17 +19,18 @@ import { toast } from 'react-toastify';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getAuth } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 import LinkItem from './LinkItem';
 import Search from './Search';
 
 import {
-  SET_ACTIVE_USER,
   SET_LOGOUT,
   selectIsLoggedIn,
   selectPhotoURL,
-  selectEmail,
+  selectIsAdmin,
+  SET_ACTIVE_USER,
+  SET_ADMIN,
 } from '../slices/authSlice';
 
 const Navbar = () => {
@@ -35,9 +39,9 @@ const Navbar = () => {
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const userPhoto = useSelector(selectPhotoURL);
+  const isAdmin = useSelector(selectIsAdmin);
 
   const navigate = useNavigate();
-  const [admin, setAdmin] = useState(false);
 
   const logoutHandler = () => {
     auth.signOut();
@@ -46,19 +50,26 @@ const Navbar = () => {
     toast.success('Logged out successfully');
   };
 
-  const userEmail = useSelector(selectEmail);
-
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         user.getIdTokenResult().then((idTokenResult) => {
           if (!!idTokenResult.claims.admin) {
-            setAdmin(true);
+            dispatch(SET_ADMIN(true));
           }
         });
+
+        dispatch(
+          SET_ACTIVE_USER({
+            email: user.email,
+            name: user.displayName,
+            uid: user.uid,
+            photo: user.photoURL,
+          })
+        );
       }
     });
-  }, [userEmail]);
+  }, [auth.currentUser]);
 
   const loggedInLinks = [
     {
@@ -123,25 +134,29 @@ const Navbar = () => {
     },
   ];
 
+  console.log(isAdmin);
 
   return (
-    <>
-      <nav className=" bg-slate-200 p-8  w-full   drop-shadow-lg h-1/3 hidden sm:block">
-        <div className="flex justify-between items-center">
-          <Search  />
-          <ul className="flex justify-center gap-1 pt-5 sm:justify-end ">
-            {!isLoggedIn &&
-              loggedOutLinks.map((link) => (
-                <LinkItem link={link} key={link.name} />
-              ))}
-            {isLoggedIn &&
-              loggedInLinks.map((link) => (
-                <LinkItem link={link} key={link.name} />
-              ))}
-          </ul>
-        </div>
-      </nav>
-    </>
+    <nav className=" bg-slate-200 p-8  w-full   drop-shadow-lg h-1/3 hidden sm:block">
+      <div className="flex justify-between items-center">
+        <Search />
+        <ul className="flex justify-center gap-1 pt-5 sm:justify-end ">
+          {isAdmin && (
+            <LinkItem
+              link={{ name: 'Admin', link: '/admin', icon: <MdOutlineAdminPanelSettings /> }}
+            />
+          )}
+          {!isLoggedIn &&
+            loggedOutLinks.map((link) => (
+              <LinkItem link={link} key={link.name} />
+            ))}
+          {isLoggedIn &&
+            loggedInLinks.map((link) => (
+              <LinkItem link={link} key={link.name} />
+            ))}
+        </ul>
+      </div>
+    </nav>
   );
 };
 

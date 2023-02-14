@@ -23,6 +23,7 @@ import Messages from './screens/Messages';
 import MessagesDetails from './screens/MessagesDetails';
 import Sidebar from './components/Sidebar';
 import SearchResult from './screens/SearchResult';
+import ContactUs from './screens/ContactUs';
 
 function App() {
   return (
@@ -51,7 +52,7 @@ function App() {
           path="/host"
           element={
             <PrivateRoute>
-              <Host />
+            <Host />
             </PrivateRoute>
           }
         />
@@ -107,6 +108,7 @@ function App() {
         />
 
         <Route path="/search" element={<SearchResult />} />
+        <Route path="/contact-us" element={<ContactUs/>} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

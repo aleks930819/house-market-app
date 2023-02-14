@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { FooterData as data } from '../data/data';
 
 const Footer = () => {
@@ -6,7 +7,9 @@ const Footer = () => {
       <ul className="flex flex-col justify-center items-center text-center gap-2 sm:flex-row sm:gap-5 sm:justify-start sm:pl-10 text-xs">
         {data.map((item) => (
           <li key={item.id}>
-            <p dangerouslySetInnerHTML={{ __html: item.text }} />
+            <Link to="/contact-us">
+              <p dangerouslySetInnerHTML={{ __html: item.text }} />
+            </Link>
           </li>
         ))}
       </ul>

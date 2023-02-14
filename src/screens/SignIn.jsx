@@ -19,7 +19,6 @@ const SignIn = () => {
     password: '',
   });
 
-  const auth = getAuth();
 
   const changeHandler = (e) => {
     setChangedValue(e, setValues);

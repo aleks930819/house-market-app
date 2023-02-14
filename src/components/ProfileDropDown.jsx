@@ -4,11 +4,7 @@ import { MdOutlinePersonAddAlt } from 'react-icons/md';
 import { FiLogOut } from 'react-icons/fi';
 import { RxAvatar } from 'react-icons/rx';
 
-const ProfileDropDown = ({
-  isMenuDropDownOpen,
-  setMenuDropDownOpen,
-  logoutHandler,
-}) => {
+const ProfileDropDown = ({ isMenuDropDownOpen, logoutHandler }) => {
   return (
     <div
       className="flex flex-col justify-center items-center gap-4 absolute text-white bg-black opacity-80 

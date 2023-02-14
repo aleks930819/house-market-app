@@ -13,7 +13,7 @@ const StarterScreen = () => {
   return (
     <>
       <div className="">
-        {/* <Banner /> */}
+        <Banner />
         <ExploreSection />
         <StarterScreenWidget />
         <Features />

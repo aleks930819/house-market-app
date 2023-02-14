@@ -7,15 +7,6 @@ const useValidators = ({
   text,
   firstName,
   lastName,
-  bathrooms,
-  bedrooms,
-  regularPrice,
-  discountPrice,
-  location,
-  name,
-  latitude,
-  longitude,
-  images,
 }) => {
   const [message, setMessage] = useState('');
 
@@ -85,6 +76,7 @@ const useValidators = ({
       setMessage('');
     }
   };
+
 
   return {
     checkEmail,

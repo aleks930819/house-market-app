@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import LinkItem from './LinkItem';
 import Search from './Search';
+import { selectIsAdmin } from '../slices/authSlice';
+import { MdOutlineAdminPanelSettings } from 'react-icons/md';
+
 
 const AsideItem = ({ loggedOutLinks, loggedInLinks, isLoggedIn }) => {
+  const isAdmin = useSelector(selectIsAdmin);
   return (
     <aside
       id="separator-sidebar"
@@ -20,6 +24,11 @@ const AsideItem = ({ loggedOutLinks, loggedInLinks, isLoggedIn }) => {
             loggedInLinks.map((link) => (
               <LinkItem link={link} key={link.name} />
             ))}
+          {isAdmin && (
+            <LinkItem
+              link={{ name: 'Admin', link: '/admin', icon: <MdOutlineAdminPanelSettings /> }}
+            />
+          )}
         </ul>
         <Search />
       </div>

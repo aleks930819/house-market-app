@@ -29,6 +29,7 @@ const Search = () => {
     }
 
     search();
+
     setSearchQuery('');
     navigate('/search');
   };
@@ -41,7 +42,7 @@ const Search = () => {
           placeholder="Search..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="p-2  rounded-md outline-none w-48 sm:focus:w-80  transition-all duration-400 ease-in-out"
+          className="p-2  rounded-md outline-none w-48 sm:focus:w-80  transition-all duration-400 ease-in-out shadow-lg"
         />
       </form>
     </div>

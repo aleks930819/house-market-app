@@ -2,35 +2,22 @@ import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { v4 as uuidv4 } from 'uuid';
+import { AiFillDelete } from 'react-icons/ai';
 
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-  deleteObject,
-} from 'firebase/storage';
+import { getStorage, ref, deleteObject } from 'firebase/storage';
 
-import {
-  addDoc,
-  collection,
-  serverTimestamp,
-  doc,
-  updateDoc,
-  getDoc,
-} from 'firebase/firestore';
+import { serverTimestamp, doc, updateDoc, getDoc } from 'firebase/firestore';
 
-import { getAuth, onAuthStateChanged, updateCurrentUser } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 
 import Form from '../components/Form';
 import Input from '../components/Input';
 import Button from '../components/Button';
-
-import setChangedValue from '../utils/changeHandler';
+import Spinner from '../components/Spinner';
 
 import { db } from '../../firbase.config';
-import Spinner from '../components/Spinner';
+
+import setChangedValue from '../utils/changeHandler';
 import uploadImages from '../utils/uploadImages';
 
 const EditProperties = () => {
@@ -356,22 +343,21 @@ const EditProperties = () => {
         </div>
         <div>
           <label>Images:</label>
-          <div className="flex flex-wrap gap-2 pt-5">
+          <div className="grid  grid-cols-3  mt-2">
             {images?.map((image, index) => (
-              <div key={index} className="flex flex-wrap flex-col items-center">
+              <div
+                key={index}
+                className="flex flex-wrap flex-col items-center mb-3"
+              >
                 <img
                   src={index === 0 ? images[0] : image}
                   alt="image"
-                  className="w-20 h-20 object-cover pb-5"
+                  className="w-20 h-20 object-cover pb-1"
                 />
-                <Button
-                  danger
-                  rounded
-                  type="button"
+                <AiFillDelete
+                  className="text-red-700 cursor-pointer text-2xl"
                   onClick={() => deleteImageHandler(images[index])}
-                >
-                  Delete
-                </Button>
+                />
               </div>
             ))}
           </div>

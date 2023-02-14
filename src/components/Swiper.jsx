@@ -12,7 +12,6 @@ import 'swiper/css/navigation';
 import { useKeyDown } from '../hooks/useKeyDown';
 
 const Swipper = ({ data, setShowSwipper, starterIndex }) => {
-
   useKeyDown(() => setShowSwipper(), ['Escape']);
 
   return (

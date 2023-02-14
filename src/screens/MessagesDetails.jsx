@@ -74,6 +74,11 @@ const MessagesDetails = () => {
   const replyHandler = async (e) => {
     e.preventDefault();
 
+    if (reply === '') {
+      toast.error('Please enter a message');
+      return;
+    }
+
     try {
       await addDoc(collection(db, 'messages'), {
         text: reply,

@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import { useClickOutside } from '../hooks/useOnHoverOutside';
+import { useClickOutside } from '../hooks/useOnClickOutside';
 
 import {
   MdOutlineExplore,
@@ -25,6 +25,7 @@ import {
   SET_LOGOUT,
   selectIsLoggedIn,
   selectPhotoURL,
+  SET_ADMIN,
 } from '../slices/authSlice';
 
 import AsideItem from './AsideItem';
@@ -43,10 +44,29 @@ const Sidebar = () => {
     setIsOpen(false);
   };
 
+
+  // useEffect(() => {
+  //   auth.onAuthStateChanged((user) => {
+  //     if (user) {
+  //       user.getIdTokenResult().then((idTokenResult) => {
+  //         if (!!idTokenResult.claims.admin) {
+  //           setAdmin(true);
+  //         }
+  //       });
+  //     }
+  //   });
+  // }, []);
+
   useEffect(() => {
-    
+
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        user.getIdTokenResult().then((idTokenResult) => {
+          if (!!idTokenResult.claims.admin) {
+            dispatch(SET_ADMIN(true));
+          }
+        });
+
         dispatch(
           SET_ACTIVE_USER({
             email: user.email,
