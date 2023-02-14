@@ -12,6 +12,7 @@ import Container from '../components/Container';
 const SearchResult = () => {
   const listings = useSelector(selectSearchResult);
 
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,6 +28,8 @@ const SearchResult = () => {
       </Container>
     );
   }
+
+  console.log(listings);
 
   return (
     <div className="mb-10">

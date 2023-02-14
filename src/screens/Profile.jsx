@@ -28,6 +28,7 @@ import AddPropertySuggestion from '../components/AddPropertySuggestion';
 import { useSelector } from 'react-redux';
 import { selectUserID } from '../slices/authSlice';
 import useGetData from '../hooks/useGetData';
+import Watchlist from '../components/Watchlist';
 
 const Profile = () => {
   const userId = useSelector(selectUserID);
@@ -102,7 +103,6 @@ const Profile = () => {
           <AddPropertySuggestion />
         ) : (
           <>
-            {' '}
             <MyProperties
               filteredProperties={filteredProperties}
               handleModalView={handleModalView}
@@ -125,6 +125,7 @@ const Profile = () => {
             )}
           </>
         )}
+        <Watchlist />
       </Container>
       {showModal && modal}
     </>

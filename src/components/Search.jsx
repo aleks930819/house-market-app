@@ -25,6 +25,10 @@ const Search = () => {
       const index = searchClient.initIndex('listings');
       const { hits } = await index.search(searchQuery);
 
+      console.log(hits);
+
+
+
       dispatch(SET_SEARCH_RESULT(hits));
     }
 
@@ -42,7 +46,7 @@ const Search = () => {
           placeholder="Search..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="p-2  rounded-md outline-none w-48 sm:focus:w-80  transition-all duration-400 ease-in-out shadow-lg"
+          className="p-2  rounded-md outline-none w-48 sm:focus:w-80  transition-all duration-400 ease-in-out shadow-lg text-xs sm:text-sm"
         />
       </form>
     </div>

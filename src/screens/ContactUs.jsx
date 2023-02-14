@@ -53,7 +53,7 @@ const ContactUs = () => {
         <Form heading="Contact Us" btnName="Send" onSubmit={submitHandler}>
           <div className="flex flex-col sm:flex-row gap-5 mb-5">
             <p>Phone: 123-456-7890</p>
-            <p>Email: example@gmail.com</p>
+            <p>Email: admin@gmail.com</p>
           </div>
 
           <Input

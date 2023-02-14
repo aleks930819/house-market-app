@@ -43,17 +43,22 @@ export const FooterData = [
   {
     id: 1,
     text: '&#169; 2023 All rights reserved',
+    link: '/',
   },
   {
     id: 2,
     text: 'Privacy Policy',
+    link: '/',
   },
   {
     id: 3,
     text: 'Terms of Service',
+    link: '/',
   },
   {
     id: 4,
     text: 'Contact Us',
+    link: '/contact-us',
   },
 ];
+

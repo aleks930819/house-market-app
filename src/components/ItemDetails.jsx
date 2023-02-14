@@ -1,8 +1,11 @@
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
-import useGetDataById from '../hooks/useGetDataById';
+import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
+
+import { selectIsLoggedIn, selectUserID } from '../slices/authSlice';
 
 import Button from './Button';
 import Spinner from './Spinner';
@@ -10,22 +13,29 @@ import Swipper from './Swiper';
 import { Facilities } from './Facilities';
 import Contact from './Contact';
 import Map from './Map';
-import { useSelector } from 'react-redux';
 
-import { selectIsLoggedIn } from '../slices/authSlice';
+import useGetDataById from '../hooks/useGetDataById';
+
+import { db } from '../../firbase.config';
+
+import { toast } from 'react-toastify';
+import useGetWatchlistData from '../hooks/useGetWatchlistData';
 
 const ItemDetails = () => {
   const [showSwipper, setShowSwipper] = useState(false);
   const [starterIndex, setStartedIndex] = useState(0);
   const [showContact, setShowContact] = useState(false);
+  const [watchList, setWatchList] = useState(null);
 
   const user = useSelector(selectIsLoggedIn);
+  const userID = useSelector(selectUserID);
 
   const navigate = useNavigate();
 
   const { id } = useParams();
 
   const { data, loading } = useGetDataById('listings', id);
+  const { watchlistData } = useGetWatchlistData();
 
   if (loading) {
     return <Spinner />;
@@ -51,6 +61,41 @@ const ItemDetails = () => {
       navigate('/sign-in');
     }
     setShowContact(!showContact);
+  };
+
+  const addToWatchListHandler = async () => {
+    if (!user) {
+      return navigate('/sign-in');
+    }
+
+    // if (watchlistData.some((item) => item.id === data[0].id)) {
+    //   toast.error('Already in watch list');
+    //   return;
+    // }
+
+    try {
+      await addDoc(collection(db, 'watchlist'), {
+        owner: userID,
+        createdAt: new Date(),
+        listing: [...data],
+      });
+      toast.success('Added to watch list');
+    } catch (err) {
+      toast.error('Could not send message');
+    }
+
+    // try {
+    //   const userRef = doc(db, 'users', userID);
+
+    //   await updateDoc(userRef, {
+    //     watchlist: [...watchlistData, ...data],
+    //   });
+
+    //   toast.success('Added to watch list');
+    // } catch (error) {
+    //   console.log(error);
+    //   toast.error('Something went wrong');
+    // }
   };
 
   return (
@@ -118,9 +163,12 @@ const ItemDetails = () => {
                       />
                     )}
                   </div>
-                  <div className="w-full sm:flex-1  gap-4 pt-6 text-center">
+                  <div className="w-full flex flex-col  sm:flex-row sm:flex-1  gap-4 pt-6 text-center">
                     <Button primary onClick={clickHandler}>
                       Contact
+                    </Button>
+                    <Button primary onClick={addToWatchListHandler}>
+                      Add to Watchlist
                     </Button>
                   </div>
                 </div>

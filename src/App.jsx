@@ -24,6 +24,7 @@ import MessagesDetails from './screens/MessagesDetails';
 import Sidebar from './components/Sidebar';
 import SearchResult from './screens/SearchResult';
 import ContactUs from './screens/ContactUs';
+import PrivacyPolicy from './screens/PrivacyPolicy';
 
 function App() {
   return (
@@ -109,6 +110,7 @@ function App() {
 
         <Route path="/search" element={<SearchResult />} />
         <Route path="/contact-us" element={<ContactUs/>} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

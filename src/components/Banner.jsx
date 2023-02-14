@@ -2,17 +2,18 @@ import HouseImage from '../assets/images/house.jpg';
 
 const Banner = () => {
   return (
-    <div className="hidden sm:block">
-      <div className="w-ful h-96 md:h-60 relative z-0">
-        <img
-          src={HouseImage}
-          alt="house image"
-          className="w-full h-full  z-0 object-cover md:object-center absolute brightness-50"
-        />
-        <div className="">
-          <h3 className='text-white absolute  text-sm md:text-3xl  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">'>
+    <div
+      className="w-full bg-cover bg-center"
+      style={{
+        height: '32rem',
+        backgroundImage: `url(${HouseImage})`,
+      }}
+    >
+      <div className="flex items-center justify-center h-full w-full bg-black bg-opacity-50">
+        <div className="text-center">
+          <h1 className="text-white text-base font-semibold uppercase md:text-3xl">
             Discover Your New Home
-          </h3>
+          </h1>
         </div>
       </div>
     </div>

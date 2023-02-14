@@ -7,7 +7,7 @@ const Footer = () => {
       <ul className="flex flex-col justify-center items-center text-center gap-2 sm:flex-row sm:gap-5 sm:justify-start sm:pl-10 text-xs">
         {data.map((item) => (
           <li key={item.id}>
-            <Link to="/contact-us">
+            <Link to={item.link}>
               <p dangerouslySetInnerHTML={{ __html: item.text }} />
             </Link>
           </li>

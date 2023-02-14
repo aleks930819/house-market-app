@@ -2,6 +2,9 @@ import { useState } from 'react';
 
 import Button from './Button';
 import { Facilities } from './Facilities';
+import { Link } from 'react-router-dom';
+import Row from './Row';
+import CardSmall from './CardSmall';
 
 const MyProperties = ({
   filteredProperties,
@@ -43,7 +46,10 @@ const MyProperties = ({
           ))}
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-5">
+
+  
+
+      <Row grid3>
         {filteredProperties?.map((listing) => (
           <div
             className="border shadow-md p-5 flex flex-col gap-2 rounded-md cursor-pointer"
@@ -59,6 +65,7 @@ const MyProperties = ({
                 <Facilities listing={listing} key={listing?.id} />
               </div>
             </div>
+
             <div className="flex gap-1 pt-5">
               <Button success={true} to={`/edit-properties/${listing?.id}`}>
                 Edit
@@ -75,7 +82,7 @@ const MyProperties = ({
             </div>
           </div>
         ))}
-      </div>
+      </Row>  
     </div>
   );
 };

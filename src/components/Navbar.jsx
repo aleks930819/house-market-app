@@ -59,6 +59,7 @@ const Navbar = () => {
           }
         });
 
+
         dispatch(
           SET_ACTIVE_USER({
             email: user.email,
@@ -134,7 +135,6 @@ const Navbar = () => {
     },
   ];
 
-  console.log(isAdmin);
 
   return (
     <nav className=" bg-slate-200 p-8  w-full   drop-shadow-lg h-1/3 hidden sm:block">
