@@ -68,34 +68,23 @@ const ItemDetails = () => {
       return navigate('/sign-in');
     }
 
-    // if (watchlistData.some((item) => item.id === data[0].id)) {
-    //   toast.error('Already in watch list');
-    //   return;
-    // }
-
-    try {
-      await addDoc(collection(db, 'watchlist'), {
-        owner: userID,
-        createdAt: new Date(),
-        listing: [...data],
-      });
-      toast.success('Added to watch list');
-    } catch (err) {
-      toast.error('Could not send message');
+    if (watchlistData.some((item) => item.id === data[0].id)) {
+      toast.error('Already in watch list');
+      return;
     }
 
-    // try {
-    //   const userRef = doc(db, 'users', userID);
+    try {
+      const userRef = doc(db, 'users', userID);
 
-    //   await updateDoc(userRef, {
-    //     watchlist: [...watchlistData, ...data],
-    //   });
+      await updateDoc(userRef, {
+        watchlist: [...watchlistData, ...data],
+      });
 
-    //   toast.success('Added to watch list');
-    // } catch (error) {
-    //   console.log(error);
-    //   toast.error('Something went wrong');
-    // }
+      toast.success('Added to watch list');
+    } catch (error) {
+      console.log(error);
+      toast.error('Something went wrong');
+    }
   };
 
   return (

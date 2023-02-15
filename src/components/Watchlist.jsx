@@ -3,9 +3,49 @@ import useGetWatchlistData from '../hooks/useGetWatchlistData';
 import { Facilities } from './Facilities';
 import Button from './Button';
 import Row from './Row';
+import { db } from '../../firbase.config';
+
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+
+import { useSelector } from 'react-redux';
+import { selectUserID } from '../slices/authSlice';
+
+import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
 
 const Watchlist = (itemToDeleteId) => {
   const { watchlistData } = useGetWatchlistData();
+  const [filtredWatchlist, setFiltredWatchlist] = useState([]);
+  const userID = useSelector(selectUserID);
+
+  console.log(watchlistData);
+
+  useEffect(() => {
+    setFiltredWatchlist(watchlistData);
+  }, [watchlistData]);
+
+  const deleteItem = async (itemToDeleteId) => {
+    try {
+      const userRef = doc(db, 'users', userID);
+      const userDoc = await getDoc(userRef);
+
+      if (userDoc.exists()) {
+        const watchlist = userDoc.data().watchlist;
+        const newWatchlist = watchlist.filter(
+          (item) => item.id !== itemToDeleteId
+        );
+        await updateDoc(userRef, {
+          watchlist: newWatchlist,
+        });
+      }
+      setFiltredWatchlist(
+        filtredWatchlist.filter((item) => item.id !== itemToDeleteId)
+      );
+      toast.success('Item removed from watchlist');
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="mb-10 ">
@@ -13,7 +53,7 @@ const Watchlist = (itemToDeleteId) => {
         <h1 className="font-bold mt-5 sm:text-lg md:text-xl pb-5">Watchlist</h1>
       </div>
       <Row grid3>
-        {watchlistData?.map((listing) => (
+        {filtredWatchlist?.map((listing) => (
           <div
             className="border shadow-md p-5 flex flex-col gap-2 rounded-md cursor-pointer"
             key={listing?.id}
@@ -32,7 +72,9 @@ const Watchlist = (itemToDeleteId) => {
               <Button success to={`/details/${listing?.id}`}>
                 View
               </Button>
-              <Button danger>Remove From Watchlist</Button>
+              <Button danger onClick={() => deleteItem(listing?.id)}>
+                Remove From Watchlist
+              </Button>
             </div>
           </div>
         ))}

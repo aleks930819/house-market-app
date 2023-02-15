@@ -2,9 +2,7 @@ import { useState } from 'react';
 
 import Button from './Button';
 import { Facilities } from './Facilities';
-import { Link } from 'react-router-dom';
 import Row from './Row';
-import CardSmall from './CardSmall';
 
 const MyProperties = ({
   filteredProperties,
@@ -27,6 +25,7 @@ const MyProperties = ({
     const filtered = properties.filter((property) => property.type === type);
     setFilteredProperties(filtered);
   };
+  
 
   return (
     <div className="mb-10">
@@ -46,8 +45,6 @@ const MyProperties = ({
           ))}
         </div>
       </div>
-
-  
 
       <Row grid3>
         {filteredProperties?.map((listing) => (
@@ -82,7 +79,7 @@ const MyProperties = ({
             </div>
           </div>
         ))}
-      </Row>  
+      </Row>
     </div>
   );
 };
