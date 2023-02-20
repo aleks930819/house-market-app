@@ -12,7 +12,9 @@ const Button = ({
   rounded,
   roundedSmall,
   dark,
+  disabled,
   to,
+
   ...rest
 }) => {
   const classes = className(
@@ -30,6 +32,7 @@ const Button = ({
       'rounded-sm': roundedSmall,
       'bg-white': outline,
       'bg-zinc-500': dark,
+      'opacity-50 cursor-not-allowed': disabled,
       'text-blue-500': outline && primary,
       'text-green-500': outline && success,
       'text-yellow-400': outline && warning,

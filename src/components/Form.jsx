@@ -8,7 +8,7 @@ const Form = (props) => {
     >
       <h2 className="text-center md:text-lg">{props.heading}</h2>
       <div>{props.children}</div>
-      <Button primary className="text-center">
+      <Button disabled={props.message} primary className="text-center">
         {props.btnName}
       </Button>
     </form>

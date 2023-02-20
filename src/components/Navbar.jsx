@@ -46,6 +46,7 @@ const Navbar = () => {
   const logoutHandler = () => {
     auth.signOut();
     dispatch(SET_LOGOUT());
+    dispatch(SET_ADMIN(false));
     navigate('/');
     toast.success('Logged out successfully');
   };

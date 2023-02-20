@@ -15,7 +15,6 @@ import Container from '../components/Container';
 import Input from '../components/Input';
 import Modal from '../components/Modal';
 
-import useGetDataById from '../hooks/useGetDataById';
 import PropertyDetails from '../components/PropertyDetails';
 
 const MessagesDetails = () => {
@@ -176,7 +175,7 @@ const MessagesDetails = () => {
           </div>
         );
       })}
-      <PropertyDetails listingId={listingId} />
+      {listingId && <PropertyDetails listingId={listingId} />}
       {showModal && modal}
     </Container>
   );

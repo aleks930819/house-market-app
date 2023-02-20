@@ -25,7 +25,6 @@ const MyProperties = ({
     const filtered = properties.filter((property) => property.type === type);
     setFilteredProperties(filtered);
   };
-  
 
   return (
     <div className="mb-10">

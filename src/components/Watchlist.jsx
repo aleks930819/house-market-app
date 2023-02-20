@@ -1,19 +1,22 @@
-import { Link } from 'react-router-dom';
-import useGetWatchlistData from '../hooks/useGetWatchlistData';
-import { Facilities } from './Facilities';
-import Button from './Button';
-import Row from './Row';
-import { db } from '../../firbase.config';
+import { toast } from 'react-toastify';
+
+import { useEffect, useState } from 'react';
+
+import { useSelector } from 'react-redux';
 
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
-import { useSelector } from 'react-redux';
+import useGetWatchlistData from '../hooks/useGetWatchlistData';
+
+import { db } from '../../firbase.config';
+
 import { selectUserID } from '../slices/authSlice';
 
-import { toast } from 'react-toastify';
-import { useEffect, useState } from 'react';
+import { Facilities } from './Facilities';
+import Button from './Button';
+import Row from './Row';
 
-const Watchlist = (itemToDeleteId) => {
+const Watchlist = () => {
   const { watchlistData } = useGetWatchlistData();
   const [filtredWatchlist, setFiltredWatchlist] = useState([]);
   const userID = useSelector(selectUserID);
@@ -43,43 +46,47 @@ const Watchlist = (itemToDeleteId) => {
       );
       toast.success('Item removed from watchlist');
     } catch (error) {
-      console.log(error);
+      toast.error('Something went wrong');
     }
   };
 
   return (
-    <div className="mb-10 ">
-      <div>
-        <h1 className="font-bold mt-5 sm:text-lg md:text-xl pb-5">Watchlist</h1>
-      </div>
-      <Row grid3>
-        {filtredWatchlist?.map((listing) => (
-          <div
-            className="border shadow-md p-5 flex flex-col gap-2 rounded-md cursor-pointer"
-            key={listing?.id}
-          >
-            <div className="flex items-center gap-2">
-              <img
-                src={listing?.imgUrls[0]}
-                className="w-16 h-16 object-cover rounded-md"
-              />
-              <div className="flex flex-col pl-5">
-                <h1 className="font-bold">{listing?.name}</h1>
-                <Facilities listing={listing} key={listing?.id} />
+    filtredWatchlist && (
+      <div className="mb-10 ">
+        <div>
+          <h1 className="font-bold mt-5 sm:text-lg md:text-xl pb-5">
+            Watchlist
+          </h1>
+        </div>
+        <Row grid3>
+          {filtredWatchlist?.map((listing) => (
+            <div
+              className="border shadow-md p-5 flex flex-col gap-2 rounded-md cursor-pointer"
+              key={listing?.id}
+            >
+              <div className="flex items-center gap-2">
+                <img
+                  src={listing?.imgUrls[0]}
+                  className="w-16 h-16 object-cover rounded-md"
+                />
+                <div className="flex flex-col pl-5">
+                  <h1 className="font-bold">{listing?.name}</h1>
+                  <Facilities listing={listing} key={listing?.id} />
+                </div>
+              </div>
+              <div className="flex gap-1 pt-5">
+                <Button success to={`/details/${listing?.id}`}>
+                  View
+                </Button>
+                <Button danger onClick={() => deleteItem(listing?.id)}>
+                  Remove From Watchlist
+                </Button>
               </div>
             </div>
-            <div className="flex gap-1 pt-5">
-              <Button success to={`/details/${listing?.id}`}>
-                View
-              </Button>
-              <Button danger onClick={() => deleteItem(listing?.id)}>
-                Remove From Watchlist
-              </Button>
-            </div>
-          </div>
-        ))}
-      </Row>
-    </div>
+          ))}
+        </Row>
+      </div>
+    )
   );
 };
 

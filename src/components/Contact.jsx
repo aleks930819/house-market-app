@@ -10,7 +10,6 @@ import Form from './Form';
 import Input from './Input';
 
 import { collection, addDoc } from 'firebase/firestore';
-import useValidators from '../hooks/useValidators';
 
 const Contact = ({ subject, userRef }) => {
   const [contactMessage, setContactMessage] = useState('');

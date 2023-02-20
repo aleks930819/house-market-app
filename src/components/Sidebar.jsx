@@ -44,21 +44,7 @@ const Sidebar = () => {
     setIsOpen(false);
   };
 
-
-  // useEffect(() => {
-  //   auth.onAuthStateChanged((user) => {
-  //     if (user) {
-  //       user.getIdTokenResult().then((idTokenResult) => {
-  //         if (!!idTokenResult.claims.admin) {
-  //           setAdmin(true);
-  //         }
-  //       });
-  //     }
-  //   });
-  // }, []);
-
   useEffect(() => {
-
     onAuthStateChanged(auth, (user) => {
       if (user) {
         user.getIdTokenResult().then((idTokenResult) => {
@@ -82,6 +68,7 @@ const Sidebar = () => {
   const logoutHandler = () => {
     auth.signOut();
     dispatch(SET_LOGOUT());
+    dispatch(SET_ADMIN(false));
     navigate('/');
     toast.success('Logged out successfully');
   };

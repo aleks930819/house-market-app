@@ -31,7 +31,7 @@ const useGetDataById = (collectionName, id) => {
 
     getData();
     setLoading(false);
-  }, [collectionName, id]);
+  }, [collectionName, id, navigate]);
 
   return { data, loading };
 };

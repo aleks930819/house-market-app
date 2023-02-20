@@ -61,6 +61,7 @@ const Host = () => {
       return;
     }
 
+ 
     if (values?.images?.length > 6) {
       setLoading(false);
 
@@ -88,7 +89,6 @@ const Host = () => {
       toast.error('Images not uploaded');
       return;
     });
-    
 
     const formDataCopy = {
       ...values,

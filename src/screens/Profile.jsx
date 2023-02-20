@@ -125,6 +125,7 @@ const Profile = () => {
             )}
           </>
         )}
+        
         <Watchlist />
       </Container>
       {showModal && modal}

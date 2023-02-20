@@ -7,7 +7,7 @@ const AddPropertySuggestion = () => {
         You haven't got any property.
       </h2>
       <Link to="/host">
-        <Button rounded primary className="mt-5">
+        <Button roundedSmall  primary className="mt-5">
           Add Property
         </Button>
       </Link>

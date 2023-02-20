@@ -12,14 +12,13 @@ import Container from '../components/Container';
 const SearchResult = () => {
   const listings = useSelector(selectSearchResult);
 
-
   const dispatch = useDispatch();
 
   useEffect(() => {
     return () => {
       dispatch(SET_SEARCH_RESULT_TO_EMPTY());
     };
-  }, []);
+  }, [dispatch]);
 
   if (listings.length === 0) {
     return (
@@ -28,8 +27,6 @@ const SearchResult = () => {
       </Container>
     );
   }
-
-  console.log(listings);
 
   return (
     <div className="mb-10">

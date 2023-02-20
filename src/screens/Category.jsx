@@ -27,13 +27,15 @@ const Category = () => {
     limit(10)
   );
 
+
+
   if (loading) {
     return <Spinner />;
   }
 
   return (
     <>
-      <InfiniteScroll
+      {/* <InfiniteScroll
         dataLength={listings?.length || 0}
         next={fetchMoreData}
         hasMore={true}
@@ -43,12 +45,12 @@ const Category = () => {
             <b>Yay! You have seen it all</b>
           </p>
         }
-      >
+      > */}
         <div className="flex flex-col min-h-screen mb-10">
           <CategoryListingItem data={listings} />
           {isVisible && <ScrollToTopButton />}
         </div>
-      </InfiniteScroll>
+      {/* </InfiniteScroll> */}
     </>
   );
 };

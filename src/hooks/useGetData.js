@@ -23,43 +23,43 @@ const useGetData = (collectionName, orderBy, where, limit) => {
       try {
         setLoading(true);
 
-        const snapShot = await onSnapshot(q, (querySnapshot) => {
-          const data = [];
+        // const snapShot = await onSnapshot(q, (querySnapshot) => {
+        //   const data = [];
 
-          querySnapshot.forEach((doc) => {
-            data.push({ id: doc.id, ...doc.data() });
-          });
+        //   querySnapshot.forEach((doc) => {
+        //     data.push({ id: doc.id, ...doc.data() });
+        //   });
 
-          const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+        //   const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
 
-          if (lastVisible !== lastFetchedListing) {
-            setLastFetchedListing(lastVisible);
-          } else {
-            setLastElement(true);
-            setLoading(false);
-            return;
-          }
+        //   if (lastVisible !== lastFetchedListing) {
+        //     setLastFetchedListing(lastVisible);
+        //   } else {
+        //     setLastElement(true);
+        //     setLoading(false);
+        //     return;
+        //   }
 
-          setData(data);
-          setLoading(false);
-        });
-
-        // const querySnapshot = await getDocs(q);
-
-        // const data = querySnapshot.docs.map((doc) => ({
-        //   ...doc.data(),
-        //   id: doc.id,
-        // }));
-
-        // const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-
-        // if (lastVisible !== lastFetchedListing) {
-        //   setLastFetchedListing(lastVisible);
-        // } else {
-        //   setLastElement(true);
+        //   setData(data);
         //   setLoading(false);
-        //   return;
-        // }
+        // });
+
+        const querySnapshot = await getDocs(q);
+
+        const data = querySnapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+
+        const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+        if (lastVisible !== lastFetchedListing) {
+          setLastFetchedListing(lastVisible);
+        } else {
+          setLastElement(true);
+          setLoading(false);
+          return;
+        }
 
         setData(data);
         setLoading(false);

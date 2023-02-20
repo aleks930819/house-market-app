@@ -1,14 +1,17 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 export const useKeyDown = (callback, keys) => {
-  const onKeyDown = (event) => {
-    const wasAnyKeyPressed = keys.some((key) => event.key === key);
+  const onKeyDown = useCallback(
+    (event) => {
+      const wasAnyKeyPressed = keys.some((key) => event.key === key);
 
-    if (wasAnyKeyPressed) {
-      event.preventDefault();
-      callback();
-    }
-  };
+      if (wasAnyKeyPressed) {
+        event.preventDefault();
+        callback();
+      }
+    },
+    [callback, keys]
+  );
 
   useEffect(() => {
     document.addEventListener('keydown', onKeyDown);

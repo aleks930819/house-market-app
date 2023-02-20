@@ -44,6 +44,17 @@ const SignUp = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
+    if (
+      !values.firstName ||
+      !values.lastName ||
+      !values.email ||
+      !values.password ||
+      !values.repassword
+    ) {
+      toast.error('All fields are required');
+      return;
+    }
+
     const imgUrl = await Promise.all(
       [...values.images].map((image) => uploadImages(image))
     ).catch(() => {
@@ -67,7 +78,7 @@ const SignUp = () => {
         photoURL: imgUrl[0],
       });
 
-      const formDataCopy = { ...values, imgUrl };
+      const formDataCopy = { ...values, imgUrl, role: 'user' };
 
       delete formDataCopy.repassword;
       delete formDataCopy.password;
@@ -86,7 +97,6 @@ const SignUp = () => {
 
   const {
     message,
-    setMessage,
     checkEmail,
     checkPassword,
     checkRepassword,
@@ -102,7 +112,12 @@ const SignUp = () => {
 
   return (
     <Container>
-      <Form heading="Sign Up" btnName="Sign Up" onSubmit={onSubmit}>
+      <Form
+        heading="Sign Up"
+        btnName="Sign Up"
+        onSubmit={onSubmit}
+        message={message}
+      >
         <Input
           element="input"
           type="text"
