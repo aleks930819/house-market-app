@@ -20,6 +20,7 @@ const PropertyDetails = ({ listingId }) => {
                 <img
                   src={listing?.imgUrls[0]}
                   className="w-16 h-16 object-cover rounded-md"
+                  alt={listing?.name}
                 />
                 <div className="flex flex-col pl-5">
                   <h1 className="font-bold">{listing?.name}</h1>

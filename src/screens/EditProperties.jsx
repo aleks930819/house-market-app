@@ -76,7 +76,7 @@ const EditProperties = () => {
     };
 
     fetchListing();
-  }, []);
+  }, [id, navigate]);
 
   const storage = getStorage();
 

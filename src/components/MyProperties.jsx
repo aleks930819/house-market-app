@@ -16,11 +16,13 @@ const MyProperties = ({
   const buttonsType = ['sale', 'rent', 'all'];
 
   const filterProperties = (type) => {
+    
     setActiveFilterButton(type);
     if (type === 'all') {
       setFilteredProperties(properties);
       return;
     }
+
 
     const filtered = properties.filter((property) => property.type === type);
     setFilteredProperties(filtered);
@@ -55,6 +57,7 @@ const MyProperties = ({
               <img
                 src={listing?.imgUrls[0]}
                 className="w-16 h-16 object-cover rounded-md"
+                alt={listing?.name}
               />
               <div className="flex flex-col pl-5">
                 <h1 className="font-bold">{listing?.name}</h1>

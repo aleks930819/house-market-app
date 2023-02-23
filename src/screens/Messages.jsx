@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { selectUserID } from '../slices/authSlice';
 import useGetData from '../hooks/useGetData';
 import Button from '../components/Button';
+import { useEffect } from 'react';
 
 const Messages = () => {
   const userId = useSelector(selectUserID);
@@ -15,12 +16,19 @@ const Messages = () => {
     data: messages,
     loading,
     fetchMoreData,
+    getData,
   } = useGetData(
     'messages',
     orderBy('createdAt', 'desc'),
     where('userRef', '==', userId),
     limit(10)
   );
+
+  useEffect(() => {
+    if (!messages) {
+      getData();
+    }
+  }, [getData, messages]);
 
   if (loading) {
     return <Spinner />;
@@ -31,14 +39,12 @@ const Messages = () => {
       <Container>
         <div className="flex flex-col items-center mt-10 mb-10">
           {messages?.length === 0 ? (
-            <>
-              <p className="text-center text-sm sm:text-base">
-                You have no messages yet.
-                <Link to="/explore" className="text-blue-500">
-                  Click here to see our properties.
-                </Link>
-              </p>
-            </>
+            <p className="text-center text-sm sm:text-base">
+              You have no messages yet.
+              <Link to="/explore" className="text-blue-500">
+                Click here to see our properties.
+              </Link>
+            </p>
           ) : (
             <>
               <h1 className="text-lg font-bold mb-10">Messages</h1>
@@ -58,13 +64,13 @@ const Messages = () => {
                   </Link>
                 ))}
               </div>
-              {messages?.length >= 10 ? (
+
+              {messages?.length >= 10 && (
                 <Button primary onClick={fetchMoreData} className="mt-10">
                   Load more
                 </Button>
-              ) : null}
+              )}
             </>
-            
           )}
         </div>
       </Container>

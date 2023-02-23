@@ -1,23 +1,12 @@
 import Container from '../components/Container';
-import Sell from '../assets/images/sell.jpg';
-import Rent from '../assets/images/rent.jpg';
 import { Link } from 'react-router-dom';
 import Row from '../components/Row';
 
-const data = [
-  {
-    id: 1,
-    title: 'Places for sale',
-    image: Sell,
-    link: '/category/sale',
-  },
-  {
-    id: 2,
-    title: 'Places for rent',
-    image: Rent,
-    link: '/category/rent',
-  },
-];
+
+import { ExploreData as data } from '../data/data';
+
+
+
 
 const Explore = () => {
   return (

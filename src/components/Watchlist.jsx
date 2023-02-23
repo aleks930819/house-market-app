@@ -51,8 +51,8 @@ const Watchlist = () => {
   };
 
   return (
-    filtredWatchlist && (
-      <div className="mb-10 ">
+    filtredWatchlist.length !== 0 && (
+      <div className="mb-10  flex justify-start items-start flex-col">
         <div>
           <h1 className="font-bold mt-5 sm:text-lg md:text-xl pb-5">
             Watchlist
@@ -68,6 +68,7 @@ const Watchlist = () => {
                 <img
                   src={listing?.imgUrls[0]}
                   className="w-16 h-16 object-cover rounded-md"
+                  alt={listing?.name}
                 />
                 <div className="flex flex-col pl-5">
                   <h1 className="font-bold">{listing?.name}</h1>

@@ -30,11 +30,7 @@ const AdminListingsTable = ({ data }) => {
     },
   ];
 
-  return (
-    <div className="flex flex-col justify-center items-center min-h-screen">
-      <Table data={data} config={config} />
-    </div>
-  );
+  return <Table data={data} config={config} />;
 };
 
 export default AdminListingsTable;

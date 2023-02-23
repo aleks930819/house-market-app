@@ -2,6 +2,8 @@ import { useParams } from 'react-router-dom';
 
 import { where, orderBy, limit } from 'firebase/firestore';
 
+import { useEffect } from 'react';
+
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import CategoryListingItem from '../components/CategoryListingItem';
@@ -20,6 +22,7 @@ const Category = () => {
     data: listings,
     loading,
     fetchMoreData,
+    getData,
   } = useGetData(
     'listings',
     orderBy('timestamp', 'desc'),
@@ -28,30 +31,34 @@ const Category = () => {
   );
 
 
+  useEffect(() => {
+    if (!listings) {
+      getData();
+    }
+    
+  }, [getData,listings]);
 
   if (loading) {
     return <Spinner />;
   }
 
   return (
-    <>
-      {/* <InfiniteScroll
-        dataLength={listings?.length || 0}
-        next={fetchMoreData}
-        hasMore={true}
-        loader={''}
-        endMessage={
-          <p style={{ textAlign: 'center' }}>
-            <b>Yay! You have seen it all</b>
-          </p>
-        }
-      > */}
-        <div className="flex flex-col min-h-screen mb-10">
-          <CategoryListingItem data={listings} />
-          {isVisible && <ScrollToTopButton />}
-        </div>
-      {/* </InfiniteScroll> */}
-    </>
+    <InfiniteScroll
+      dataLength={listings?.length || 0}
+      next={fetchMoreData}
+      hasMore={true}
+      loader={''}
+      endMessage={
+        <p style={{ textAlign: 'center' }}>
+          <b>There is no more listings</b>
+        </p>
+      }
+    >
+      <div className="flex flex-col min-h-screen mb-10">
+        <CategoryListingItem data={listings} />
+        {isVisible && <ScrollToTopButton />}
+      </div>
+    </InfiniteScroll>
   );
 };
 

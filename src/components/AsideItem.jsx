@@ -4,8 +4,12 @@ import Search from './Search';
 import { selectIsAdmin } from '../slices/authSlice';
 import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 
-
-const AsideItem = ({ loggedOutLinks, loggedInLinks, isLoggedIn }) => {
+const AsideItem = ({
+  loggedOutLinks,
+  loggedInLinks,
+  isLoggedIn,
+  setIsOpen,
+}) => {
   const isAdmin = useSelector(selectIsAdmin);
   return (
     <aside
@@ -17,16 +21,21 @@ const AsideItem = ({ loggedOutLinks, loggedInLinks, isLoggedIn }) => {
         <ul className="space-y-2 pb-3">
           {!isLoggedIn &&
             loggedOutLinks.map((link) => (
-              <LinkItem link={link} key={link.name} />
+              <LinkItem link={link} key={link.name} setIsOpen={setIsOpen} />
             ))}
 
           {isLoggedIn &&
             loggedInLinks.map((link) => (
-              <LinkItem link={link} key={link.name} />
+              <LinkItem link={link} key={link.name} setIsOpen={setIsOpen} />
             ))}
           {isAdmin && (
             <LinkItem
-              link={{ name: 'Admin', link: '/admin', icon: <MdOutlineAdminPanelSettings /> }}
+              link={{
+                name: 'Admin',
+                link: '/admin',
+                icon: <MdOutlineAdminPanelSettings />,
+              }}
+              setIsOpen={setIsOpen}
             />
           )}
         </ul>

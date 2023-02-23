@@ -1,7 +1,7 @@
 import Button from './Button';
 import Table from './Table';
 
-const UsersTable = ({ data }) => {
+const AdminUsersTable = ({ data }) => {
   const config = [
     {
       label: 'Name',
@@ -26,11 +26,7 @@ const UsersTable = ({ data }) => {
     },
   ];
 
-  return (
-    <div className="flex flex-col justify-center items-center min-h-screen">
-      <Table data={data} config={config} />
-    </div>
-  );
+  return <Table data={data} config={config} />;
 };
 
-export default UsersTable;
+export default AdminUsersTable;

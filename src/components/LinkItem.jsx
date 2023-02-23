@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 
-const LinkItem = ({ link }) => {
+const LinkItem = ({ link, setIsOpen }) => {
   return (
-    <li>
+    <li onClick={setIsOpen && (() => setIsOpen(false))}>
       <Link
         to={link.link}
         className="flex items-center p-2 text-base font-normal rounded-lg dark:text-white  sm:text-neutral-600 "
@@ -21,7 +21,9 @@ const LinkItem = ({ link }) => {
           <img
             src={link.img}
             alt="user"
-            className="w-10 h-10 object-cover rounded-full"
+            className="w-10 h-10 object-cover rounded-full 
+            sm:w-8 sm:h-8
+            "
           />
         )}
 

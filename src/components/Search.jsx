@@ -25,10 +25,6 @@ const Search = () => {
       const index = searchClient.initIndex('listings');
       const { hits } = await index.search(searchQuery);
 
-      console.log(hits);
-
-
-
       dispatch(SET_SEARCH_RESULT(hits));
     }
 

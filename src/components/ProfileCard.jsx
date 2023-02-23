@@ -77,6 +77,7 @@ const ProfileCard = () => {
           <img
             src={photo || DefaultProfilePhoto}
             className="w-full h-full object-cover rounded-full"
+            alt={displayName}
           />
         </div>
         <Link to="/messages">

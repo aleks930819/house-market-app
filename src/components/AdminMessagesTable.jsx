@@ -151,15 +151,13 @@ const AdminMessagesTable = ({ data }) => {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center min-h-screen">
         {messagesData.length > 0 ? (
           <Table data={messagesData} config={config} />
         ) : (
-          <h1 className="flex justify-center items-center text-xl ">
+          <h1 className="flex justify-center items-center text-xl mt-10 ">
             No messages
           </h1>
         )}
-      </div>
       {showModal && modal}
     </>
   );

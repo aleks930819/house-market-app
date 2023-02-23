@@ -63,7 +63,7 @@ const Sidebar = () => {
         );
       }
     });
-  }, [auth.currentUser]);
+  }, [auth, dispatch]);
 
   const logoutHandler = () => {
     auth.signOut();
@@ -147,6 +147,7 @@ const Sidebar = () => {
           loggedOutLinks={loggedOutLinks}
           loggedInLinks={loggedInLinks}
           isLoggedIn={isLoggedIn}
+          setIsOpen={setIsOpen}
         />
       )}
     </div>

@@ -1,19 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { getAuth } from 'firebase/auth';
-import {
-  updateDoc,
-  doc,
-  getDocs,
-  collection,
-  query,
-  where,
-  orderBy,
-  limit,
-  deleteDoc,
-} from 'firebase/firestore';
+import { doc, where, orderBy, limit, deleteDoc } from 'firebase/firestore';
 
 import { db } from '../../firbase.config';
 
@@ -41,12 +29,20 @@ const Profile = () => {
     data: properties,
     loading,
     fetchMoreData,
+    getData,
   } = useGetData(
     'listings',
     orderBy('timestamp', 'desc'),
     where('userRef', '==', userId),
     limit(10)
   );
+
+  useEffect(() => {
+    if (!properties) {
+      getData();
+    }
+  }, [getData,properties]);
+
 
   useEffect(() => {
     setFilteredProperties(properties);
@@ -125,7 +121,7 @@ const Profile = () => {
             )}
           </>
         )}
-        
+
         <Watchlist />
       </Container>
       {showModal && modal}

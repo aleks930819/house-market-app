@@ -2,10 +2,9 @@ import { Link } from 'react-router-dom';
 import { Facilities } from './Facilities';
 
 const Card = ({ item }) => {
-  console.log(item);
   return (
     <>
-      <div className="flex flex-col justify-center items-center w-2/3 overflow-hidden rounded-md shadow-xl text-xs  mb-5 cursor-pointer mx-auto">
+      <div className="flex flex-col justify-center items-center w-full md:w-2/3 overflow-hidden rounded-md shadow-xl text-xs  mb-5 cursor-pointer mx-auto">
         <div className="w-full h-96">
           <Link
             to={`/details/${item.id === undefined ? item.objectID : item.id}`}
@@ -13,6 +12,7 @@ const Card = ({ item }) => {
             <img
               src={item?.imgUrls[0]}
               className="w-full h-full object-cover md:hover:scale-110 transition duration-500 ease-in-out"
+              alt="listing"
             />
           </Link>
         </div>

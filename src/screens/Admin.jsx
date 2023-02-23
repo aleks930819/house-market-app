@@ -1,14 +1,15 @@
-import { useState } from 'react';
-import Button from '../components/Button';
-import { db } from '../../firbase.config';
+import { useEffect, useState } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
-import UsersTable from '../components/UsersTable';
+
+import { db } from '../../firbase.config';
+
+import AdminUserTable from '../components/AdminUsersTable';
 import AdminMessagesTable from '../components/AdminMessagesTable';
-import Spinner from '../components/Spinner';
 import AdminListingsTable from '../components/AdminListingsTable';
+import AdminSidebar from '../components/AdminSidebar';
+import Spinner from '../components/Spinner';
 
 const Admin = () => {
-  const buttonsType = ['users', 'listings', 'messages'];
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [activeFilterButton, setActiveFilterButton] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -37,41 +38,35 @@ const Admin = () => {
       setFilteredProperties(data);
     } catch (err) {
       setLoading(false);
-      console.log(err);
     }
 
     setLoading(false);
   };
 
-  const element = () => {
-    if (activeFilterButton === 'users') {
-      return <UsersTable data={filteredProperties} />;
-    } else if (activeFilterButton === 'listings') {
-      return <AdminListingsTable data={filteredProperties} />;
-    } else if (activeFilterButton === 'messages') {
-      return <AdminMessagesTable data={filteredProperties} />;
-    }
+  useEffect(() => {
+    filterProperties('users');
+  }, []);
+
+
+  const lookup = {
+    users: <AdminUserTable data={filteredProperties} />,
+    listings: <AdminListingsTable data={filteredProperties} />,
+    messages: <AdminMessagesTable data={filteredProperties} />,
   };
 
 
   return (
-    <div className="flex  flex-col   items-center min-h-screen">
-      <div className="flex flex-col sm:flex-row items-center gap-4 mt-10 ">
-        {buttonsType.map((type) => (
-          <Button
-            key={type}
-            onClick={() => {
-              filterProperties(type);
-            }}
-            success={activeFilterButton === type}
-          >
-            {type[0].toUpperCase() + type.slice(1) || 'Users'}
-          </Button>
-        ))}
+    <div className="flex flex-col md:grid md:grid-cols-6 min-h-screen">
+      <div className="col-start-1 col-end-1">
+        <AdminSidebar filterProperties={filterProperties} />
       </div>
-      {loading && <Spinner />}
-
-      {element()}
+      {loading ? (
+        <Spinner />
+      ) : (
+        <div className="col-start-2 col-end-7">{
+           lookup[activeFilterButton]
+        }</div>
+      )}
     </div>
   );
 };

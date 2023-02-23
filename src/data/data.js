@@ -3,6 +3,9 @@ import Couple from '../assets/images/couple-rent.jpg';
 import Apartments from '../assets/images/apartments.jpg';
 import OnlineShoping from '../assets/images/online-shoping.jpg';
 
+import Sell from '../assets/images/sell.jpg';
+import Rent from '../assets/images/rent.jpg';
+
 // Path: src\components\StarterScreenWidget.jsx
 
 export const StarterScreenWidgetData = [
@@ -25,7 +28,7 @@ export const StarterScreenWidgetData = [
     image: Apartments,
     title: 'Advertise Your Rental',
     description:
-      'Advertise Your Rental Connect with more than 75 million renters looking for new homes using our comprehensive marketing platform.',
+      'Advertise Your Rental Connect with millions renters looking for new homes using our comprehensive marketing platform.',
   },
 
   {
@@ -62,3 +65,19 @@ export const FooterData = [
   },
 ];
 
+// Path: src\components\Explore.jsx
+
+export const ExploreData = [
+  {
+    id: 1,
+    title: 'Places for sale',
+    image: Sell,
+    link: '/category/sale',
+  },
+  {
+    id: 2,
+    title: 'Places for rent',
+    image: Rent,
+    link: '/category/rent',
+  },
+];

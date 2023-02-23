@@ -36,6 +36,8 @@ const ItemDetails = () => {
 
   const { data, loading } = useGetDataById('listings', id);
   const { watchlistData } = useGetWatchlistData();
+  
+
 
   if (loading) {
     return <Spinner />;
@@ -56,7 +58,7 @@ const ItemDetails = () => {
     );
   }
 
-  const clickHandler = () => {
+  const contactClickHandler = () => {
     if (!user) {
       navigate('/sign-in');
     }
@@ -80,6 +82,8 @@ const ItemDetails = () => {
         watchlist: [...watchlistData, ...data],
       });
 
+      watchlistData.push(...data);
+
       toast.success('Added to watch list');
     } catch (error) {
       toast.error('Something went wrong');
@@ -92,7 +96,7 @@ const ItemDetails = () => {
         data?.map((item) => (
           <>
             <div
-              className="container mx-auto px-20 mt-10 mb-10 min-h-screen z-0"
+              className="container mx-auto px-8 md:px-20 mt-10 mb-10 min-h-screen z-0"
               key={item?.id}
             >
               <div
@@ -106,6 +110,7 @@ const ItemDetails = () => {
                         src={item?.imgUrls[0]}
                         className="w-full h-full object-cover object-top rounded-lg bg-white cursor-pointer"
                         onClick={() => viewImageHandler(0)}
+                        alt={item?.name}
                       />
                     </div>
                     <div className="w-4/12 h-full">
@@ -116,6 +121,7 @@ const ItemDetails = () => {
                               src={item?.imgUrls[1]}
                               className="absolute top-0 w-full h-full object-cover object-center rounded-lg bg-white cursor-pointer"
                               onClick={() => viewImageHandler(1)}
+                              alt={item?.name}
                             />
                           </div>
                         </div>
@@ -125,6 +131,7 @@ const ItemDetails = () => {
                               src={item?.imgUrls[2]}
                               className="absolute top-0 w-full h-full object-cover object-bottom rounded-lg bg-white cursor-pointer"
                               onClick={() => viewImageHandler(2)}
+                              alt={item?.name}
                             />
                           </div>
                         </div>
@@ -152,7 +159,7 @@ const ItemDetails = () => {
                     )}
                   </div>
                   <div className="w-full flex flex-col  sm:flex-row sm:flex-1  gap-4 pt-6 text-center">
-                    <Button primary onClick={clickHandler}>
+                    <Button primary onClick={contactClickHandler}>
                       Contact
                     </Button>
                     <Button primary onClick={addToWatchListHandler}>

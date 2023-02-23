@@ -23,6 +23,10 @@ const Contact = ({ subject, userRef }) => {
     if (ref.current) {
       ref.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
+
+    return () => {
+      ref.current = null;
+    };
   }, []);
 
   const onSubmit = async (e) => {
@@ -35,6 +39,7 @@ const Contact = ({ subject, userRef }) => {
       toast.error('Message must be less than 500 characters long');
       return;
     }
+    
 
     try {
       await addDoc(collection(db, 'messages'), {

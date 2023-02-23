@@ -33,7 +33,6 @@ import NotFound from './screens/404';
 import Spinner from './components/Spinner';
 
 const Admin = lazy(() => import('./screens/Admin'));
-const PrivacyPolicy = lazy(() => import('./screens/PrivacyPolicy'));
 const EditProfile = lazy(() => import('./screens/EditProfile'));
 const EditProperties = lazy(() => import('./screens/EditProperties'));
 const ContactUs = lazy(() => import('./screens/ContactUs'));
@@ -136,7 +135,6 @@ function App() {
 
           <Route path="/search" element={<SearchResult />} />
           <Route path="/contact-us" element={<ContactUs />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/admin" element={<Admin />} />
 
           <Route path="*" element={<NotFound />} />

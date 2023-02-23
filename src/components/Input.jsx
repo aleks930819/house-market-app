@@ -36,16 +36,10 @@ const Input = (props) => {
       />
     );
 
-  const icon = () => {
-    if (props.icon === 'email') {
-      return <MdEmail />;
-    } else if (props.icon === 'password') {
-      return <RiLockPasswordFill />;
-    } else if (props.icon === 'user') {
-      return <FaUserAlt />;
-    } else {
-      return null;
-    }
+  const lookup = {
+    email: <MdEmail />,
+    password: <RiLockPasswordFill />,
+    user: <FaUserAlt />,
   };
 
   return (
@@ -56,7 +50,7 @@ const Input = (props) => {
 
           {props.icon && (
             <div className="pointer-events-none text-sm absolute top-1/2 transform -translate-y-1/2 left-3 text-gray-400">
-              {icon()}
+              {lookup[props.icon]}
             </div>
           )}
         </div>

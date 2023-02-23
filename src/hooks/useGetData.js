@@ -1,5 +1,5 @@
 import { db } from '../../firbase.config';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   collection,
   getDocs,
@@ -12,49 +12,27 @@ const useGetData = (collectionName, orderBy, where, limit) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [lastFetchedListing, setLastFetchedListing] = useState(null);
+  const [lastVisibleDoc, setLastVisibleDoc] = useState(null);
   const [lastElement, setLastElement] = useState(false);
 
-  useEffect(() => {
-    const getData = async () => {
-      const collectionRef = collection(db, collectionName);
-      const q = query(collectionRef, orderBy, where, limit);
+  const getData = useCallback(async () => {
+    const collectionRef = collection(db, collectionName);
+    const q = query(collectionRef, orderBy, where, limit);
 
-      try {
-        setLoading(true);
+    try {
+      setLoading(true);
 
-        // const snapShot = await onSnapshot(q, (querySnapshot) => {
-        //   const data = [];
+      await onSnapshot(q, (querySnapshot) => {
+        const data = [];
 
-        //   querySnapshot.forEach((doc) => {
-        //     data.push({ id: doc.id, ...doc.data() });
-        //   });
-
-        //   const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
-
-        //   if (lastVisible !== lastFetchedListing) {
-        //     setLastFetchedListing(lastVisible);
-        //   } else {
-        //     setLastElement(true);
-        //     setLoading(false);
-        //     return;
-        //   }
-
-        //   setData(data);
-        //   setLoading(false);
-        // });
-
-        const querySnapshot = await getDocs(q);
-
-        const data = querySnapshot.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
+        querySnapshot.forEach((doc) => {
+          data.push({ id: doc.id, ...doc.data() });
+        });
 
         const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
 
-        if (lastVisible !== lastFetchedListing) {
-          setLastFetchedListing(lastVisible);
+        if (lastVisible !== lastVisibleDoc) {
+          setLastVisibleDoc(lastVisible);
         } else {
           setLastElement(true);
           setLoading(false);
@@ -63,24 +41,79 @@ const useGetData = (collectionName, orderBy, where, limit) => {
 
         setData(data);
         setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
-      }
-    };
+      });
+    } catch (err) {
+      setError(err);
+      setLoading(false);
+    }
+  }, [collectionName, orderBy, where, limit, lastVisibleDoc]);
 
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     const collectionRef = collection(db, collectionName);
+  //     const q = query(collectionRef, orderBy, where, limit);
+
+  //     try {
+  //       setLoading(true);
+
+  //       // const snapShot = await onSnapshot(q, (querySnapshot) => {
+  //       //   const data = [];
+
+  //       //   querySnapshot.forEach((doc) => {
+  //       //     data.push({ id: doc.id, ...doc.data() });
+  //       //   });
+
+  //       //   const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+  //       //   if (lastVisible !== lastFetchedListing) {
+  //       //     setLastFetchedListing(lastVisible);
+  //       //   } else {
+  //       //     setLastElement(true);
+  //       //     setLoading(false);
+  //       //     return;
+  //       //   }
+
+  //       //   setData(data);
+  //       //   setLoading(false);
+  //       // });
+
+  //       const querySnapshot = await getDocs(q);
+
+  //       const data = querySnapshot.docs.map((doc) => ({
+  //         ...doc.data(),
+  //         id: doc.id,
+  //       }));
+
+  //       const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+  //       if (lastVisible !== lastFetchedListing) {
+  //         setLastFetchedListing(lastVisible);
+  //       } else {
+  //         setLastElement(true);
+  //         setLoading(false);
+  //         return;
+  //       }
+
+  //       setData(data);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       setError(error);
+  //       setLoading(false);
+  //     }
+  //   };
+  //   return () => {
+  //     getData();
+  //   };
+  // }, []);
 
   const fetchMoreData = async () => {
-
     const collectionRef = collection(db, collectionName);
     const q = query(
       collectionRef,
       orderBy,
       where,
       limit,
-      startAfter(lastFetchedListing)
+      startAfter(lastVisibleDoc)
     );
     try {
       setLoading(true);
@@ -94,13 +127,13 @@ const useGetData = (collectionName, orderBy, where, limit) => {
 
       const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
 
-      if (lastVisible === lastFetchedListing) {
+      if (lastVisible === lastVisibleDoc) {
         setLastElement(true);
         setLoading(false);
         return;
       }
 
-      setLastFetchedListing(lastVisible);
+      setLastVisibleDoc(lastVisible);
 
       setData((prevData) => [...prevData, ...data]);
 
@@ -116,10 +149,8 @@ const useGetData = (collectionName, orderBy, where, limit) => {
     loading,
     error,
     setData,
-    lastFetchedListing,
-    setLastFetchedListing,
     fetchMoreData,
-    lastElement,
+    getData,
   };
 };
 

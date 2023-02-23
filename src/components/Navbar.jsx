@@ -71,7 +71,7 @@ const Navbar = () => {
         );
       }
     });
-  }, [auth.currentUser]);
+  }, [auth,dispatch]);
 
   const loggedInLinks = [
     {
