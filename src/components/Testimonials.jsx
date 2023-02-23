@@ -83,7 +83,7 @@ const Testimonials = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-        <Button primary>See More</Button>
+        <Button primary to="/testimonials">See More</Button>
       </>
     </div>
   );

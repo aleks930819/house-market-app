@@ -33,6 +33,7 @@ import NotFound from './screens/404';
 import Spinner from './components/Spinner';
 
 const Admin = lazy(() => import('./screens/Admin'));
+const Testimonials = lazy(() => import('./screens/Testimonials'));
 const EditProfile = lazy(() => import('./screens/EditProfile'));
 const EditProperties = lazy(() => import('./screens/EditProperties'));
 const ContactUs = lazy(() => import('./screens/ContactUs'));
@@ -48,7 +49,6 @@ const ForgotPassword = lazy(() => import('./screens/ForgotPassword'));
 const Profile = lazy(() => import('./screens/Profile'));
 const ItemDetails = lazy(() => import('./components/ItemDetails'));
 const SearchResult = lazy(() => import('./screens/SearchResult'));
-
 
 function App() {
   return (
@@ -135,6 +135,7 @@ function App() {
 
           <Route path="/search" element={<SearchResult />} />
           <Route path="/contact-us" element={<ContactUs />} />
+          <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/admin" element={<Admin />} />
 
           <Route path="*" element={<NotFound />} />
