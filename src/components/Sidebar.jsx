@@ -97,7 +97,7 @@ const Sidebar = () => {
       link: '/offers',
     },
     {
-      name: 'Sell/Rent Property',
+      name: 'Add Property',
       icon: <MdOutlinePersonAddAlt />,
       link: '/host',
     },

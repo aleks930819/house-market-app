@@ -5,6 +5,7 @@ import OnlineShoping from '../assets/images/online-shoping.jpg';
 
 import Sell from '../assets/images/sell.jpg';
 import Rent from '../assets/images/rent.jpg';
+import Stay from '../assets/images/hotel-room.jpg';
 
 // Path: src\components\StarterScreenWidget.jsx
 
@@ -78,6 +79,12 @@ export const ExploreData = [
     id: 2,
     title: 'Places for rent',
     image: Rent,
+    link: '/category/rent',
+  },
+  {
+    id: 3,
+    title: 'Places to stay',
+    image: Stay,
     link: '/category/rent',
   },
 ];

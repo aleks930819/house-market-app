@@ -118,12 +118,12 @@ const Host = () => {
   return (
     <div className="flex flex-col  justify-center items-center mb-10 mt-16">
       <Form
-        heading="Sell / Rent Your Property"
+        heading="Add Property"
         btnName="Send"
         onSubmit={onSubmit}
       >
         <div className="flex flex-col gap-2 pb-5">
-          <label>Sell / Rent</label>
+          <label>Sell / Rent / Stay </label>
           <div className="flex gap-2">
             <Button
               rounded
@@ -140,6 +140,14 @@ const Host = () => {
               onClick={() => setValues({ ...values, type: 'rent' })}
             >
               Rent
+            </Button>
+            <Button
+              type={'button'}
+              rounded
+              success={values.type === 'stay'}
+              onClick={() => setValues({ ...values, type: 'stay' })}
+            >
+              Stay
             </Button>
           </div>
         </div>
@@ -268,7 +276,7 @@ const Host = () => {
         </div>
         <div className="flex flex-col gap-1 ">
           <label>
-            Regular Price {values.type === 'rent' ? '/ Month' : ''}{' '}
+            Regular Price {values.type === 'rent' ? '/ Month' : ''} {values.type === 'stay' ? '/ Day' : ''}
           </label>
           <Input
             element="input"
