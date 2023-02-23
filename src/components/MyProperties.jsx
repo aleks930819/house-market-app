@@ -13,16 +13,14 @@ const MyProperties = ({
 }) => {
   const [activeFilterButton, setActiveFilterButton] = useState('all');
 
-  const buttonsType = ['sale', 'rent', 'all'];
+  const buttonsType = ['sale', 'rent', 'stay', 'all'];
 
   const filterProperties = (type) => {
-    
     setActiveFilterButton(type);
     if (type === 'all') {
       setFilteredProperties(properties);
       return;
     }
-
 
     const filtered = properties.filter((property) => property.type === type);
     setFilteredProperties(filtered);

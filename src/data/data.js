@@ -85,6 +85,6 @@ export const ExploreData = [
     id: 3,
     title: 'Places to stay',
     image: Stay,
-    link: '/category/rent',
+    link: '/category/stay',
   },
 ];

@@ -49,6 +49,7 @@ const ForgotPassword = lazy(() => import('./screens/ForgotPassword'));
 const Profile = lazy(() => import('./screens/Profile'));
 const ItemDetails = lazy(() => import('./components/ItemDetails'));
 const SearchResult = lazy(() => import('./screens/SearchResult'));
+const Booking = lazy(() => import('./screens/Booking'));
 
 function App() {
   return (
@@ -137,6 +138,14 @@ function App() {
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/admin" element={<Admin />} />
+          <Route
+            path="/booking/:id"
+            element={
+              <PrivateRoute>
+                <Booking />
+              </PrivateRoute>
+            }
+          />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

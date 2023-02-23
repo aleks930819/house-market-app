@@ -36,8 +36,6 @@ const ItemDetails = () => {
 
   const { data, loading } = useGetDataById('listings', id);
   const { watchlistData } = useGetWatchlistData();
-  
-
 
   if (loading) {
     return <Spinner />;
@@ -58,10 +56,16 @@ const ItemDetails = () => {
     );
   }
 
-  const contactClickHandler = () => {
+  const contactClickHandler = (type) => {
+
     if (!user) {
       navigate('/sign-in');
     }
+
+    if (type === 'stay') {
+      return navigate(`/booking/${id}`);
+    }
+
     setShowContact(!showContact);
   };
 
@@ -159,8 +163,8 @@ const ItemDetails = () => {
                     )}
                   </div>
                   <div className="w-full flex flex-col  sm:flex-row sm:flex-1  gap-4 pt-6 text-center">
-                    <Button primary onClick={contactClickHandler}>
-                      Contact
+                    <Button primary onClick={() => contactClickHandler(item?.type)}>
+                      {item?.type === 'stay' ? 'Book Now' : 'Contact Owner'}
                     </Button>
                     <Button primary onClick={addToWatchListHandler}>
                       Add to Watchlist
