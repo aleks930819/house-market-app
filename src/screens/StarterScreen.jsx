@@ -6,6 +6,7 @@ import useScrollToTop from '../hooks/useScrollToTop';
 
 import ScrollToTopButton from '../components/ScrollToTopButton';
 import ExploreRentals from '../components/ExploreRentals';
+import Testimonials from '../components/Testimonials';
 
 const StarterScreen = () => {
   const { isVisible } = useScrollToTop();
@@ -16,6 +17,7 @@ const StarterScreen = () => {
         <Banner />
         <ExploreRentals />
         <StarterScreenWidget />
+        <Testimonials />
         <Features />
         {isVisible && <ScrollToTopButton />}
       </div>

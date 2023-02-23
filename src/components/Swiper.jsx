@@ -1,5 +1,3 @@
-import React, { useEffect } from 'react';
-
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { AiOutlineClose } from 'react-icons/ai';
@@ -15,15 +13,18 @@ const Swipper = ({ data, setShowSwipper, starterIndex }) => {
   useKeyDown(() => setShowSwipper(), ['Escape']);
 
   return (
-    <div className="fixed w-full h-full  top-0 left-0  right-0 bottom-0 overflow-hidden bg-black bg-opacity-80">
+    <div className="relative w-full h-screen flex justify-center items-center overflow-hidden ">
       <AiOutlineClose
-        className=" absolute  top-[100px]   md:top-[60px] left-[15px] text-lg sm:text-2xl z-50 cursor-pointer text-white bg-black bg-opacity-60 rounded-lg p-[1px]"
+        className=" absolute  top-[220px]  left-[10px]  md:top-[90px]  md:left-[155px] text-lg sm:text-2xl z-0 cursor-pointer  text-neutral-600"
         onClick={() => setShowSwipper()}
       />
       <Swiper
         pagination={true}
         modules={[Pagination]}
-        className="mySwiper"
+        className="
+          w-[400px] h-[300px] sm:w-[70%] sm:h-[70%]
+           flex justify-center items-center mt-10
+        "
         initialSlide={starterIndex}
       >
         {data[0]?.imgUrls?.map((imgUrl, index) => (

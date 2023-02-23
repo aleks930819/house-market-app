@@ -14,7 +14,7 @@ const Explore = () => {
       <Row flex>
         {data.map((item) => (
           <div
-            className="relative sm:w-1/2 rounded-md overflow-hidden"
+            className="relative sm:w-1/2 rounded-md overflow-hidden cursor-pointer"
             key={item.id}
           >
             <Link to={item.link}>
