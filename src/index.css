@@ -63,6 +63,9 @@ a {
   object-fit: cover;
 }
 
+.swiper-button-next { color: #808790; }
+.swiper-button-prev { color: #808790; }
+
 
 
 /* .mySwiper {
