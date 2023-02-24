@@ -11,24 +11,6 @@ import Sidebar from './components/Sidebar';
 import PrivateRoute from './components/PrivateRoute';
 
 import StarterScreen from './screens/StarterScreen';
-import NotFound from './screens/404';
-// import SearchResult from './screens/SearchResult';
-// import ItemDetails from './components/ItemDetails';
-// import Profile from './screens/Profile';
-// import ForgotPassword from './screens/ForgotPassword';
-// import SignUp from './screens/SignUp';
-// import Explore from './screens/Explore';
-// import SignIn from './screens/SignIn';
-// import Category from './screens/Category';
-// import Offers from './screens/Offers';
-// import Messages from './screens/Messages';
-// import MessagesDetails from './screens/MessagesDetails';
-// import ContactUs from './screens/ContactUs';
-// import PrivacyPolicy from './screens/PrivacyPolicy';
-// import EditProperties from './screens/EditProperties';
-// import Admin from './screens/Admin';
-// import EditProfile from './screens/EditProfile';
-// import Host from './screens/Host';
 
 import Spinner from './components/Spinner';
 
@@ -50,6 +32,7 @@ const Profile = lazy(() => import('./screens/Profile'));
 const ItemDetails = lazy(() => import('./components/ItemDetails'));
 const SearchResult = lazy(() => import('./screens/SearchResult'));
 const Booking = lazy(() => import('./screens/Booking'));
+const NotFound = lazy(() => import('./screens/404'));
 
 function App() {
   return (

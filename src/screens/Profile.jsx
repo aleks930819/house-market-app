@@ -17,6 +17,7 @@ import { useSelector } from 'react-redux';
 import { selectUserID } from '../slices/authSlice';
 import useGetData from '../hooks/useGetData';
 import Watchlist from '../components/Watchlist';
+import BookedListings from '../components/BookedListings';
 
 const Profile = () => {
   const userId = useSelector(selectUserID);
@@ -41,8 +42,7 @@ const Profile = () => {
     if (!properties) {
       getData();
     }
-  }, [getData,properties]);
-
+  }, [getData, properties]);
 
   useEffect(() => {
     setFilteredProperties(properties);
@@ -122,6 +122,7 @@ const Profile = () => {
           </>
         )}
 
+        <BookedListings />
         <Watchlist />
       </Container>
       {showModal && modal}

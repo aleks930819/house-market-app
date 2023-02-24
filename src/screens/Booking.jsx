@@ -8,20 +8,19 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import setChangedValue from '../utils/changeHandler';
 
-import { doc, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firbase.config';
 import { useSelector } from 'react-redux';
 import { selectBooking } from '../slices/bookingSlice';
 import { selectUserID } from '../slices/authSlice';
-
+import { useParams } from 'react-router-dom';
 
 const Booking = () => {
-  // const { data, loading } = useGetDataById('listings', id);
-
-  const { id, name, reservetions } = useSelector(selectBooking);
   const userId = useSelector(selectUserID);
 
+  const { id, name, imgUrls, price } = useSelector(selectBooking);
 
+  const [reservedDates, setReservedDates] = useState(false);
 
   const [values, setValues] = useState({
     number: '',
@@ -39,6 +38,10 @@ const Booking = () => {
     },
   ]);
 
+  const [pricePerNight, setPricePerNight] = useState(price);
+
+
+
   const changeHandler = (e) => {
     setChangedValue(e, setValues);
   };
@@ -55,31 +58,27 @@ const Booking = () => {
     year: 'numeric',
   });
 
+
+  const totalPrice = (price * (state[0].endDate - state[0].startDate)) / 86400000;
+
+
   const BookHandler = async () => {
     try {
-      const listingRef = doc(db, 'listings', id);
-
-      await updateDoc(listingRef, {
-        reservetions: [
-          ...reservetions,
-          {
-            startDate: start,
-            endDate: end,
-            number: values.number,
-            firstName: values.first,
-            lastName: values.last,
-            email: values.email,
-            comments: values.comments,
-            userRef:userId,
-          },
-        ],
+      await addDoc(collection(db, 'bookings'), {
+        createdAt: new Date(),
+        from: userId,
+        listingId: id,
+        startDate: start,
+        endDate: end,
+        totalPrice,
+        imgUrls,
+        name,
+        ...values,
       });
     } catch (err) {
       console.log(err);
     }
   };
-
- 
 
   return (
     <Container>
@@ -150,6 +149,12 @@ const Booking = () => {
             name="comments"
           />
         </div>
+      </div>
+      <div className="mt-5">
+        <h2 className="text-lg text-center pb-2">
+          {start} - {end}
+        </h2>
+        <p>Total: ${totalPrice.toFixed(2)} </p>
       </div>
 
       <div className="flex gap-2 mt-5">

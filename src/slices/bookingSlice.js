@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   id: '',
   name: '',
-  reservetions: [],
+  imgUrls: '',
+  price: '',
 };
 
 const bookingSlice = createSlice({
@@ -11,16 +12,13 @@ const bookingSlice = createSlice({
   initialState,
   reducers: {
     SET_BOOKING: (state, action) => {
-      let { id, name, reservetions } = action.payload;
+      console.log(action.payload);
+      let { id, name, imgUrls, regularPrice, discountPrice } = action.payload;
 
       state.id = id;
       state.name = name;
-      state.reservetions = reservetions || [];
-    },
-    SET_BOOKING_TO_EMPTY: (state) => {
-      state.id = '';
-      state.name = '';
-      state.reservetions = [];
+      state.imgUrls = imgUrls || [];
+      state.price = discountPrice || regularPrice;
     },
   },
 });

@@ -32,18 +32,21 @@ const ItemDetails = () => {
   const userID = useSelector(selectUserID);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const { id } = useParams();
 
   const { data, loading } = useGetDataById('listings', id);
   const { watchlistData } = useGetWatchlistData();
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
+
+    console.log(data);
     if (data) {
       dispatch(SET_BOOKING(data[0]));
     }
-  }, [data, dispatch]);
+  }, [data]);
 
   if (loading) {
     return <Spinner />;

@@ -19,7 +19,7 @@ const Button = ({
 }) => {
   const classes = className(
     rest.className,
-    'flex justify-between items-center px-7 py-2.5  border h-8 text-xs sm:text-sm',
+    `flex justify-between items-center px-7 py-2.5  border h-8 text-xs sm:text-sm`,
     {
       'border-blue-500 bg-cyan-900 p-5 text-white hover:bg-cyan-700 transition':
         primary,

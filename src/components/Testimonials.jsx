@@ -59,7 +59,7 @@ const Testimonials = () => {
         >
           {data.map((item) => (
             <SwiperSlide
-              className="flex justify-center items-center  flex-col p-8 text-center  border-gray-200 md:p-12 bg-slate-200"
+              className="flex justify-center items-center  flex-col p-8 text-center  border-gray-200 md:p-12"
               key={item?.id}
             
                    
