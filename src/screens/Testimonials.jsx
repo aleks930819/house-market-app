@@ -1,14 +1,12 @@
 import Button from '../components/Button';
 
-
-
 const data = [
   {
     id: 1,
     userPhoto:
       'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80',
     userName: 'John Doe',
-    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+    text: 'House Market actually helped me find the house of my dreams.',
     createdAt: '2021-08-01T00:00:00.000Z',
   },
   {
@@ -16,25 +14,16 @@ const data = [
     userPhoto:
       'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
     userName: 'Alex Doe',
-    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+    text: ' Using House Market has definitely saved us time and money.',
   },
-  {
-    id: 3,
-    userPhoto:
-      'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
-    userName: 'Alexia Doe',
-    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
-  },
+
   {
     id: 4,
     userPhoto:
       'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80',
     userName: 'Alexia Doe',
-    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.',
+    text: 'I would recommend House Market for people who want to sell their home. It has saved me so much time!',
   },
-
- 
- 
 ];
 
 const Testimonials = () => {
