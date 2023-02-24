@@ -2,13 +2,21 @@ import { limit, orderBy, where } from 'firebase/firestore';
 import useGetData from '../hooks/useGetData';
 import { useSelector } from 'react-redux';
 import { selectUserID } from '../slices/authSlice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import Button from '../components/Button';
 import Row from './Row';
 
+import { doc, deleteDoc } from 'firebase/firestore';
+import { db } from '../../firbase.config';
+import { toast } from 'react-toastify';
+import Modal from './Modal';
+
 const BookedListings = () => {
   const userId = useSelector(selectUserID);
+
+  const [showModal, setShowModal] = useState(false);
+  const [itemToCancelId, setItemToCancelId] = useState(null);
 
   const { data: bookings, getData } = useGetData(
     'bookings',
@@ -23,7 +31,37 @@ const BookedListings = () => {
     }
   }, [bookings, getData]);
 
-  console.log(bookings);
+  const cancelBooking = async (id) => {
+    try {
+      await deleteDoc(doc(db, 'bookings', id));
+      handleModalView();
+      toast.success('Booking cancelled successfully');
+    } catch (error) {
+      toast.error('Something went wrong');
+    }
+  };
+
+  const handleModalView = () => {
+    setShowModal((prev) => !prev);
+  };
+
+  const modal = (
+    <Modal>
+      <div className="flex flex-col gap-2">
+        <h1 className="font-bold text-base sm:text-lg text-white">
+          Are you sure you want to cancel?
+        </h1>
+        <div className="flex gap-2 mt-2 items-center justify-center">
+          <Button rounded danger onClick={() => cancelBooking(itemToCancelId)}>
+            YES
+          </Button>
+          <Button rounded success onClick={handleModalView}>
+            NO
+          </Button>
+        </div>
+      </div>
+    </Modal>
+  );
 
   return (
     <>
@@ -62,11 +100,20 @@ const BookedListings = () => {
             </div>
 
             <div className="flex gap-1 pt-5">
-              <Button danger >Cancel</Button>
+              <Button
+                danger
+                onClick={() => {
+                  setItemToCancelId(booking?.id);
+                  handleModalView();
+                }}
+              >
+                Cancel
+              </Button>
             </div>
           </div>
         ))}
       </Row>
+      {showModal && modal}
     </>
   );
 };
