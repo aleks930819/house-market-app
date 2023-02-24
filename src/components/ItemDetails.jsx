@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
 import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
@@ -20,6 +20,7 @@ import { db } from '../../firbase.config';
 
 import { toast } from 'react-toastify';
 import useGetWatchlistData from '../hooks/useGetWatchlistData';
+import { SET_BOOKING } from '../slices/bookingSlice';
 
 const ItemDetails = () => {
   const [showSwipper, setShowSwipper] = useState(false);
@@ -31,11 +32,18 @@ const ItemDetails = () => {
   const userID = useSelector(selectUserID);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const { id } = useParams();
 
   const { data, loading } = useGetDataById('listings', id);
   const { watchlistData } = useGetWatchlistData();
+
+  useEffect(() => {
+    if (data) {
+      dispatch(SET_BOOKING(data[0]));
+    }
+  }, [data, dispatch]);
 
   if (loading) {
     return <Spinner />;
@@ -57,7 +65,6 @@ const ItemDetails = () => {
   }
 
   const contactClickHandler = (type) => {
-
     if (!user) {
       navigate('/sign-in');
     }
@@ -163,7 +170,10 @@ const ItemDetails = () => {
                     )}
                   </div>
                   <div className="w-full flex flex-col  sm:flex-row sm:flex-1  gap-4 pt-6 text-center">
-                    <Button primary onClick={() => contactClickHandler(item?.type)}>
+                    <Button
+                      primary
+                      onClick={() => contactClickHandler(item?.type)}
+                    >
                       {item?.type === 'stay' ? 'Book Now' : 'Contact Owner'}
                     </Button>
                     <Button primary onClick={addToWatchListHandler}>

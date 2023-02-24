@@ -21,7 +21,6 @@ const Watchlist = () => {
   const [filtredWatchlist, setFiltredWatchlist] = useState([]);
   const userID = useSelector(selectUserID);
 
-  console.log(watchlistData);
 
   useEffect(() => {
     setFiltredWatchlist(watchlistData);
