@@ -13,7 +13,9 @@ import { db } from '../../firbase.config';
 import { useSelector } from 'react-redux';
 import { selectBooking } from '../slices/bookingSlice';
 import { selectUserID } from '../slices/authSlice';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import { toast } from 'react-toastify';
 
 const Booking = () => {
   const userId = useSelector(selectUserID);
@@ -21,6 +23,7 @@ const Booking = () => {
   const { id, name, imgUrls, price } = useSelector(selectBooking);
 
   const [reservedDates, setReservedDates] = useState(false);
+  const navigate = useNavigate();
 
   const [values, setValues] = useState({
     number: '',
@@ -40,8 +43,6 @@ const Booking = () => {
 
   const [pricePerNight, setPricePerNight] = useState(price);
 
-
-
   const changeHandler = (e) => {
     setChangedValue(e, setValues);
   };
@@ -58,9 +59,8 @@ const Booking = () => {
     year: 'numeric',
   });
 
-
-  const totalPrice = (price * (state[0].endDate - state[0].startDate)) / 86400000;
-
+  const totalPrice =
+    (price * (state[0].endDate - state[0].startDate)) / 86400000;
 
   const BookHandler = async () => {
     try {
@@ -75,8 +75,11 @@ const Booking = () => {
         name,
         ...values,
       });
+      navigate('/');
+
+      toast.success('Booking Successful');
     } catch (err) {
-      console.log(err);
+      toast.error('Something went wrong');
     }
   };
 

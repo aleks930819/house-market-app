@@ -1,6 +1,8 @@
 import { ToastContainer } from 'react-toastify';
 import { Routes, Route } from 'react-router-dom';
 
+import 'react-toastify/dist/ReactToastify.css';
+
 import React, { Suspense, lazy } from 'react';
 
 import ScrollToTop from './utils/scrollToTop';
@@ -37,6 +39,8 @@ const NotFound = lazy(() => import('./screens/404'));
 function App() {
   return (
     <>
+      <ToastContainer />
+
       <Navbar />
       <Sidebar />
       <ScrollToTop />
@@ -134,7 +138,6 @@ function App() {
         </Routes>
       </Suspense>
       <Footer />
-      <ToastContainer />
     </>
   );
 }
