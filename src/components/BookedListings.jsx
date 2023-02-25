@@ -7,39 +7,75 @@ import { useEffect, useState } from 'react';
 import Button from '../components/Button';
 import Row from './Row';
 
-import { doc, deleteDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firbase.config';
 import { toast } from 'react-toastify';
 import Modal from './Modal';
+import useGetBookings from '../hooks/useGetBookings';
 
 const BookedListings = () => {
   const userId = useSelector(selectUserID);
 
   const [showModal, setShowModal] = useState(false);
   const [itemToCancelId, setItemToCancelId] = useState(null);
+  const [bookingList, setBookingList] = useState([]);
 
-  const { data: bookings, getData } = useGetData(
-    'bookings',
-    orderBy('createdAt', 'desc'),
-    where('from', '==', userId),
-    limit(10)
-  );
+  const { bookings } = useGetBookings();
+
+  console.log(bookings);
 
   useEffect(() => {
-    if (!bookings) {
-      getData();
-    }
-  }, [bookings, getData]);
+    setBookingList(bookings);
+  }, [bookings]);
 
-  const cancelBooking = async (id) => {
+  // const { data: bookings, getData } = useGetData(
+  //   'bookings',
+  //   orderBy('createdAt', 'desc'),
+  //   where('from', '==', userId),
+  //   limit(10)
+  // );
+
+  // useEffect(() => {
+  //   if (!bookings) {
+  //     getData();
+  //   }
+  // }, [bookings, getData]);
+
+  const cancelBooking = async (itemToDeleteId) => {
+
+    console.log(itemToDeleteId);
     try {
-      await deleteDoc(doc(db, 'bookings', id));
-      handleModalView();
+      const userRef = doc(db, 'users', userId);
+      const userDoc = await getDoc(userRef);
+
+      if (userDoc.exists()) {
+        const bookingsList = userDoc.data().bookings;
+        const newBookingList = bookingsList.filter(
+          (item) => item.id !== itemToDeleteId
+        );
+
+
+        await updateDoc(userRef, {
+          bookings: newBookingList,
+        });
+        handleModalView();
+      }
+      setBookingList(bookingList.filter((item) => item.id !== itemToDeleteId));
       toast.success('Booking cancelled successfully');
     } catch (error) {
       toast.error('Something went wrong');
     }
   };
+
+  // const cancelBooking = async (id) => {
+  //   try {
+  //     await deleteDoc(doc(db, 'bookings', id));
+  //     handleModalView();
+  //     toast.success('Booking cancelled successfully');
+  //   } catch (error) {
+  //     toast.error('Something went wrong');
+  //   }
+  // };
 
   const handleModalView = () => {
     setShowModal((prev) => !prev);
@@ -67,7 +103,7 @@ const BookedListings = () => {
     <>
       <h2 className="font-bold text-lg">My Bookings</h2>
       <Row grid3 className="mb-20">
-        {bookings?.map((booking) => (
+        {bookingList?.map((booking) => (
           <div
             className="border shadow-md p-5 flex flex-col gap-2 rounded-md cursor-pointer"
             key={booking?.id}

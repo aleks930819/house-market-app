@@ -8,6 +8,8 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import setChangedValue from '../utils/changeHandler';
 
+import { v4 as uuidv4 } from 'uuid';
+
 import { addDoc, collection, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firbase.config';
 import { useSelector } from 'react-redux';
@@ -16,6 +18,7 @@ import { selectUserID } from '../slices/authSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { toast } from 'react-toastify';
+import useGetBookings from '../hooks/useGetBookings';
 
 const Booking = () => {
   const userId = useSelector(selectUserID);
@@ -62,26 +65,67 @@ const Booking = () => {
   const totalPrice =
     (price * (state[0].endDate - state[0].startDate)) / 86400000;
 
+  const { bookings } = useGetBookings();
+
   const BookHandler = async () => {
+    if (!userId) {
+      return navigate('/login');
+    }
+
+    if (!values.number || !values.first || !values.last || !values.email) {
+      return toast.error(
+        'Number of people, first name, last name, email  are required'
+      );
+    }
+
+    const booking = {
+      createdAt: new Date(),
+      from: userId,
+      listingId: id,
+      startDate: start,
+      endDate: end,
+      totalPrice,
+      imgUrls,
+      name,
+      id: uuidv4(),
+      ...values,
+    };
     try {
-      await addDoc(collection(db, 'bookings'), {
-        createdAt: new Date(),
-        from: userId,
-        listingId: id,
-        startDate: start,
-        endDate: end,
-        totalPrice,
-        imgUrls,
-        name,
-        ...values,
+      const userRef = doc(db, 'users', userId);
+
+      await updateDoc(userRef, {
+        bookings: [...bookings, booking],
       });
+
       navigate('/');
 
       toast.success('Booking Successful');
-    } catch (err) {
+    } catch (error) {
+      console.log(error);
       toast.error('Something went wrong');
     }
   };
+
+  // const BookHandler = async () => {
+  //   try {
+  //     await addDoc(collection(db, 'bookings'), {
+  //       createdAt: new Date(),
+  //       from: userId,
+  //       listingId: id,
+  //       startDate: start,
+  //       endDate: end,
+  //       totalPrice,
+  //       imgUrls,
+  //       name,
+  //       ...values,
+  //     });
+  //     navigate('/');
+
+  //     toast.success('Booking Successful');
+  //   } catch (err) {
+  //     toast.error('Something went wrong');
+  //   }
+  // };
 
   return (
     <Container>
@@ -107,7 +151,7 @@ const Booking = () => {
             element="input"
             type="number"
             htmlFor="number"
-            placeholder="Number of People"
+            placeholder="*Number of People"
             name="number"
             icon="user"
             handler={changeHandler}
@@ -118,7 +162,7 @@ const Booking = () => {
             element="input"
             type="text"
             htmlFor="first"
-            placeholder="First Name"
+            placeholder="*First Name"
             name="first"
             handler={changeHandler}
             icon="user"
@@ -128,7 +172,7 @@ const Booking = () => {
             element="input"
             type="text"
             htmlFor="last"
-            placeholder="Last Name"
+            placeholder="*Last Name"
             name="last"
             handler={changeHandler}
             icon="user"
@@ -137,7 +181,7 @@ const Booking = () => {
             element="input"
             type="email"
             htmlFor="email"
-            placeholder="Email"
+            placeholder="*Email"
             name="email"
             handler={changeHandler}
             icon="email"

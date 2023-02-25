@@ -42,11 +42,10 @@ const ItemDetails = () => {
 
   useEffect(() => {
 
-    console.log(data);
     if (data) {
       dispatch(SET_BOOKING(data[0]));
     }
-  }, [data]);
+  }, [data,]);
 
   if (loading) {
     return <Spinner />;
