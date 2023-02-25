@@ -23,7 +23,7 @@ const Watchlist = () => {
 
 
   useEffect(() => {
-    setFiltredWatchlist(watchlistData);
+    setFiltredWatchlist(watchlistData || []);
   }, [watchlistData]);
 
   const deleteItem = async (itemToDeleteId) => {
