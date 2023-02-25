@@ -2,15 +2,10 @@ import { MdOutlineAttachMoney, MdChair } from 'react-icons/md';
 import { FaBath, FaParking } from 'react-icons/fa';
 import { IoIosBed } from 'react-icons/io';
 
-
 import ConvertPrice from '../utils/ConvertPrice';
 
-
-
 export const Facilities = ({ listing }) => {
-  
   return (
-
     <ul className="text-xs mt-4  list-inside  leading-relaxed flex flex-col gap-5">
       <li className="flex sm:flex-row gap-2 items-center">
         <MdOutlineAttachMoney className="text-lg" />

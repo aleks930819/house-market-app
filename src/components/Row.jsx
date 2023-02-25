@@ -6,7 +6,7 @@ const Row = ({ children, grid3, flex, ...rest }) => {
 
     {
       'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-5 mb-5': grid3,
-      'flex flex-col w-3/4 gap-5 mx-auto sm:flex-row  justify-center items-center': flex,
+      'flex flex-col w-3/4 gap-5 mx-auto sm:flex-row ': flex,
     }
   );
 
