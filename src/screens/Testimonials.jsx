@@ -28,7 +28,7 @@ const data = [
 
 const Testimonials = () => {
   return (
-    <div className="flex justify-start items-center flex-col  h-screen mt-10 mb-10 p-5">
+    <div className="flex justify-between items-center flex-col  h-screen mt-10 mb-10 p-5 ">
       <section className="text-gray-600 body-font overflow-scroll mt-[-40px]">
         {data.map((item) => (
           <div className="container px-5 py-12 mx-auto ">

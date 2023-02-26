@@ -1,6 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 
-import { AiFillMessage } from 'react-icons/ai';
+import { AiFillMessage,AiOutlineUnorderedList } from 'react-icons/ai';
+import { TbBrandBooking } from 'react-icons/tb';
+
 
 import { getAuth, deleteUser } from 'firebase/auth';
 
@@ -80,12 +82,26 @@ const ProfileCard = () => {
             alt={displayName}
           />
         </div>
-        <Link to="/messages">
-          <div className="flex items-center gap-2 cursor-pointer">
-            <AiFillMessage className="text-2xl place-items-center text-cyan-900" />
-            <h2>My Messages</h2>
-          </div>
-        </Link>
+        <div>
+          <Link to="/messages">
+            <div className="flex items-center gap-2 cursor-pointer pb-2">
+              <AiFillMessage className="text-2xl place-items-center text-cyan-900" />
+              <h2>My Messages</h2>
+            </div>
+          </Link>
+          <Link to="/bookings">
+            <div className="flex items-center gap-2 cursor-pointer pb-2">
+              <TbBrandBooking className="text-2xl place-items-center text-cyan-900" />
+              <h2>My Bookings</h2>
+            </div>
+          </Link>
+          <Link to="/watchlist">
+            <div className="flex items-center gap-2 cursor-pointer">
+              <AiOutlineUnorderedList className="text-2xl place-items-center text-cyan-900" />
+              <h2>My Watchlist</h2>
+            </div>
+          </Link>
+        </div>
       </div>
 
       <div className="flex flex-col items-center mt-5">

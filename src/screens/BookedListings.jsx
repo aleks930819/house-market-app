@@ -5,12 +5,15 @@ import { selectUserID } from '../slices/authSlice';
 import { useEffect, useState } from 'react';
 
 import Button from '../components/Button';
-import Row from './Row';
+
+import Row from '../components/Row';
 
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firbase.config';
 import { toast } from 'react-toastify';
-import Modal from './Modal';
+
+import Modal from '../components/Modal';
+
 import useGetBookings from '../hooks/useGetBookings';
 
 const BookedListings = () => {
@@ -21,7 +24,6 @@ const BookedListings = () => {
   const [bookingList, setBookingList] = useState([]);
 
   const { bookings } = useGetBookings();
-
 
   useEffect(() => {
     setBookingList(bookings);
@@ -41,7 +43,6 @@ const BookedListings = () => {
   // }, [bookings, getData]);
 
   const cancelBooking = async (itemToDeleteId) => {
-
     try {
       const userRef = doc(db, 'users', userId);
       const userDoc = await getDoc(userRef);
@@ -51,7 +52,6 @@ const BookedListings = () => {
         const newBookingList = bookingsList.filter(
           (item) => item.id !== itemToDeleteId
         );
-
 
         await updateDoc(userRef, {
           bookings: newBookingList,
@@ -98,8 +98,12 @@ const BookedListings = () => {
   );
 
   return (
-    <>
-      <h2 className="font-bold text-lg">My Bookings</h2>
+    <div className="flex justify-center items-center mx-auto h-screen">
+      {bookingList?.length === 0 && (
+        <h1 className="font-bold text-2xl text-gray-500">
+          You have no bookings yet
+        </h1>
+      )}
       <Row grid3 className="mb-20">
         {bookingList?.map((booking) => (
           <div
@@ -148,7 +152,7 @@ const BookedListings = () => {
         ))}
       </Row>
       {showModal && modal}
-    </>
+    </div>
   );
 };
 
