@@ -3,6 +3,9 @@ import Couple from '../assets/images/couple-rent.jpg';
 import Apartments from '../assets/images/apartments.jpg';
 import OnlineShoping from '../assets/images/online-shoping.jpg';
 
+import { AiFillMessage, AiOutlineUnorderedList } from 'react-icons/ai';
+import { TbBrandBooking, TbBusinessplan } from 'react-icons/tb';
+
 import Sell from '../assets/images/sell.jpg';
 import Rent from '../assets/images/rent.jpg';
 import Stay from '../assets/images/hotel-room.jpg';
@@ -86,5 +89,42 @@ export const ExploreData = [
     title: 'Places to stay',
     image: Stay,
     link: '/category/stay',
+  },
+];
+
+// Path: src\components\ProfileCardActions.jsx
+
+export const ProfileCardActionsData = [
+  {
+    id: 1,
+    icon: (
+      <AiFillMessage className="text-2xl place-items-center text-cyan-900" />
+    ),
+    title: 'Messages',
+    link: '/messages',
+  },
+  {
+    id: 2,
+    icon: (
+      <TbBrandBooking className="text-2xl place-items-center text-cyan-900" />
+    ),
+    title: 'Bookings',
+    link: '/bookings',
+  },
+  {
+    id: 3,
+    icon: (
+      <AiOutlineUnorderedList className="text-2xl place-items-center text-cyan-900" />
+    ),
+    title: 'Watchlist',
+    link: '/watchlist',
+  },
+  {
+    id: 4,
+    icon: (
+      <TbBusinessplan className="text-2xl place-items-center text-cyan-900" />
+    ),
+    title: 'Subscription',
+    link: '/subscription',
   },
 ];

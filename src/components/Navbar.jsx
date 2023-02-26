@@ -61,7 +61,7 @@ const Navbar = () => {
     auth.signOut();
     dispatch(SET_LOGOUT());
     dispatch(SET_ADMIN(false));
-    dispatch(SET_PLAN(''));
+    dispatch(SET_PLAN('free'));
     navigate('/');
     toast.success('Logged out successfully');
   };

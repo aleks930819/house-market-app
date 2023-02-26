@@ -1,8 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 
-import { AiFillMessage,AiOutlineUnorderedList } from 'react-icons/ai';
-import { TbBrandBooking } from 'react-icons/tb';
-
+import { AiFillMessage, AiOutlineUnorderedList } from 'react-icons/ai';
+import { TbBrandBooking, TbBusinessplan } from 'react-icons/tb';
 
 import { getAuth, deleteUser } from 'firebase/auth';
 
@@ -21,6 +20,7 @@ import {
 } from '../slices/authSlice';
 import { useState } from 'react';
 import Modal from './Modal';
+import ProfileCardActions from './ProfileCardActions';
 
 const ProfileCard = () => {
   const photo = useSelector(selectPhotoURL);
@@ -82,26 +82,8 @@ const ProfileCard = () => {
             alt={displayName}
           />
         </div>
-        <div>
-          <Link to="/messages">
-            <div className="flex items-center gap-2 cursor-pointer pb-2">
-              <AiFillMessage className="text-2xl place-items-center text-cyan-900" />
-              <h2>My Messages</h2>
-            </div>
-          </Link>
-          <Link to="/bookings">
-            <div className="flex items-center gap-2 cursor-pointer pb-2">
-              <TbBrandBooking className="text-2xl place-items-center text-cyan-900" />
-              <h2>My Bookings</h2>
-            </div>
-          </Link>
-          <Link to="/watchlist">
-            <div className="flex items-center gap-2 cursor-pointer">
-              <AiOutlineUnorderedList className="text-2xl place-items-center text-cyan-900" />
-              <h2>My Watchlist</h2>
-            </div>
-          </Link>
-        </div>
+        <ProfileCardActions />
+      
       </div>
 
       <div className="flex flex-col items-center mt-5">
