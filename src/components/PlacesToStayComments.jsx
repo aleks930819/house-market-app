@@ -33,9 +33,6 @@ const PlacesToStayComments = () => {
     };
   }, [id]);
 
-
-  
-
   const addCommentHandler = async (e) => {
     e.preventDefault();
 
@@ -43,6 +40,11 @@ const PlacesToStayComments = () => {
       toast.error('Please sign in to comment');
       return;
     }
+
+    if (!comment) {
+      toast.error('Please enter a comment');
+      return;
+    };
 
     try {
       const listingRef = doc(db, 'listings', id);
@@ -58,6 +60,15 @@ const PlacesToStayComments = () => {
         ],
       });
 
+      setComments([
+        ...comments,
+        {
+          comment,
+          userName,
+          createdAt: new Date().toISOString().slice(0, 10),
+        },
+      ]);
+
       toast.success('Comment added');
     } catch (error) {
       console.log(error);
@@ -69,11 +80,11 @@ const PlacesToStayComments = () => {
   return (
     <div className="flex justify-center items-center mb-10 ">
       <>
-        <section className="bg-slate-300 py-8 lg:py-16 w-3/4 rounded-sm ">
+        <section className="bg-slate-300 py-8 lg:py-16  w-full sm:w-3/4 rounded-sm ">
           <div className="max-w-2xl mx-auto px-4">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-lg lg:text-2xl font-bold  text-natural-600">
-                {/* Discussion ({data?.length}) */}
+                Discussion ({comments?.length})
               </h2>
             </div>
             <form className="mb-6">

@@ -42,11 +42,10 @@ const ItemDetails = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-
     if (data) {
       dispatch(SET_BOOKING(data[0]));
     }
-  }, [data,]);
+  }, [data]);
 
   if (loading) {
     return <Spinner />;
@@ -179,14 +178,16 @@ const ItemDetails = () => {
                     >
                       {item?.type === 'stay' ? 'Book Now' : 'Contact Owner'}
                     </Button>
-                    <Button primary onClick={addToWatchListHandler}>
-                      Add to Watchlist
-                    </Button>
+                    {user && (
+                      <Button primary onClick={addToWatchListHandler}>
+                        Add to Watchlist
+                      </Button>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
-            <PlacesToStayComments/>
+            {item?.type === 'stay' && <PlacesToStayComments />}
             <div>
               {showContact && (
                 <Contact
