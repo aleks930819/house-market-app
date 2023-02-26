@@ -53,7 +53,7 @@ const Messages = () => {
                   <Link to={`/messages/${message.id}`} key={message?.id}>
                     <div
                       div
-                      className="flex flex-col items-center border p-5 w-[350px] sm:w-[500px] cursor-pointer"
+                      className="flex flex-col items-center border-2 border-black p-5 w-[350px] sm:w-[500px] cursor-pointer"
                       key={message?.id}
                     >
                       <div className="flex  justify-between  w-full">

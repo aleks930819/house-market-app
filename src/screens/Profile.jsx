@@ -123,7 +123,7 @@ const Profile = () => {
         )}
 
         {/* <BookedListings /> */}
-        <Watchlist />
+        {/* <Watchlist /> */}
       </Container>
       {showModal && modal}
     </>

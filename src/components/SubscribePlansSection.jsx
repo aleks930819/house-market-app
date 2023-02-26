@@ -5,8 +5,8 @@ import { db } from '../../firbase.config';
 import { collection, collectionGroup, deleteDoc } from 'firebase/firestore';
 import 'firebase/firestore';
 import { getDocs } from 'firebase/firestore';
-import { useSelector } from 'react-redux';
-import { selectUserID, selectEmail } from '../slices/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUserID, selectEmail, selectPlan } from '../slices/authSlice';
 import { doc, getDoc, addDoc } from 'firebase/firestore';
 import { loadStripe } from '@stripe/stripe-js';
 import { toast } from 'react-toastify';
@@ -16,7 +16,12 @@ import { useNavigate } from 'react-router-dom';
 const SubscribePlansSection = () => {
   const [products, setProducts] = useState([]);
   const userID = useSelector(selectUserID);
+  const [subscription, setSubscription] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+
+
 
   useEffect(() => {
     const getData = async () => {
@@ -71,6 +76,7 @@ const SubscribePlansSection = () => {
       stripe.redirectToCheckout({ sessionId });
     });
   };
+
   return (
     <Row
       grid3
@@ -92,9 +98,7 @@ const SubscribePlansSection = () => {
               <p className="mb-3 font-normal text-gray-900">
                 {productData?.description}
               </p>
-              <p className="pb-3">
-               
-              </p>
+              <p className="pb-3"></p>
               <Button
                 primary
                 className="border-none"

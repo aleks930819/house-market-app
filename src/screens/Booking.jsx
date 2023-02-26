@@ -93,9 +93,15 @@ const Booking = () => {
     try {
       const userRef = doc(db, 'users', userId);
 
-      await updateDoc(userRef, {
-        bookings: [...bookings, booking],
-      });
+      if (bookings) {
+        await updateDoc(userRef, {
+          bookings: [...bookings, booking],
+        });
+      } else {
+        await updateDoc(userRef, {
+          bookings: [booking],
+        });
+      }
 
       navigate('/');
 

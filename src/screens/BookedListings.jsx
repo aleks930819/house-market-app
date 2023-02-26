@@ -97,9 +97,10 @@ const BookedListings = () => {
     </Modal>
   );
 
+
   return (
     <div className="flex justify-center items-center mx-auto h-screen">
-      {bookingList?.length === 0 && (
+      {(!bookingList || bookingList.length === 0 )&& (
         <h1 className="font-bold text-2xl text-gray-500">
           You have no bookings yet
         </h1>

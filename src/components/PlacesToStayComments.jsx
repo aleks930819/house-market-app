@@ -81,10 +81,10 @@ const PlacesToStayComments = () => {
     <div className="flex justify-center items-center mb-10 ">
       <>
         <section className="bg-slate-300 py-8 lg:py-16  w-full sm:w-3/4 rounded-sm ">
-          <div className="max-w-2xl mx-auto px-4">
+          <div className="max-w-2xl mx-auto px-4" >
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-lg lg:text-2xl font-bold  text-natural-600">
-                Discussion ({comments?.length})
+                Comments ({comments?.length})
               </h2>
             </div>
             <form className="mb-6">

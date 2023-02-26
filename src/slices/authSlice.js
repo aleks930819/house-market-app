@@ -7,6 +7,7 @@ const initialState = {
   email: null,
   photoURL: null,
   admin: false,
+  plan: 'free',
 };
 
 const authSlice = createSlice({
@@ -31,10 +32,14 @@ const authSlice = createSlice({
     SET_ADMIN: (state, action) => {
       state.admin = action.payload;
     },
+    SET_PLAN: (state, action) => {
+      console.log(action.payload);
+      state.plan = action.payload;
+    },
   },
 });
 
-export const { SET_ACTIVE_USER, SET_LOGOUT, SET_ADMIN } = authSlice.actions;
+export const { SET_ACTIVE_USER, SET_LOGOUT, SET_ADMIN,SET_PLAN } = authSlice.actions;
 
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const selectUserID = (state) => state.auth.uid;
@@ -42,5 +47,6 @@ export const selectDisplayName = (state) => state.auth.displayName;
 export const selectEmail = (state) => state.auth.email;
 export const selectPhotoURL = (state) => state.auth.photoURL;
 export const selectIsAdmin = (state) => state.auth.admin;
+export const selectPlan = (state) => state.auth.plan;
 
 export default authSlice.reducer;
