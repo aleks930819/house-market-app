@@ -2,7 +2,6 @@ import { BsFillShieldFill } from 'react-icons/bs';
 import { BiSupport } from 'react-icons/bi';
 import { MdFreeCancellation } from 'react-icons/md';
 
-
 const data = [
   {
     id: 1,
@@ -24,8 +23,9 @@ const data = [
   },
 ];
 
-
 const Features = () => {
+  
+
   return (
     <div className="flex flex-col md:flex-row justify-center items-center pt-10 pb-10 border-t-2 w-4/5 mx-auto text-sm">
       {data.map((item) => (

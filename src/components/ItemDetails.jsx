@@ -21,6 +21,7 @@ import { db } from '../../firbase.config';
 import { toast } from 'react-toastify';
 import useGetWatchlistData from '../hooks/useGetWatchlistData';
 import { SET_BOOKING } from '../slices/bookingSlice';
+import PlacesToStayComments from './PlacesToStayComments';
 
 const ItemDetails = () => {
   const [showSwipper, setShowSwipper] = useState(false);
@@ -185,6 +186,7 @@ const ItemDetails = () => {
                 </div>
               </div>
             </div>
+            <PlacesToStayComments/>
             <div>
               {showContact && (
                 <Contact

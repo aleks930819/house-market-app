@@ -13,6 +13,7 @@ export const Facilities = ({ listing }) => {
           ? ConvertPrice(listing?.discountPrice)
           : ConvertPrice(listing?.regularPrice)}
         {listing?.type === 'rent' ? ' / Month' : ''}
+        {listing?.type === 'stay' ? ' / Night' : ''}
         {listing?.offer ? (
           <span className="bg-green-700 text-white roudned-sm py-[1.2px] px-[4px]">
             Discount: $

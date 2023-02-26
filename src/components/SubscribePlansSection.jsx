@@ -11,11 +11,12 @@ import { doc, getDoc, addDoc } from 'firebase/firestore';
 import { loadStripe } from '@stripe/stripe-js';
 import { toast } from 'react-toastify';
 import { REACT_STRIPE_PUBLISHABLE_KEY } from '../../config';
+import { useNavigate } from 'react-router-dom';
 
 const SubscribePlansSection = () => {
   const [products, setProducts] = useState([]);
   const userID = useSelector(selectUserID);
-  const userEmail = useSelector(selectEmail);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getData = async () => {
@@ -47,6 +48,11 @@ const SubscribePlansSection = () => {
   }, []);
 
   const subscribeHandler = async (priceId) => {
+    if (!userID) {
+      toast.error('Please login to subscribe');
+      return navigate('/sign-in');
+    }
+
     const docRef = doc(db, 'customers', userID);
     const colRef = collection(docRef, 'checkout_sessions');
     addDoc(colRef, {
@@ -63,8 +69,6 @@ const SubscribePlansSection = () => {
 
       const stripe = await loadStripe(REACT_STRIPE_PUBLISHABLE_KEY);
       stripe.redirectToCheckout({ sessionId });
-
-     
     });
   };
   return (
@@ -89,9 +93,7 @@ const SubscribePlansSection = () => {
                 {productData?.description}
               </p>
               <p className="pb-3">
-                {/* <span className=" text-base sm:text-xl font-bold text-gray-900 italic">
-                  {item?.price}
-                </span> */}
+               
               </p>
               <Button
                 primary
