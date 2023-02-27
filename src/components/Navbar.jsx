@@ -7,8 +7,6 @@ import {
   MdOutlineAdminPanelSettings,
 } from 'react-icons/md';
 
-import { GrUserAdmin } from 'react-icons/gr';
-
 import { FiLogOut } from 'react-icons/fi';
 import { RxAvatar } from 'react-icons/rx';
 
@@ -21,13 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
-import {
-  collection,
-  getDocs,
-  collectionGroup,
-  doc,
-  getDoc,
-} from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 
 import { db } from '../../firbase.config';
 
@@ -43,6 +35,7 @@ import {
   SET_ADMIN,
   SET_PLAN,
   selectUserID,
+  SET_SUBSCRIPTION_ID,
 } from '../slices/authSlice';
 
 const Navbar = () => {
@@ -96,6 +89,7 @@ const Navbar = () => {
         snapshot.forEach((doc) => {
           const { role } = doc.data();
           dispatch(SET_PLAN(role));
+          dispatch(SET_SUBSCRIPTION_ID(doc.id));
           setPlan(role);
         });
       }
@@ -103,7 +97,6 @@ const Navbar = () => {
 
     checkSubscription();
   }, [userID, dispatch, setPlan]);
-
 
   const loggedInLinks = [
     {

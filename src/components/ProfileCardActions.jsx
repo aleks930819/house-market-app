@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 
 import { AiFillMessage, AiOutlineUnorderedList } from 'react-icons/ai';
-import { TbBrandBooking, TbBusinessplan } from 'react-icons/tb';
+import { TbBrandBooking } from 'react-icons/tb';
+
+import { getFunctions, httpsCallable } from 'firebase/functions';
 
 import Button from './Button';
 import { useSelector } from 'react-redux';
@@ -37,6 +39,23 @@ const data = [
 const ProfileCardActions = () => {
   const userPlan = useSelector(selectPlan);
 
+  const functions = getFunctions();
+
+  const functionRef = httpsCallable(
+    functions,
+    'ext-firestore-stripe-payments-createPortalLink'
+  );
+
+  const handleSubscription = async () => {
+    functionRef({
+      returnUrl: `${window.location.origin}`,
+      locale: 'auto',
+    }).then((result) => {
+      const data = result.data;
+      window.location.assign(data.url);
+    });
+  };
+
   return (
     <div>
       {data.map((item) => (
@@ -50,10 +69,10 @@ const ProfileCardActions = () => {
       <div className="flex items-center gap-2 cursor-pointer pb-2">
         <Button
           to={userPlan === 'free' ? '/subscription' : ''}
-          danger={userPlan === 'free' ? false : true}
-          primary={userPlan === 'free' ? true : false}
+          primary
+          onClick={handleSubscription}
         >
-          {userPlan === 'free' ? 'Upgrade Plan' : 'Cancel Subscription'}
+          {userPlan === 'free' ? 'Upgrade Plan' : 'Manage Subscription'}
         </Button>
       </div>
     </div>
