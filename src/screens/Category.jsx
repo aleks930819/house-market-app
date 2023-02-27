@@ -38,6 +38,8 @@ const Category = () => {
     
   }, [getData,listings]);
 
+
+
   if (loading) {
     return <Spinner />;
   }

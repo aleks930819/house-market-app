@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import Button from './Button';
 import Row from './Row';
 import { db } from '../../firbase.config';
-import { collection, collectionGroup, deleteDoc } from 'firebase/firestore';
+import { collection, collectionGroup } from 'firebase/firestore';
 import 'firebase/firestore';
 import { getDocs } from 'firebase/firestore';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectUserID, selectEmail, selectPlan } from '../slices/authSlice';
-import { doc, getDoc, addDoc } from 'firebase/firestore';
+import { useSelector } from 'react-redux';
+import { selectUserID } from '../slices/authSlice';
+import { doc, addDoc } from 'firebase/firestore';
 import { loadStripe } from '@stripe/stripe-js';
 import { toast } from 'react-toastify';
 import { REACT_STRIPE_PUBLISHABLE_KEY } from '../../config';
@@ -16,12 +16,7 @@ import { useNavigate } from 'react-router-dom';
 const SubscribePlansSection = () => {
   const [products, setProducts] = useState([]);
   const userID = useSelector(selectUserID);
-  const [subscription, setSubscription] = useState(null);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-
-
 
   useEffect(() => {
     const getData = async () => {

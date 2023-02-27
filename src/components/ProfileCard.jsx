@@ -1,7 +1,5 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import { AiFillMessage, AiOutlineUnorderedList } from 'react-icons/ai';
-import { TbBrandBooking, TbBusinessplan } from 'react-icons/tb';
 
 import { getAuth, deleteUser } from 'firebase/auth';
 

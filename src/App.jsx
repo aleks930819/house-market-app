@@ -37,6 +37,7 @@ const Booking = lazy(() => import('./screens/Booking'));
 const NotFound = lazy(() => import('./screens/404'));
 const BookedListings = lazy(() => import('./screens/BookedListings'));
 const Watchlist = lazy(() => import('./screens/WatchList'));
+const Subscription = lazy(() => import('./screens/Subscription'));
 
 function App() {
   return (
@@ -127,6 +128,7 @@ function App() {
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/subscription" element={<Subscription />} />
           <Route
             path="/bookings"
             element={

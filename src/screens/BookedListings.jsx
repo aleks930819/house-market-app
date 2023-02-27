@@ -28,6 +28,7 @@ const BookedListings = () => {
   useEffect(() => {
     setBookingList(bookings);
   }, [bookings]);
+  
 
   // const { data: bookings, getData } = useGetData(
   //   'bookings',

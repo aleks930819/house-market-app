@@ -14,6 +14,8 @@ import Button from './Button';
 import useGetData from '../hooks/useGetData';
 
 const Testimonials = () => {
+
+
   const { data: testimonials, getData } = useGetData(
     'testimonials',
     orderBy('createdAt', 'desc'),
@@ -26,6 +28,7 @@ const Testimonials = () => {
       getData();
     }
   }, [testimonials, getData]);
+
 
   return (
     <div className="flex justify-center items-center  flex-col mt-10 mb-10">
