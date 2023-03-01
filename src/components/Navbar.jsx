@@ -1,5 +1,8 @@
-import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+
+import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
+
+import { useMediaQuery } from 'react-responsive';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -23,6 +26,8 @@ import LinksAndActions from './LinksAndActions';
 const Navbar = () => {
   const auth = getAuth();
   const dispatch = useDispatch();
+  const isMobile = useMediaQuery({ maxWidth: 787 });
+  const [showMenu, setShowMenu] = useState(false);
 
   const userID = useSelector(selectUserID);
   const [plan, setPlan] = useState(null);
@@ -66,13 +71,34 @@ const Navbar = () => {
     checkSubscription();
   }, [userID, dispatch, setPlan]);
 
+  useEffect(() => {
+    if (!isMobile) {
+      setShowMenu(true);
+    }
+
+    if (isMobile) {
+      setShowMenu(false);
+    }
+  }, [isMobile]);
+
+
   return (
-    <nav className=" bg-slate-200 p-8  w-full   drop-shadow-lg h-1/3 hidden sm:block">
-      <div className="flex justify-between items-center">
-        <Search />
-        <LinksAndActions />
-      </div>
-    </nav>
+    <div className="relative">
+      <button
+        className="text-xl top-[10px] left-[10px] fixed text-white bg-black bg-opacity-70 p-1 rounded-full z-[1000] sm:hidden"
+        onClick={() => setShowMenu(!showMenu)}
+      >
+        {showMenu ? <AiOutlineClose /> : <AiOutlineMenu />}
+      </button>
+      {showMenu && (
+        <nav className=" fixed bg-slate-500 sm:bg-slate-200 p-8  w-full  h-full drop-shadow-lg sm:h-1/3  z-[999] sm:relative">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+            <Search />
+            <LinksAndActions setShowMenu={setShowMenu} />
+          </div>
+        </nav>
+      )}
+    </div>
   );
 };
 

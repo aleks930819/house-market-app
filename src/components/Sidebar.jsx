@@ -16,14 +16,14 @@ const Sidebar = () => {
     setIsOpen(false);
   };
 
-  console.log(isOpen);
 
   return (
-    <div ref={menuRef} className="sm:hidden">
-      <AsideButton setIsOpen={setIsOpen} />
+    <div></div>
+    // <div ref={menuRef} className="sm:hidden">
+    //   <AsideButton setIsOpen={setIsOpen} />
 
-      {isOpen && <AsideItem isLoggedIn={isLoggedIn} setIsOpen={setIsOpen} />}
-    </div>
+    //   {isOpen && <AsideItem isLoggedIn={isLoggedIn} setIsOpen={setIsOpen} />}
+    // </div>
   );
 };
 

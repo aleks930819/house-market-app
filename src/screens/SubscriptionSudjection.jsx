@@ -6,7 +6,7 @@ const SubscriptionSudjection = () => {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen">
-      <h1 className="text-2xl font-semibold mb-5">
+      <h1 className="text-base sm:text-2xl font-semibold mb-5">
         Upgrade your plan to add a property
       </h1>
       <Button onClick={() => navigate('/subscription')}>Upgrade</Button>

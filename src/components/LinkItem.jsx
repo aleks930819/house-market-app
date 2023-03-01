@@ -1,8 +1,10 @@
+import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
 
-const LinkItem = ({ link, setIsOpen }) => {
+const LinkItem = ({ link, setShowMenu }) => {
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
   return (
-    <li onClick={setIsOpen && (() => setIsOpen(false))}>
+    <li onClick={() => (isMobile ? setShowMenu(false) : null)}>
       <Link
         to={link.link}
         className="flex items-center p-2 text-base font-normal rounded-lg dark:text-white  sm:text-neutral-600 "
@@ -16,15 +18,17 @@ const LinkItem = ({ link, setIsOpen }) => {
             {link.icon}
           </div>
         )}
-
         {link.img && (
-          <img
-            src={link.img}
-            alt="user"
-            className="w-10 h-10 object-cover rounded-full 
+          <div className="flex gap-2 items-center">
+            <img
+              src={link.img}
+              alt="user"
+              className="w-10 h-10 object-cover rounded-full 
             sm:w-8 sm:h-8
             "
-          />
+            />
+            <p>Profile</p>
+          </div>
         )}
 
         <span className="ml-3 sm:ml-0">{link.name}</span>

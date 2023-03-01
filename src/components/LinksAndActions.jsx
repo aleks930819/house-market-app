@@ -25,7 +25,7 @@ import { RxAvatar } from 'react-icons/rx';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAuth } from 'firebase/auth';
 
-const LinksAndActions = () => {
+const LinksAndActions = ({ setShowMenu }) => {
   const auth = getAuth();
   const dispatch = useDispatch();
 
@@ -114,12 +114,17 @@ const LinksAndActions = () => {
             link: '/admin',
             icon: <MdOutlineAdminPanelSettings />,
           }}
+          setShowMenu={setShowMenu}
         />
       )}
       {!isLoggedIn &&
-        loggedOutLinks.map((link) => <LinkItem link={link} key={link.name} />)}
+        loggedOutLinks.map((link) => (
+          <LinkItem link={link} key={link.name} setShowMenu={setShowMenu} />
+        ))}
       {isLoggedIn &&
-        loggedInLinks.map((link) => <LinkItem link={link} key={link.name} />)}
+        loggedInLinks.map((link) => (
+          <LinkItem link={link} key={link.name} setShowMenu={setShowMenu} />
+        ))}
     </ul>
   );
 };

@@ -42,7 +42,7 @@ const Search = () => {
           placeholder="Search..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="p-2  rounded-md outline-none w-48 sm:focus:w-80  transition-all duration-400 ease-in-out shadow-lg text-xs sm:text-sm mt-5 sm:mt-0"
+          className="p-2  w-full rounded-md outline-none sm:w-48 sm:focus:w-80  transition-all duration-400 ease-in-out shadow-lg text-xs sm:text-sm mt-5 sm:mt-0"
         />
       </form>
     </div>
