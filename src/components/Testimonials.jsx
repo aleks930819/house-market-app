@@ -5,12 +5,10 @@ import '../index.css';
 
 import { orderBy, where, limit } from 'firebase/firestore';
 
-
 import React, { useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper';
 
-import Button from './Button';
 import useGetData from '../hooks/useGetData';
 
 const Testimonials = () => {
@@ -64,9 +62,6 @@ const Testimonials = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-        {/* <Button primary to="/testimonials">
-          See More
-        </Button> */}
       </>
     </div>
   );

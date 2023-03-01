@@ -125,7 +125,14 @@ function App() {
 
           <Route path="/search" element={<SearchResult />} />
           <Route path="/contact-us" element={<ContactUs />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route
+            path="/admin"
+            element={
+              <PrivateRoute admin>
+                <Admin />
+              </PrivateRoute>
+            }
+          />
           <Route path="/subscription" element={<Subscription />} />
           <Route
             path="/bookings"

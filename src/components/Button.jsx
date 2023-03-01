@@ -1,6 +1,5 @@
 import className from 'classnames';
 import { Link } from 'react-router-dom';
-import Spinner from './Spinner';
 import ButtonSpiner from './ButtonSpiner';
 
 const Button = ({
@@ -52,7 +51,6 @@ const Button = ({
   return (
     <button {...rest} className={classes}>
       {loading ? <ButtonSpiner /> : children}
-      {/* {children} */}
     </button>
   );
 };

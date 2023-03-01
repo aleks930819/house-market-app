@@ -80,12 +80,11 @@ const ItemDetails = () => {
   }
 
   const contactClickHandler = (type) => {
+    if (!user) {
+      return navigate('/sign-in');
+    }
     if (currentUserPlan === 'free') {
       return toast.error('Please upgrade your plan to contact the host');
-    }
-
-    if (!user) {
-      navigate('/sign-in');
     }
 
     if (type === 'stay') {
