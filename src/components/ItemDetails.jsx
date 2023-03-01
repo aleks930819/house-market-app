@@ -49,7 +49,14 @@ const ItemDetails = () => {
   useEffect(() => {
     if (data) {
       const { id, name, imgUrls, regularPrice, discountPrice } = data[0];
-      dispatch(SET_BOOKING(id, name, imgUrls, regularPrice, discountPrice));
+      const payload = {
+        id,
+        name,
+        imgUrls,
+        regularPrice,
+        discountPrice,
+      };
+      dispatch(SET_BOOKING(payload));
     }
   }, [data, dispatch]);
 
@@ -117,11 +124,8 @@ const ItemDetails = () => {
     <>
       {data &&
         data?.map((item) => (
-          <>
-            <div
-              className="container mx-auto px-8 md:px-20 mt-10 mb-10 min-h-screen z-0"
-              key={item?.id}
-            >
+          <div key={item?.id}>
+            <div className="container mx-auto px-8 md:px-20 mt-10 mb-10 min-h-screen z-0">
               <div
                 className="border bg-slate-200  rounded-lg p-6  relative z-0"
                 style={{ cursor: 'auto' }}
@@ -207,7 +211,7 @@ const ItemDetails = () => {
                 />
               )}
             </div>
-          </>
+          </div>
         ))}
     </>
   );

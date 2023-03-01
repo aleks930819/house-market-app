@@ -12,8 +12,8 @@ const bookingSlice = createSlice({
   initialState,
   reducers: {
     SET_BOOKING: (state, action) => {
+      console.log(action.payload);
       let { id, name, imgUrls, regularPrice, discountPrice } = action.payload;
-
       state.id = id;
       state.name = name;
       state.imgUrls = imgUrls || [];
