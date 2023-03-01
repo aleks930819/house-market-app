@@ -17,7 +17,6 @@ import StarterScreen from './screens/StarterScreen';
 import Spinner from './components/Spinner';
 
 const Admin = lazy(() => import('./screens/Admin'));
-const Testimonials = lazy(() => import('./screens/Testimonials'));
 const EditProfile = lazy(() => import('./screens/EditProfile'));
 const EditProperties = lazy(() => import('./screens/EditProperties'));
 const ContactUs = lazy(() => import('./screens/ContactUs'));
@@ -126,7 +125,6 @@ function App() {
 
           <Route path="/search" element={<SearchResult />} />
           <Route path="/contact-us" element={<ContactUs />} />
-          <Route path="/testimonials" element={<Testimonials />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/subscription" element={<Subscription />} />
           <Route

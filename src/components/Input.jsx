@@ -1,6 +1,6 @@
 import { MdEmail } from 'react-icons/md';
 import { RiLockPasswordFill } from 'react-icons/ri';
-import { FaUserAlt } from 'react-icons/fa';
+import { FaUserAlt,FaPhoneAlt } from 'react-icons/fa';
 
 const Input = (props) => {
   const element =
@@ -40,6 +40,7 @@ const Input = (props) => {
     email: <MdEmail />,
     password: <RiLockPasswordFill />,
     user: <FaUserAlt />,
+    phone: <FaPhoneAlt />,
   };
 
   return (

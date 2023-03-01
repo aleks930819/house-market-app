@@ -15,9 +15,13 @@ import setChangedValue from '../utils/changeHandler';
 import { db } from '../../firbase.config';
 import Spinner from '../components/Spinner';
 import uploadImages from '../utils/uploadImages';
+import { useSelector } from 'react-redux';
+import { selectPlan } from '../slices/authSlice';
+import SubscriptionSudjection from './SubscriptionSudjection';
 
 const Host = () => {
   const [loading, setLoading] = useState(false);
+  const currentUserPlan = useSelector(selectPlan);
 
   const [values, setValues] = useState({
     type: 'rent',
@@ -61,7 +65,6 @@ const Host = () => {
       return;
     }
 
- 
     if (values?.images?.length > 6) {
       setLoading(false);
 
@@ -115,13 +118,13 @@ const Host = () => {
     return <Spinner />;
   }
 
+  if (currentUserPlan === 'free') {
+    return <SubscriptionSudjection />;
+  }
+
   return (
     <div className="flex flex-col  justify-center items-center mb-10 mt-16">
-      <Form
-        heading="Add Property"
-        btnName="Send"
-        onSubmit={onSubmit}
-      >
+      <Form heading="Add Property" btnName="Send" onSubmit={onSubmit}>
         <div className="flex flex-col gap-2 pb-5">
           <label>Sell / Rent / Stay </label>
           <div className="flex gap-2">
@@ -276,7 +279,8 @@ const Host = () => {
         </div>
         <div className="flex flex-col gap-1 ">
           <label>
-            Regular Price {values.type === 'rent' ? '/ Month' : ''} {values.type === 'stay' ? '/ Day' : ''}
+            Regular Price {values.type === 'rent' ? '/ Month' : ''}{' '}
+            {values.type === 'stay' ? '/ Day' : ''}
           </label>
           <Input
             element="input"

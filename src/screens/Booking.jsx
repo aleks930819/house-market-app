@@ -32,7 +32,7 @@ const Booking = () => {
     number: '',
     first: '',
     last: '',
-    email: '',
+    phone: '',
     comments: '',
   });
 
@@ -72,7 +72,7 @@ const Booking = () => {
       return navigate('/login');
     }
 
-    if (!values.number || !values.first || !values.last || !values.email) {
+    if (!values.number || !values.first || !values.last || !values.phone) {
       return toast.error(
         'Number of people, first name, last name, email  are required'
       );
@@ -185,12 +185,12 @@ const Booking = () => {
           />
           <Input
             element="input"
-            type="email"
-            htmlFor="email"
-            placeholder="*Email"
-            name="email"
+            type="phone"
+            htmlFor="phone"
+            placeholder="*Phone Number"
+            name="phone"
             handler={changeHandler}
-            icon="email"
+            icon="phone"
           />
 
           <Input
@@ -212,9 +212,8 @@ const Booking = () => {
 
       <div className="flex gap-2 mt-5">
         <Button primary onClick={BookHandler}>
-          Book
+          Book Now
         </Button>
-        <Button primary>Pay Online</Button>
       </div>
     </Container>
   );

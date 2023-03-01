@@ -3,9 +3,15 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
-import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 
-import { selectIsLoggedIn, selectUserID } from '../slices/authSlice';
+import { toast } from 'react-toastify';
+
+import {
+  selectIsLoggedIn,
+  selectPlan,
+  selectUserID,
+} from '../slices/authSlice';
 
 import Button from './Button';
 import Spinner from './Spinner';
@@ -13,21 +19,20 @@ import Swipper from './Swiper';
 import { Facilities } from './Facilities';
 import Contact from './Contact';
 import Map from './Map';
-
-import useGetDataById from '../hooks/useGetDataById';
+import PlacesToStayComments from './PlacesToStayComments';
 
 import { db } from '../../firbase.config';
 
-import { toast } from 'react-toastify';
-import useGetWatchlistData from '../hooks/useGetWatchlistData';
 import { SET_BOOKING } from '../slices/bookingSlice';
-import PlacesToStayComments from './PlacesToStayComments';
+
+import useGetDataById from '../hooks/useGetDataById';
+import useGetWatchlistData from '../hooks/useGetWatchlistData';
 
 const ItemDetails = () => {
   const [showSwipper, setShowSwipper] = useState(false);
   const [starterIndex, setStartedIndex] = useState(0);
   const [showContact, setShowContact] = useState(false);
-  const [watchList, setWatchList] = useState(null);
+  const currentUserPlan = useSelector(selectPlan);
 
   const user = useSelector(selectIsLoggedIn);
   const userID = useSelector(selectUserID);
@@ -43,9 +48,10 @@ const ItemDetails = () => {
 
   useEffect(() => {
     if (data) {
-      dispatch(SET_BOOKING(data[0]));
+      const { id, name, imgUrls, regularPrice, discountPrice } = data[0];
+      dispatch(SET_BOOKING(id, name, imgUrls, regularPrice, discountPrice));
     }
-  }, [data]);
+  }, [data, dispatch]);
 
   if (loading) {
     return <Spinner />;
@@ -67,6 +73,10 @@ const ItemDetails = () => {
   }
 
   const contactClickHandler = (type) => {
+    if (currentUserPlan === 'free') {
+      return toast.error('Please upgrade your plan to contact the host');
+    }
+
     if (!user) {
       navigate('/sign-in');
     }

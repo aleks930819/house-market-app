@@ -1,21 +1,19 @@
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import '../index.css';
 
 import { orderBy, where, limit } from 'firebase/firestore';
 
+
 import React, { useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
 import { Pagination, Navigation } from 'swiper';
 
-import '../index.css';
 import Button from './Button';
 import useGetData from '../hooks/useGetData';
 
 const Testimonials = () => {
-
-
   const { data: testimonials, getData } = useGetData(
     'testimonials',
     orderBy('createdAt', 'desc'),
@@ -28,7 +26,6 @@ const Testimonials = () => {
       getData();
     }
   }, [testimonials, getData]);
-
 
   return (
     <div className="flex justify-center items-center  flex-col mt-10 mb-10">
@@ -67,9 +64,9 @@ const Testimonials = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-        <Button primary to="/testimonials">
+        {/* <Button primary to="/testimonials">
           See More
-        </Button>
+        </Button> */}
       </>
     </div>
   );
