@@ -67,6 +67,7 @@ const EditProfile = () => {
       });
 
       toast.success('Profile updated successfully');
+      toast.success('You need to sign in again to see changes');
       navigate('/profile');
     } catch (err) {
       setLoading(false);

@@ -29,12 +29,12 @@ const authSlice = createSlice({
       state.displayName = null;
       state.email = null;
       state.photoURL = null;
+      state.plan = 'free';
     },
     SET_ADMIN: (state, action) => {
       state.admin = action.payload;
     },
     SET_PLAN: (state, action) => {
-      console.log(action.payload);
       state.plan = action.payload;
     },
     SET_SUBSCRIPTION_ID: (state, action) => {

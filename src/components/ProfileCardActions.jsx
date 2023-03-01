@@ -9,6 +9,9 @@ import Button from './Button';
 import { useSelector } from 'react-redux';
 import { selectPlan } from '../slices/authSlice';
 
+import { useState } from 'react';
+import Spinner from './Spinner';
+
 const data = [
   {
     id: 1,
@@ -38,6 +41,7 @@ const data = [
 
 const ProfileCardActions = () => {
   const userPlan = useSelector(selectPlan);
+  const [loading, setLoading] = useState(false);
 
   const functions = getFunctions();
 
@@ -47,12 +51,15 @@ const ProfileCardActions = () => {
   );
 
   const handleSubscription = async () => {
+    setLoading(true);
     functionRef({
       returnUrl: `${window.location.origin}`,
       locale: 'auto',
     }).then((result) => {
       const data = result.data;
       window.location.assign(data.url);
+
+      setLoading(false);
     });
   };
 
@@ -70,6 +77,7 @@ const ProfileCardActions = () => {
         <Button
           to={userPlan === 'free' ? '/subscription' : ''}
           primary
+          loading={loading}
           onClick={handleSubscription}
         >
           {userPlan === 'free' ? 'Upgrade Plan' : 'Manage Subscription'}

@@ -78,7 +78,7 @@ const SignUp = () => {
         photoURL: imgUrl[0],
       });
 
-      const formDataCopy = { ...values, imgUrl, role: 'user' };
+      const formDataCopy = { ...values, imgUrl, role: 'user', watchlist: [] };
 
       delete formDataCopy.repassword;
       delete formDataCopy.password;

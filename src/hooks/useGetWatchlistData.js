@@ -9,7 +9,6 @@ const useGetWatchlistData = () => {
   const userID = useSelector(selectUserID);
 
   useEffect(() => {
-    
     const getWatchlistData = async (watchlist) => {
       try {
         const userRef = doc(db, 'users', userID);
