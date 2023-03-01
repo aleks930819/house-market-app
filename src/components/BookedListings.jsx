@@ -22,26 +22,11 @@ const BookedListings = () => {
 
   const { bookings } = useGetBookings();
 
-
   useEffect(() => {
     setBookingList(bookings);
   }, [bookings]);
 
-  // const { data: bookings, getData } = useGetData(
-  //   'bookings',
-  //   orderBy('createdAt', 'desc'),
-  //   where('from', '==', userId),
-  //   limit(10)
-  // );
-
-  // useEffect(() => {
-  //   if (!bookings) {
-  //     getData();
-  //   }
-  // }, [bookings, getData]);
-
   const cancelBooking = async (itemToDeleteId) => {
-
     try {
       const userRef = doc(db, 'users', userId);
       const userDoc = await getDoc(userRef);
@@ -51,7 +36,6 @@ const BookedListings = () => {
         const newBookingList = bookingsList.filter(
           (item) => item.id !== itemToDeleteId
         );
-
 
         await updateDoc(userRef, {
           bookings: newBookingList,
@@ -64,16 +48,6 @@ const BookedListings = () => {
       toast.error('Something went wrong');
     }
   };
-
-  // const cancelBooking = async (id) => {
-  //   try {
-  //     await deleteDoc(doc(db, 'bookings', id));
-  //     handleModalView();
-  //     toast.success('Booking cancelled successfully');
-  //   } catch (error) {
-  //     toast.error('Something went wrong');
-  //   }
-  // };
 
   const handleModalView = () => {
     setShowModal((prev) => !prev);

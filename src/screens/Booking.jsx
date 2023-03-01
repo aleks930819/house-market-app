@@ -10,15 +10,16 @@ import setChangedValue from '../utils/changeHandler';
 
 import { v4 as uuidv4 } from 'uuid';
 
-import { addDoc, collection, doc, updateDoc } from 'firebase/firestore';
+import {  doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firbase.config';
 import { useSelector } from 'react-redux';
 import { selectBooking } from '../slices/bookingSlice';
 import { selectUserID } from '../slices/authSlice';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate,} from 'react-router-dom';
 
 import { toast } from 'react-toastify';
 import useGetBookings from '../hooks/useGetBookings';
+
 
 const Booking = () => {
   const userId = useSelector(selectUserID);
@@ -74,7 +75,7 @@ const Booking = () => {
 
     if (!values.number || !values.first || !values.last || !values.phone) {
       return toast.error(
-        'Number of people, first name, last name, email  are required'
+        'Number of people, first name, last name and phone  are required'
       );
     }
 
@@ -112,37 +113,8 @@ const Booking = () => {
     }
   };
 
-  // const BookHandler = async () => {
-  //   try {
-  //     await addDoc(collection(db, 'bookings'), {
-  //       createdAt: new Date(),
-  //       from: userId,
-  //       listingId: id,
-  //       startDate: start,
-  //       endDate: end,
-  //       totalPrice,
-  //       imgUrls,
-  //       name,
-  //       ...values,
-  //     });
-  //     navigate('/');
-
-  //     toast.success('Booking Successful');
-  //   } catch (err) {
-  //     toast.error('Something went wrong');
-  //   }
-  // };
-
   return (
     <Container>
-      {/* <div className="flex"> */}
-      {/* <h1 className="text-2xl text-center pb-2">{data?.[0]?.name}</h1>
-        <img
-          src={data?.[0]?.imgUrls[0]}
-          alt=""
-          className="w-96 h-96 object-cover rounded-md"
-        />
-      </div> */}
       <div className="flex flex-col sm:flex-row gap-2">
         <DateRange
           editableDateInputs={true}

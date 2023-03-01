@@ -1,5 +1,4 @@
-import { limit, orderBy, where } from 'firebase/firestore';
-import useGetData from '../hooks/useGetData';
+
 import { useSelector } from 'react-redux';
 import { selectUserID } from '../slices/authSlice';
 import { useEffect, useState } from 'react';
@@ -30,18 +29,7 @@ const BookedListings = () => {
   }, [bookings]);
   
 
-  // const { data: bookings, getData } = useGetData(
-  //   'bookings',
-  //   orderBy('createdAt', 'desc'),
-  //   where('from', '==', userId),
-  //   limit(10)
-  // );
 
-  // useEffect(() => {
-  //   if (!bookings) {
-  //     getData();
-  //   }
-  // }, [bookings, getData]);
 
   const cancelBooking = async (itemToDeleteId) => {
     try {
@@ -66,15 +54,7 @@ const BookedListings = () => {
     }
   };
 
-  // const cancelBooking = async (id) => {
-  //   try {
-  //     await deleteDoc(doc(db, 'bookings', id));
-  //     handleModalView();
-  //     toast.success('Booking cancelled successfully');
-  //   } catch (error) {
-  //     toast.error('Something went wrong');
-  //   }
-  // };
+
 
   const handleModalView = () => {
     setShowModal((prev) => !prev);

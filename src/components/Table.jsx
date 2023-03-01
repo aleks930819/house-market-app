@@ -32,9 +32,9 @@ const Table = ({ data, config }) => {
         <thead className="bg-gray-50 dark:bg-slate-300">
           <tr>{renderedHeaders}</tr>
         </thead>
-        <tbody
-         className=" bg-slate-600 divide-y divide-gray-200 "
-        >{redneredRows}</tbody>
+        <tbody className=" bg-slate-600 divide-y divide-gray-200 ">
+          {redneredRows}
+        </tbody>
       </table>
     </div>
   );

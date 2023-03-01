@@ -1,5 +1,4 @@
 import Banner from '../components/Banner';
-import ExploreSection from '../components/ExploreRentals';
 import Features from '../components/Features';
 import StarterScreenWidget from '../components/StarterScreenWidget';
 import useScrollToTop from '../hooks/useScrollToTop';
