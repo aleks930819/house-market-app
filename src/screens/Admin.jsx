@@ -3,11 +3,11 @@ import { collection, getDocs } from 'firebase/firestore';
 
 import { db } from '../../firbase.config';
 
-import AdminUserTable from '../components/AdminUsersTable';
-import AdminMessagesTable from '../components/AdminMessagesTable';
-import AdminListingsTable from '../components/AdminListingsTable';
-import AdminSidebar from '../components/AdminSidebar';
 import Spinner from '../components/Spinner';
+import AdminListingsTable from '../components/AdminListingsTable';
+import AdminMessagesTable from '../components/AdminMessagesTable';
+import AdminSidebar from '../components/AdminSidebar';
+import AdminUserTable from '../components/AdminUsersTable';
 
 const Admin = () => {
   const [filteredProperties, setFilteredProperties] = useState([]);
@@ -47,13 +47,11 @@ const Admin = () => {
     filterProperties('users');
   }, []);
 
-
   const lookup = {
     users: <AdminUserTable data={filteredProperties} />,
     listings: <AdminListingsTable data={filteredProperties} />,
     messages: <AdminMessagesTable data={filteredProperties} />,
   };
-
 
   return (
     <div className="flex flex-col md:grid md:grid-cols-6 min-h-screen">
@@ -63,9 +61,9 @@ const Admin = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="col-start-2 col-end-7">{
-           lookup[activeFilterButton]
-        }</div>
+        <div className="col-start-2 col-end-7">
+          {lookup[activeFilterButton]}
+        </div>
       )}
     </div>
   );

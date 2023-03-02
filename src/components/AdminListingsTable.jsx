@@ -1,4 +1,5 @@
 import Button from './Button';
+
 import Table from './Table';
 import { deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../firbase.config';

@@ -8,8 +8,11 @@ import useGetData from '../hooks/useGetData';
 
 import Spinner from '../components/Spinner';
 import { useEffect } from 'react';
+import useScrollToTop from '../hooks/useScrollToTop';
+import ScrollToTopButton from '../components/ScrollToTopButton';
 
 const Offers = () => {
+  const { isVisible } = useScrollToTop();
   const {
     data: listings,
     loading,
@@ -47,6 +50,7 @@ const Offers = () => {
     >
       <div className="flex flex-col min-h-screen mb-10">
         <CategoryListingItem data={listings} />
+        {isVisible && <ScrollToTopButton />}
       </div>
     </InfiniteScroll>
   );

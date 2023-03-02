@@ -9,7 +9,6 @@ import ScrollToTop from './utils/scrollToTop';
 
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
-import Sidebar from './components/Sidebar';
 import PrivateRoute from './components/PrivateRoute';
 
 import StarterScreen from './screens/StarterScreen';
@@ -44,7 +43,6 @@ function App() {
       <ToastContainer />
 
       <Navbar />
-      <Sidebar />
       <ScrollToTop />
       <Suspense fallback={<Spinner />}>
         <Routes>
