@@ -40,13 +40,14 @@ const Navbar = () => {
             dispatch(SET_ADMIN(true));
           }
         });
+        const { email, displayName, uid, photoURL } = user;
 
         dispatch(
           SET_ACTIVE_USER({
-            email: user.email,
-            name: user.displayName,
-            uid: user.uid,
-            photo: user.photoURL,
+            email,
+            displayName,
+            uid,
+            photoURL,
           })
         );
       }
@@ -72,15 +73,8 @@ const Navbar = () => {
   }, [userID, dispatch, setPlan]);
 
   useEffect(() => {
-    if (!isMobile) {
-      setShowMenu(true);
-    }
-
-    if (isMobile) {
-      setShowMenu(false);
-    }
+    !isMobile ? setShowMenu(true) : setShowMenu(false);
   }, [isMobile]);
-
 
   return (
     <div className="relative">

@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import Button from './Button';
 import { useSelector } from 'react-redux';
 import { selectDisplayName } from '../slices/authSlice';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firbase.config';
 
 const PlacesToStayComments = () => {
@@ -24,7 +24,7 @@ const PlacesToStayComments = () => {
           setComments(listingDoc.data().comments);
         }
       } catch (error) {
-        console.log(error);
+        toast.error('Something went wrong');
       }
     };
 
@@ -44,34 +44,28 @@ const PlacesToStayComments = () => {
     if (!comment) {
       toast.error('Please enter a comment');
       return;
-    };
+    }
 
     try {
       const listingRef = doc(db, 'listings', id);
 
-      await updateDoc(listingRef, {
-        comments: [
-          ...comments,
-          {
-            comment,
-            userName,
-            createdAt: new Date().toISOString().slice(0, 10),
-          },
-        ],
-      });
-
-      setComments([
+      const newCommentsData = [
         ...comments,
         {
           comment,
           userName,
           createdAt: new Date().toISOString().slice(0, 10),
         },
-      ]);
+      ];
+
+      await updateDoc(listingRef, {
+        comments: newCommentsData,
+      });
+
+      setComments(newCommentsData);
 
       toast.success('Comment added');
     } catch (error) {
-      console.log(error);
       toast.error('Something went wrong');
     }
     setComment('');
@@ -81,7 +75,7 @@ const PlacesToStayComments = () => {
     <div className="flex justify-center items-center mb-10 ">
       <>
         <section className="bg-slate-300 py-8 lg:py-16  w-full sm:w-3/4 rounded-sm ">
-          <div className="max-w-2xl mx-auto px-4" >
+          <div className="max-w-2xl mx-auto px-4">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-lg lg:text-2xl font-bold  text-natural-600">
                 Comments ({comments?.length})
