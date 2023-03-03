@@ -6,6 +6,7 @@ import { db } from '../../firbase.config';
 
 const useGetWatchlistData = () => {
   const [watchlistData, setWatchlistData] = useState([]);
+  const [error, setError] = useState(null);
   const userID = useSelector(selectUserID);
 
   useEffect(() => {
@@ -18,7 +19,7 @@ const useGetWatchlistData = () => {
           setWatchlistData(userDoc.data().watchlist);
         }
       } catch (error) {
-        console.log(error);
+        setError(error);
       }
     };
 

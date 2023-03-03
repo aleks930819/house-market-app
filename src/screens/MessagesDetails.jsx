@@ -141,7 +141,7 @@ const MessagesDetails = () => {
         return (
           <div
             key={message.id}
-            className="text-base border shadow-lg p-5 flex flex-col gap-5 w-[300px] sm:w-[550px] md:w-[650px] mt-10"
+            className="text-base border shadow-lg p-5 flex flex-col gap-5 w-[350px] sm:w-[550px] md:w-[650px] mt-10"
           >
             <h1 className="font-bold">Subject: {message?.subject}</h1>
             <h2>From: {message?.name}</h2>

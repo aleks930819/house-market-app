@@ -3,11 +3,11 @@ import Couple from '../assets/images/couple-rent.jpg';
 import Apartments from '../assets/images/apartments.jpg';
 import OnlineShoping from '../assets/images/online-shoping.jpg';
 
-
 import Sell from '../assets/images/sell.jpg';
 import Rent from '../assets/images/rent.jpg';
 import Stay from '../assets/images/hotel-room.jpg';
 
+const currentYear = new Date().getFullYear();
 
 // Path: src\components\StarterScreenWidget.jsx
 
@@ -48,7 +48,7 @@ export const StarterScreenWidgetData = [
 export const FooterData = [
   {
     id: 1,
-    text: '&#169; 2023 All rights reserved',
+    text: `&#169; ${currentYear} All rights reserved`,
     link: '/',
   },
   {
@@ -90,4 +90,3 @@ export const ExploreData = [
     link: '/category/stay',
   },
 ];
-

@@ -10,7 +10,6 @@ import { useSelector } from 'react-redux';
 import { selectPlan } from '../slices/authSlice';
 
 import { useState } from 'react';
-import Spinner from './Spinner';
 
 const data = [
   {

@@ -351,7 +351,7 @@ const EditProperties = () => {
               >
                 <img
                   src={index === 0 ? images[0] : image}
-                  alt="image"
+                  alt=""
                   className="w-20 h-20 object-cover pb-1"
                 />
                 <AiFillDelete
