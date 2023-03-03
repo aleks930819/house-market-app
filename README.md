@@ -1,5 +1,10 @@
+### House Market is single page application build with React JS, Redux Toolkit, Tailwind Css, Firebase, Stripe, 
 
 
+## Functionality
+
+
+![House Market - Google Chrome 3_3_2023 10_23_14 AM](https://user-images.githubusercontent.com/107752460/222669252-ba644cde-42f4-4fa6-a2f8-6dc8c1b054cf.png)
 
 ![House Market - Google Chrome 3_2_2023 1_06_19 PM](https://user-images.githubusercontent.com/107752460/222667137-3775ce33-a899-4cff-abf4-49c8df63e3b4.png)
 ![House Market - Google Chrome 3_2_2023 12_51_55 PM](https://user-images.githubusercontent.com/107752460/222667144-42c06a23-c218-4611-bbf7-8252580f2a51.png)
