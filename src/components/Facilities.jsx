@@ -30,18 +30,22 @@ export const Facilities = ({ listing }) => {
           </span>
         )}
       </li>
+
       <li className="flex gap-2 items-center">
         <IoIosBed className="text-lg" />
         {`${bedrooms} Bedroom${bedrooms > 1 ? 's' : ''}`}
       </li>
+
       <li className="flex gap-2 items-center">
         <FaBath className="text-lg" />
         {`${bathrooms} Bathroom${bathrooms > 1 ? 's' : ''}`}
       </li>
+
       <li className="flex gap-2 items-center">
         <FaParking className="text-lg" />
         {parking ? 'Yes' : 'No'}
       </li>
+
       <li className="flex gap-2 items-center">
         <MdChair className="text-lg" />
         {furnished ? 'Yes' : 'No'}

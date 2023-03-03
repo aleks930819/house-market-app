@@ -47,17 +47,9 @@ const ItemDetails = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (data) {
-      const { id, name, imgUrls, regularPrice, discountPrice } = data[0];
-      const payload = {
-        id,
-        name,
-        imgUrls,
-        regularPrice,
-        discountPrice,
-      };
-      dispatch(SET_BOOKING(payload));
-    }
+    const { id, name, imgUrls, regularPrice, discountPrice } = data?.[0] || {};
+    const payload = { id,name,imgUrls,regularPrice,discountPrice};
+    dispatch(SET_BOOKING(payload));
   }, [data, dispatch]);
 
   if (loading) {

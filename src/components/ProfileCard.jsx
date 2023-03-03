@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 
-
 import { getAuth, deleteUser } from 'firebase/auth';
 
 import Button from '../components/Button';
@@ -70,6 +69,7 @@ const ProfileCard = () => {
     </Modal>
   );
 
+
   return (
     <div className="mt-10 text-xs sm:text-md  border shadow-md p-5 flex flex-col gap-2 rounded-md ">
       <div className="grid grid-cols-2 place-items-center">
@@ -81,7 +81,6 @@ const ProfileCard = () => {
           />
         </div>
         <ProfileCardActions />
-      
       </div>
 
       <div className="flex flex-col items-center mt-5">
