@@ -13,7 +13,7 @@ https://user-images.githubusercontent.com/107752460/222894623-8a3d482a-681d-4948
 ## Functionality
 
 
-* Google OAuth
+* Google Auth
 * Search built with Algolia 
 * Interactive Map built with Leaflet
 * Filter properties by categories
