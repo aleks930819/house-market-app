@@ -1,4 +1,4 @@
-###  House Market is a single page application which enables the users to look for properties  to rent, buy or reserve for a short stay. The application also allows users who are registered and paying a monthly fee to put their property on the market. The web application is built with React.js, Redux Toolkit, Firebase, Algolia, Stripe, Leaflet
+####  House Market is a single page application which enables the users to look for properties  to rent, buy or reserve for a short stay. The application also allows users who are registered and paying a monthly fee to put their property on the market. The web application is built with React.js, Redux Toolkit, Firebase, Algolia, Stripe, Leaflet
 ---
 
 
