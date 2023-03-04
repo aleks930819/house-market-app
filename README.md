@@ -1,4 +1,4 @@
-### House Market is a single page application build with React JS, Redux Toolkit, Tailwind Css, Firebase, Stripe, 
+### House Market is a single page application build with React JS, Redux Toolkit, Tailwind Css, Firebase, Stripe, Leaflet 
 
 
 
