@@ -2,9 +2,7 @@ import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-
-
-import { serverTimestamp, doc, updateDoc, getDoc } from 'firebase/firestore';
+import { doc, updateDoc, getDoc } from 'firebase/firestore';
 
 import { getAuth } from 'firebase/auth';
 
@@ -16,14 +14,12 @@ import Spinner from '../components/Spinner';
 import { db } from '../../firbase.config';
 
 import setChangedValue from '../utils/changeHandler';
-import uploadImages from '../utils/uploadImages';
 import useDeleteImage from '../hooks/useDeleteImage';
 import EditPropertiesImages from '../components/EditPropertiesImages';
+import uploadFormData from '../utils/uploadFormData';
 
 const EditProperties = () => {
-
   const { id } = useParams();
-
 
   const [loading, setLoading] = useState(false);
   const [listing, setListing] = useState(null);
@@ -45,8 +41,12 @@ const EditProperties = () => {
     longitude: 0,
   });
 
-  const {deleteImageHandler} = useDeleteImage(id, values, setValues, setImages);
-
+  const { deleteImageHandler } = useDeleteImage(
+    id,
+    values,
+    setValues,
+    setImages
+  );
 
   const auth = getAuth();
   const navigate = useNavigate();
@@ -55,14 +55,13 @@ const EditProperties = () => {
     setChangedValue(e, setValues);
   };
 
-
   useEffect(() => {
     setLoading(true);
 
     const fetchListing = async () => {
       const docRef = doc(db, 'listings', id);
       const docSnap = await getDoc(docRef);
-      const {imgUrls} = docSnap.data();
+      const { imgUrls } = docSnap.data();
 
       if (docSnap.exists()) {
         setListing(docSnap.data());
@@ -85,26 +84,16 @@ const EditProperties = () => {
     fetchListing();
   }, [id, navigate]);
 
-
   const onSubmit = async (e) => {
     e.preventDefault();
 
     setLoading(true);
 
-    const imgUrls = await Promise.all(
-      [...values.images].map((image) => uploadImages(image))
-    ).catch(() => {
-      toast.error('Images not uploaded');
-      return;
-    });
-
-    const formDataCopy = {
-      ...values,
-      imgUrls: [...images, ...imgUrls],
-      userRef: auth.currentUser.uid,
-      timestamp: serverTimestamp(),
-    };
-    delete formDataCopy.images;
+    const formDataCopy = await uploadFormData(
+      values,
+      auth.currentUser.uid,
+      images
+    );
 
     try {
       setLoading(true);
@@ -121,7 +110,6 @@ const EditProperties = () => {
   if (loading) {
     return <Spinner />;
   }
-
 
   return (
     <div className="flex flex-col  justify-center items-center mb-10 mt-16">
@@ -277,9 +265,7 @@ const EditProperties = () => {
           </div>
         </div>
         <div className="flex flex-col gap-1 ">
-          <label>
-            Regular Price {values.type === 'rent' ? '/ Month' : ''}{' '}
-          </label>
+          <label>Regular Price {values.type === 'rent' ? '/ Month' : ''}</label>
           <Input
             element="input"
             type="number"
@@ -323,28 +309,10 @@ const EditProperties = () => {
             multiple
           />
         </div>
-        <EditPropertiesImages images={images} deleteImageHandler={deleteImageHandler}/>
-        {/* <div>
-          <label>Images:</label>
-          <div className="grid  grid-cols-3  mt-2">
-            {images?.map((image, index) => (
-              <div
-                key={index}
-                className="flex flex-wrap flex-col items-center mb-3"
-              >
-                <img
-                  src={index === 0 ? images[0] : image}
-                  alt=""
-                  className="w-20 h-20 object-cover pb-1"
-                />
-                <AiFillDelete
-                  className="text-red-700 cursor-pointer text-2xl"
-                  onClick={() => deleteImageHandler(images[index])}
-                />
-              </div>
-            ))}
-          </div>
-        </div> */}
+        <EditPropertiesImages
+          images={images}
+          deleteImageHandler={deleteImageHandler}
+        />
       </Form>
     </div>
   );

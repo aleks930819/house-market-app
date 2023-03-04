@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
 
 import { getAuth } from 'firebase/auth';
 
@@ -14,10 +14,11 @@ import setChangedValue from '../utils/changeHandler';
 
 import { db } from '../../firbase.config';
 import Spinner from '../components/Spinner';
-import uploadImages from '../utils/uploadImages';
 import { useSelector } from 'react-redux';
 import { selectPlan } from '../slices/authSlice';
 import SubscriptionSudjection from './SubscriptionSudjection';
+import uploadFormData from '../utils/uploadFormData';
+import useHostValidators from '../hooks/useHostValidators';
 
 const Host = () => {
   const [loading, setLoading] = useState(false);
@@ -39,6 +40,8 @@ const Host = () => {
     longitude: 0,
   });
 
+  const { errors, validateForm } = useHostValidators();
+
   const auth = getAuth();
   const navigate = useNavigate();
 
@@ -51,56 +54,15 @@ const Host = () => {
 
     setLoading(true);
 
-    if (
-      values.bathrooms === 0 ||
-      values.bedrooms === 0 ||
-      values.name === '' ||
-      values.location === '' ||
-      values.regularPrice < 1 ||
-      values.longitude === 0 ||
-      values.latitude === 0
-    ) {
+    validateForm(values);
+
+    if (Object.keys(errors).length > 0) {
       setLoading(false);
-      toast.error('All fields are required');
+      toast.error(`${errors.errorMessage}`);
       return;
     }
 
-    if (values?.images?.length > 6) {
-      setLoading(false);
-
-      toast.error('You can only upload a maximum of 6 images');
-      return;
-    }
-
-    if (values?.images?.length === 0) {
-      setLoading(false);
-
-      toast.error('Images are required');
-      return;
-    }
-
-    if (values?.images?.length < 3) {
-      setLoading(false);
-
-      toast.error('You must  upload a minimum of 3 images');
-      return;
-    }
-
-    const imgUrls = await Promise.all(
-      [...values.images].map((image) => uploadImages(image))
-    ).catch(() => {
-      toast.error('Images not uploaded');
-      return;
-    });
-
-    const formDataCopy = {
-      ...values,
-      imgUrls,
-      userRef: auth.currentUser.uid,
-      timestamp: serverTimestamp(),
-    };
-
-    delete formDataCopy.images;
+    const formDataCopy = await uploadFormData(values, auth.currentUser.uid);
 
     try {
       setLoading(true);
