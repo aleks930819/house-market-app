@@ -4,7 +4,8 @@
 
 
 
-https://user-images.githubusercontent.com/107752460/222893519-eb74747e-2661-48d2-8e37-f1b223c45b85.mp4
+
+https://user-images.githubusercontent.com/107752460/222894623-8a3d482a-681d-4948-acf6-4d048f43baf5.mp4
 
 ---
 
@@ -21,3 +22,4 @@ https://user-images.githubusercontent.com/107752460/222893519-eb74747e-2661-48d2
 * Edit properties 
 * Users may communicate with one another with messages
 * The user is able to cancel booking at any time
+* Comments for places to stay at
