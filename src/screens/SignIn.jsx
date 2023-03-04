@@ -52,7 +52,7 @@ const SignIn = () => {
           element="input"
           type="text"
           htmlFor="email"
-          placeholder="Your Email"
+          placeholder="*Your Email"
           name="email"
           value={values.name}
           handler={changeHandler}
@@ -63,7 +63,7 @@ const SignIn = () => {
           element="input"
           type="password"
           htmlFor="password"
-          placeholder="Password"
+          placeholder="*Password"
           name="password"
           value={values.name}
           handler={changeHandler}

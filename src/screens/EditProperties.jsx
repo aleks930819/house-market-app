@@ -4,7 +4,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { AiFillDelete } from 'react-icons/ai';
 
-import { getStorage, ref, deleteObject } from 'firebase/storage';
 
 import { serverTimestamp, doc, updateDoc, getDoc } from 'firebase/firestore';
 
@@ -19,8 +18,13 @@ import { db } from '../../firbase.config';
 
 import setChangedValue from '../utils/changeHandler';
 import uploadImages from '../utils/uploadImages';
+import useDeleteImage from '../hooks/useDeleteImage';
 
 const EditProperties = () => {
+
+  const { id } = useParams();
+
+
   const [loading, setLoading] = useState(false);
   const [listing, setListing] = useState(null);
   const [images, setImages] = useState([]);
@@ -41,6 +45,9 @@ const EditProperties = () => {
     longitude: 0,
   });
 
+  const {deleteImageHandler} = useDeleteImage(id, values, setValues, setImages);
+
+
   const auth = getAuth();
   const navigate = useNavigate();
 
@@ -48,7 +55,6 @@ const EditProperties = () => {
     setChangedValue(e, setValues);
   };
 
-  const { id } = useParams();
 
   useEffect(() => {
     setLoading(true);
@@ -56,6 +62,7 @@ const EditProperties = () => {
     const fetchListing = async () => {
       const docRef = doc(db, 'listings', id);
       const docSnap = await getDoc(docRef);
+      const {imgUrls} = docSnap.data();
 
       if (docSnap.exists()) {
         setListing(docSnap.data());
@@ -65,7 +72,7 @@ const EditProperties = () => {
           images: {},
         }));
 
-        setImages(docSnap.data().imgUrls);
+        setImages(imgUrls);
 
         setLoading(false);
       } else {
@@ -78,7 +85,6 @@ const EditProperties = () => {
     fetchListing();
   }, [id, navigate]);
 
-  const storage = getStorage();
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -116,30 +122,6 @@ const EditProperties = () => {
     return <Spinner />;
   }
 
-  const deleteImageHandler = async (url) => {
-    setImages((prev) => prev.filter((img) => img !== url));
-
-    setValues((prev) => ({
-      ...prev,
-      images: prev.imgUrls.filter((img) => img !== url),
-    }));
-
-    const imgUrls = values.imgUrls.filter((img) => img !== url);
-
-    await updateDoc(doc(db, 'listings', id), {
-      imgUrls,
-    });
-
-    const desertRef = ref(storage, url);
-
-    deleteObject(desertRef)
-      .then(() => {
-        toast.success('Image deleted successfully');
-      })
-      .catch((error) => {
-        toast.error('Something went wrong');
-      });
-  };
 
   return (
     <div className="flex flex-col  justify-center items-center mb-10 mt-16">

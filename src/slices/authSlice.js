@@ -9,6 +9,7 @@ const initialState = {
   admin: false,
   plan: 'free',
   subscriptionId: null,
+  listings: [],
 };
 
 const authSlice = createSlice({
@@ -40,6 +41,9 @@ const authSlice = createSlice({
     SET_SUBSCRIPTION_ID: (state, action) => {
       state.subscriptionId = action.payload;
     },
+    SET_LISTINGS: (state, action) => {
+      state.listings = action.payload;
+    },
   },
 });
 
@@ -59,5 +63,6 @@ export const selectPhotoURL = (state) => state.auth.photoURL;
 export const selectIsAdmin = (state) => state.auth.admin;
 export const selectPlan = (state) => state.auth.plan;
 export const selectSubscriptionId = (state) => state.auth.subscriptionId;
+export const selectListings = (state) => state.auth.listings;
 
 export default authSlice.reducer;

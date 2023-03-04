@@ -122,7 +122,7 @@ const SignUp = () => {
           element="input"
           type="text"
           htmlFor="firstName"
-          placeholder="First Name"
+          placeholder="*First Name"
           name="firstName"
           value={values.name}
           handler={changeHandler}
@@ -135,7 +135,7 @@ const SignUp = () => {
           element="input"
           type="text"
           htmlFor="lastName"
-          placeholder="Last Name"
+          placeholder="*Last Name"
           name="lastName"
           value={values.name}
           handler={changeHandler}
@@ -148,7 +148,7 @@ const SignUp = () => {
           element="input"
           type="text"
           htmlFor="email"
-          placeholder="Your Email"
+          placeholder="*Your Email"
           name="email"
           value={values.name}
           handler={changeHandler}
@@ -160,7 +160,7 @@ const SignUp = () => {
           element="input"
           type="password"
           htmlFor="password"
-          placeholder="Password"
+          placeholder="*Password"
           name="password"
           value={values.name}
           handler={changeHandler}
@@ -173,7 +173,7 @@ const SignUp = () => {
           element="input"
           type="password"
           htmlFor="password"
-          placeholder="Repeat password"
+          placeholder="*Repeat password"
           name="repassword"
           value={values.name}
           handler={changeHandler}

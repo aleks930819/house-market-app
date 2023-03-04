@@ -26,7 +26,7 @@ const useGetWatchlistData = () => {
     getWatchlistData();
   }, [userID]);
 
-  return { watchlistData };
+  return { watchlistData,setWatchlistData };
 };
 
 export default useGetWatchlistData;

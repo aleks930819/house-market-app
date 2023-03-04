@@ -1,12 +1,14 @@
+import 'swiper/css';
+import '../index.css';
+import 'swiper/css';
+import 'swiper/css/navigation';
+
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { AiOutlineClose } from 'react-icons/ai';
 
 import { Pagination } from 'swiper';
-import 'swiper/css';
-import '../index.css';
-import 'swiper/css';
-import 'swiper/css/navigation';
+
 import { useKeyDown } from '../hooks/useKeyDown';
 
 const Swipper = ({ data, setShowSwipper, starterIndex }) => {

@@ -7,11 +7,11 @@ const initialState = {
   price: '',
 };
 
-const bookingSlice = createSlice({
-  name: 'booking',
+const currentListingSlice = createSlice({
+  name: 'listing',
   initialState,
   reducers: {
-    SET_BOOKING: (state, action) => {
+    SET_LISTING: (state, action) => {
       let { id, name, imgUrls, regularPrice, discountPrice } = action.payload;
       state.id = id;
       state.name = name;
@@ -19,10 +19,11 @@ const bookingSlice = createSlice({
       state.price = discountPrice || regularPrice;
     },
   },
+  
 });
 
-export const { SET_BOOKING, SET_BOOKING_TO_EMPTY } = bookingSlice.actions;
+export const { SET_LISTING } = currentListingSlice.actions;
 
-export const selectBooking = (state) => state.booking;
+export const selectListing = (state) => state.listing;
 
-export default bookingSlice.reducer;
+export default currentListingSlice.reducer;

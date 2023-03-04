@@ -13,7 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
 import {  doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firbase.config';
 import { useSelector } from 'react-redux';
-import { selectBooking } from '../slices/bookingSlice';
+import { selectListing } from '../slices/listingSlice';
 import { selectUserID } from '../slices/authSlice';
 import { useNavigate,} from 'react-router-dom';
 
@@ -24,7 +24,7 @@ import useGetBookings from '../hooks/useGetBookings';
 const Booking = () => {
   const userId = useSelector(selectUserID);
 
-  const { id, name, imgUrls, price } = useSelector(selectBooking);
+  const { id, name, imgUrls, price } = useSelector(selectListing);
 
   const [reservedDates, setReservedDates] = useState(false);
   const navigate = useNavigate();

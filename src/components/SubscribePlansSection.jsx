@@ -1,17 +1,26 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { toast } from 'react-toastify';
+
+import { useSelector } from 'react-redux';
+
+import { loadStripe } from '@stripe/stripe-js';
+
+
+
+import { collection, collectionGroup, doc, addDoc,getDocs } from 'firebase/firestore';
+import 'firebase/firestore';
+
+
+import { db } from '../../firbase.config';
+import { REACT_STRIPE_PUBLISHABLE_KEY } from '../../config';
+
+import { selectUserID } from '../slices/authSlice';
+
+
 import Button from './Button';
 import Row from './Row';
-import { db } from '../../firbase.config';
-import { collection, collectionGroup } from 'firebase/firestore';
-import 'firebase/firestore';
-import { getDocs } from 'firebase/firestore';
-import { useSelector } from 'react-redux';
-import { selectUserID } from '../slices/authSlice';
-import { doc, addDoc } from 'firebase/firestore';
-import { loadStripe } from '@stripe/stripe-js';
-import { toast } from 'react-toastify';
-import { REACT_STRIPE_PUBLISHABLE_KEY } from '../../config';
-import { useNavigate } from 'react-router-dom';
 
 const SubscribePlansSection = () => {
   const [products, setProducts] = useState([]);
@@ -39,8 +48,8 @@ const SubscribePlansSection = () => {
           }
         });
 
-        const array = Object.entries(products);
-        setProducts(array);
+        const arrayFromProducts = Object.entries(products);
+        setProducts(arrayFromProducts);
       });
     };
 

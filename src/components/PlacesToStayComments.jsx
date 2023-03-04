@@ -82,7 +82,7 @@ const PlacesToStayComments = () => {
               </h2>
             </div>
             <form className="mb-6">
-              <div className="py-2 px-4 mb-4 bg-slate-400 rounded-lg rounded-t-lg border border-gray-200">
+              <div className="py-2 px-4 mb-4 bg-slate-400 rounded-lg rounded-t-lg  ">
                 <label htmlFor="comment" className="sr-only">
                   Your comment
                 </label>

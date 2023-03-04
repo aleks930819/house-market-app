@@ -23,7 +23,7 @@ import PlacesToStayComments from './PlacesToStayComments';
 
 import { db } from '../../firbase.config';
 
-import { SET_BOOKING } from '../slices/bookingSlice';
+import { SET_LISTING } from '../slices/listingSlice';
 
 import useGetDataById from '../hooks/useGetDataById';
 import useGetWatchlistData from '../hooks/useGetWatchlistData';
@@ -42,14 +42,14 @@ const ItemDetails = () => {
   const { id } = useParams();
 
   const { data, loading } = useGetDataById('listings', id);
-  const { watchlistData } = useGetWatchlistData();
+  let { watchlistData, setWatchlistData } = useGetWatchlistData();
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     const { id, name, imgUrls, regularPrice, discountPrice } = data?.[0] || {};
-    const payload = { id,name,imgUrls,regularPrice,discountPrice};
-    dispatch(SET_BOOKING(payload));
+    const payload = { id, name, imgUrls, regularPrice, discountPrice };
+    dispatch(SET_LISTING(payload));
   }, [data, dispatch]);
 
   if (loading) {
@@ -103,7 +103,7 @@ const ItemDetails = () => {
         watchlist: [...watchlistData, ...data],
       });
 
-      watchlistData.push(...data);
+      setWatchlistData([...watchlistData, ...data]);
 
       toast.success('Added to watch list');
     } catch (error) {

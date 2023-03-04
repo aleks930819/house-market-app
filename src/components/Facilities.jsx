@@ -2,7 +2,7 @@ import { MdOutlineAttachMoney, MdChair } from 'react-icons/md';
 import { FaBath, FaParking } from 'react-icons/fa';
 import { IoIosBed } from 'react-icons/io';
 
-import ConvertPrice from '../utils/ConvertPrice';
+import convertPrice from '../utils/convertPrice';
 
 export const Facilities = ({ listing }) => {
   const {
@@ -20,13 +20,13 @@ export const Facilities = ({ listing }) => {
     <ul className="text-xs mt-4  list-inside  leading-relaxed flex flex-col gap-5">
       <li className="flex sm:flex-row gap-2 items-center">
         <MdOutlineAttachMoney className="text-lg" />
-        {offer ? ConvertPrice(discountPrice) : ConvertPrice(regularPrice)}
+        {offer ? convertPrice(discountPrice) : convertPrice(regularPrice)}
         {type === 'rent' ? ' / Month' : ''}
         {type === 'stay' ? ' / Night' : ''}
 
         {offer && (
           <span className="bg-green-700 text-white roudned-sm py-[1.2px] px-[4px]">
-            Discount: ${ConvertPrice(regularPrice - discountPrice)}
+            Discount: ${convertPrice(regularPrice - discountPrice)}
           </span>
         )}
       </li>

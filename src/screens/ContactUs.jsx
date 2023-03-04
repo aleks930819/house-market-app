@@ -6,7 +6,7 @@ import Input from '../components/Input';
 import { toast } from 'react-toastify';
 import { addDoc, collection } from 'firebase/firestore';
 
-import {db } from '../../firbase.config';
+import { db } from '../../firbase.config';
 import { useSelector } from 'react-redux';
 import { selectDisplayName, selectUserID } from '../slices/authSlice';
 
@@ -40,7 +40,6 @@ const ContactUs = () => {
       });
       toast.success('Message sent');
     } catch (err) {
-        console.log(err);
       toast.error('Could not send message');
     }
 
@@ -52,7 +51,6 @@ const ContactUs = () => {
       <div className="p-5">
         <Form heading="Contact Us" btnName="Send" onSubmit={submitHandler}>
           <div className="flex flex-col sm:flex-row gap-5 mb-5">
-          
             <p>Phone: 123-456-7890</p>
             <p>Email: admin@gmail.com</p>
           </div>

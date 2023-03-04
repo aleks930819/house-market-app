@@ -8,15 +8,17 @@ import { orderBy, where, limit } from 'firebase/firestore';
 import { db } from '../../firbase.config';
 import { deleteDoc, doc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectUserID } from '../slices/authSlice';
 import Modal from './Modal';
+import { SET_LISTING } from '../slices/listingSlice';
 
 const MyProperties = () => {
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [itemToDeleteId, setItemToDeleteId] = useState(null);
   const userId = useSelector(selectUserID);
+  const dispatch = useDispatch();
 
   const {
     data: properties,
@@ -33,7 +35,8 @@ const MyProperties = () => {
     if (!properties) {
       getData();
     }
-  }, [getData, properties]);
+   
+  }, [getData, properties, dispatch]);
 
   useEffect(() => {
     setFilteredProperties(properties);

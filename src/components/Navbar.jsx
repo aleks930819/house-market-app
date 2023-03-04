@@ -30,7 +30,7 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   const userID = useSelector(selectUserID);
-  const [plan, setPlan] = useState(null);
+
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -64,13 +64,13 @@ const Navbar = () => {
           const { role } = doc.data();
           dispatch(SET_PLAN(role));
           dispatch(SET_SUBSCRIPTION_ID(doc.id));
-          setPlan(role);
+       
         });
       }
     };
 
     checkSubscription();
-  }, [userID, dispatch, setPlan]);
+  }, [userID, dispatch,]);
 
   useEffect(() => {
     !isMobile ? setShowMenu(true) : setShowMenu(false);
@@ -85,7 +85,7 @@ const Navbar = () => {
         {showMenu ? <AiOutlineClose /> : <AiOutlineMenu />}
       </button>
       {showMenu && (
-        <nav className=" fixed bg-slate-500 sm:bg-slate-200 p-8  w-full  h-full drop-shadow-lg sm:h-1/3  z-[999] sm:relative">
+        <nav className="top-0 fixed bg-slate-500 sm:bg-slate-200 p-8  w-full  h-full drop-shadow-lg sm:h-1/3  z-[999] sm:relative">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
             <Search />
             <LinksAndActions setShowMenu={setShowMenu} />

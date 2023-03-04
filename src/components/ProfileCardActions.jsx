@@ -64,7 +64,7 @@ const ProfileCardActions = () => {
 
   return (
     <div>
-      {data.map((item) => (
+      {data?.map((item) => (
         <Link to={item?.link} key={item?.id}>
           <div className="flex items-center gap-2 cursor-pointer pb-2">
             {item?.icon}

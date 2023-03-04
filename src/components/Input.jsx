@@ -44,7 +44,6 @@ const Input = (props) => {
   };
 
   return (
-    <>
       <div>
         <div className="flex mx-auto mb-5 justify-center items-center relative">
           {element}
@@ -56,7 +55,6 @@ const Input = (props) => {
           )}
         </div>
       </div>
-    </>
   );
 };
 

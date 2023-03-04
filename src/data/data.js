@@ -85,7 +85,7 @@ export const ExploreData = [
   },
   {
     id: 3,
-    title: 'Places to stay',
+    title: 'Places to stay at',
     image: Stay,
     link: '/category/stay',
   },

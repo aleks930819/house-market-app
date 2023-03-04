@@ -12,17 +12,15 @@ const StarterScreen = () => {
   const { isVisible } = useScrollToTop();
 
   return (
-    <>
-      <div className="">
-        <Banner />
-        <ExploreRentals />
-        <StarterScreenWidget />
-        <Testimonials />
-        <SubscribePlansSection />
-        <Features />
-        {isVisible && <ScrollToTopButton />}
-      </div>
-    </>
+    <div className="">
+      <Banner />
+      <ExploreRentals />
+      <StarterScreenWidget />
+      <Testimonials />
+      <SubscribePlansSection />
+      <Features />
+      {isVisible && <ScrollToTopButton />}
+    </div>
   );
 };
 
