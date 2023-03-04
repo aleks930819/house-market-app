@@ -2,7 +2,6 @@ import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { AiFillDelete } from 'react-icons/ai';
 
 
 import { serverTimestamp, doc, updateDoc, getDoc } from 'firebase/firestore';
@@ -19,6 +18,7 @@ import { db } from '../../firbase.config';
 import setChangedValue from '../utils/changeHandler';
 import uploadImages from '../utils/uploadImages';
 import useDeleteImage from '../hooks/useDeleteImage';
+import EditPropertiesImages from '../components/EditPropertiesImages';
 
 const EditProperties = () => {
 
@@ -323,7 +323,8 @@ const EditProperties = () => {
             multiple
           />
         </div>
-        <div>
+        <EditPropertiesImages images={images} deleteImageHandler={deleteImageHandler}/>
+        {/* <div>
           <label>Images:</label>
           <div className="grid  grid-cols-3  mt-2">
             {images?.map((image, index) => (
@@ -343,7 +344,7 @@ const EditProperties = () => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </Form>
     </div>
   );
